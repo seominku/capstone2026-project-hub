@@ -2,6 +2,7 @@
   "use strict";
 
   const data = window.PROJECT_DATA;
+  const catalog = window.EQUIPMENT_CATALOG || { weapons: [], armor: [], memories: [] };
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const escapeHtml = (value = "") => String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[char]));
@@ -12,7 +13,12 @@
   let feedback = loadFeedback();
   let taskFilter = "all";
   let weaponFilter = "all";
+  let memoryFilter = "all";
+  let armorFilter = "all";
+  let armorQuery = "";
+  let armorPage = 1;
   let monsterFilter = "all";
+  const armorPageSize = 24;
   const gameViews = new Set(["game-bible", "story", "weapons", "memories", "armor", "bestiary"]);
   const routeMap = {
     "": "game-bible",
@@ -183,16 +189,46 @@
         <span>${escapeHtml(family.name)}</span><strong>${escapeHtml(family.role)}</strong>
         <div><b>${escapeHtml(family.fit)}</b><small>${escapeHtml(family.opposite)}</small></div>
       </article>`).join("");
-    const weapons = data.unityAssets.weapons.filter((weapon) => weaponFilter === "all" || weapon.family === weaponFilter);
-    renderUnityAssetGallery("#weaponAssetGallery", weapons);
+    const weapons = catalog.weapons.filter((weapon) => weaponFilter === "all" || weapon.classKey === weaponFilter);
+    $("#weaponCatalogCount").textContent = `${weapons.length} / ${catalog.weapons.length}종`;
+    $("#weaponAssetGallery").innerHTML = weapons.map((weapon) => `
+      <a class="unity-asset-card catalog-card grade-${weapon.grade.toLowerCase()}" href="${encodeURI(weapon.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(`${weapon.asset} · ${weapon.prefab}`)}">
+        <span class="unity-asset-image"><img src="${encodeURI(weapon.image)}" alt="${escapeHtml(weapon.name)} 무기 렌더" loading="lazy" width="640" height="640"></span>
+        <span class="unity-asset-copy"><small>${escapeHtml(weapon.className)} · ${escapeHtml(weapon.grade)}</small><strong>${escapeHtml(weapon.name)}</strong><em>공격력 ${escapeHtml(weapon.damage)} · ${escapeHtml(weapon.prefab)}</em><i>${escapeHtml(weapon.asset)}</i></span>
+      </a>`).join("");
   }
 
   function renderMemories() {
-    renderUnityAssetGallery("#memoryAssetGallery", data.unityAssets.memories);
+    const memories = catalog.memories.filter((memory) => memoryFilter === "all" || memory.weight === memoryFilter);
+    $("#memoryCatalogCount").textContent = `${memories.length} / ${catalog.memories.length}종`;
+    $("#memoryAssetGallery").innerHTML = memories.map((memory) => `
+      <a class="unity-asset-card catalog-card memory-catalog-card grade-${memory.grade.toLowerCase()}" href="${encodeURI(memory.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(`${memory.asset} · ${memory.clip}`)}">
+        <span class="unity-asset-image"><img src="${encodeURI(memory.image)}" alt="${escapeHtml(memory.name)} 기억 아이콘" loading="lazy" width="64" height="64"></span>
+        <span class="unity-asset-copy"><small>${escapeHtml(memory.weightName)} · ${escapeHtml(memory.grade)}</small><strong>${escapeHtml(memory.name)}</strong><em>피해 ${memory.damage} · ${escapeHtml(memory.tag)} · ${escapeHtml(memory.element)}</em><i>${escapeHtml(memory.clip)}</i></span>
+      </a>`).join("");
   }
 
   function renderArmor() {
-    renderUnityAssetGallery("#armorAssetGallery", data.unityAssets.armor);
+    const normalized = armorQuery.trim().toLowerCase();
+    const filtered = catalog.armor.filter((armor) => {
+      const matchesFilter = armorFilter === "all" || (armorFilter === "featured" ? armor.featured : armor.slot === armorFilter);
+      const searchText = `${armor.name} ${armor.asset} ${armor.collection} ${armor.part} ${armor.slotName}`.toLowerCase();
+      return matchesFilter && (!normalized || searchText.includes(normalized));
+    });
+    const pageCount = Math.max(1, Math.ceil(filtered.length / armorPageSize));
+    armorPage = Math.min(armorPage, pageCount);
+    const start = (armorPage - 1) * armorPageSize;
+    const visible = filtered.slice(start, start + armorPageSize);
+
+    $("#armorCatalogCount").textContent = `검색 결과 ${filtered.length}종`;
+    $("#armorPage").textContent = `${armorPage} / ${pageCount}`;
+    $("#armorPrev").disabled = armorPage <= 1;
+    $("#armorNext").disabled = armorPage >= pageCount;
+    $("#armorCatalogGrid").innerHTML = visible.length ? visible.map((armor) => `
+      <a class="armor-catalog-card grade-${armor.grade.toLowerCase()}" href="${encodeURI(armor.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(`${armor.asset} · ${armor.part}`)}">
+        <span class="armor-catalog-image"><img src="${encodeURI(armor.image)}" alt="${escapeHtml(armor.name)} 아이콘" loading="lazy" width="64" height="64"></span>
+        <span class="armor-catalog-copy"><small>${escapeHtml(armor.slotName)} · ${escapeHtml(armor.collection)}</small><strong>${escapeHtml(armor.name)}</strong><em>방어 ${escapeHtml(armor.defence)} · 체력 ${escapeHtml(armor.hp)}</em></span>
+      </a>`).join("") : `<div class="empty-state catalog-empty">조건에 맞는 방어구가 없습니다.</div>`;
     renderUnityAssetGallery("#accessoryAssetGallery", data.unityAssets.accessories);
   }
 
@@ -299,6 +335,36 @@
       $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
       renderWeapons();
     });
+    $("#memoryFilters").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button) return;
+      memoryFilter = button.dataset.filter;
+      $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
+      renderMemories();
+    });
+    $("#armorFilters").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button) return;
+      armorFilter = button.dataset.filter;
+      armorPage = 1;
+      $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
+      renderArmor();
+    });
+    $("#armorSearch").addEventListener("input", (event) => {
+      armorQuery = event.currentTarget.value;
+      armorPage = 1;
+      renderArmor();
+    });
+    $("#armorPrev").addEventListener("click", () => {
+      armorPage = Math.max(1, armorPage - 1);
+      renderArmor();
+      $("#armorCatalogGrid").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    $("#armorNext").addEventListener("click", () => {
+      armorPage += 1;
+      renderArmor();
+      $("#armorCatalogGrid").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
     $("#monsterFilters").addEventListener("click", (event) => {
       const button = event.target.closest("button[data-filter]");
       if (!button) return;
@@ -317,9 +383,9 @@
       ...data.changes.map((item) => ({ group: "변경", title: item.title, detail: item.detail, href: "#changes" })),
       ...data.documents.map((item) => ({ group: "문서", title: item.title, detail: item.description, href: item.path })),
       ...data.game.story.map((item) => ({ group: "스토리", title: item.title, detail: `${item.chapters} · ${item.detail}`, href: "#story" })),
-      ...data.unityAssets.weapons.map((item) => ({ group: "무기", title: item.name, detail: `${item.type} · ${item.detail}`, href: "#weapons" })),
-      ...data.unityAssets.memories.map((item) => ({ group: "기억", title: item.name, detail: `${item.type} · ${item.detail}`, href: "#memories" })),
-      ...data.unityAssets.armor.map((item) => ({ group: "방어구", title: item.name, detail: item.detail, href: "#armor" })),
+      ...catalog.weapons.map((item) => ({ group: "무기", title: item.name, detail: `${item.className} · 공격력 ${item.damage}`, href: "#weapons" })),
+      ...catalog.memories.map((item) => ({ group: "기억", title: item.name, detail: `${item.weightName} · 피해 ${item.damage} · ${item.tag}`, href: "#memories" })),
+      ...catalog.armor.map((item) => ({ group: "방어구", title: item.name, detail: `${item.slotName} · ${item.collection}`, href: "#armor" })),
       ...data.unityAssets.accessories.map((item) => ({ group: "액세서리", title: item.name, detail: item.detail, href: "#armor" })),
       ...data.unityAssets.monsters.map((item) => ({ group: "몬스터", title: item.name, detail: `${item.type} · ${item.detail}`, href: "#bestiary" })),
       ...data.game.boss.phases.map((item) => ({ group: "보스", title: item.title, detail: `${item.phase} · ${item.pattern}`, href: "#boss" }))

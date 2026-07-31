@@ -119,15 +119,16 @@
             <div><p class="section-kicker">ARSENAL · WEAPONS</p><h2>무기가 콤보의 문법을 바꾼다</h2></div>
             <div class="filter-tabs" id="weaponFilters" role="tablist" aria-label="무기 계열 필터">
               <button class="active" data-filter="all" type="button">전체</button>
-              <button data-filter="longsword" type="button">장검</button>
-              <button data-filter="greatsword" type="button">대검</button>
+              <button data-filter="light" type="button">경량</button>
+              <button data-filter="medium" type="button">중량</button>
+              <button data-filter="heavy" type="button">대검</button>
             </div>
           </div>
           <div class="weapon-family-grid" id="weaponFamilies"></div>
           <article class="asset-showcase panel">
             <div class="asset-showcase-heading">
               <div><p class="section-kicker">CAPTURED FROM UNITY</p><h3>실제 프로젝트 장비</h3></div>
-              <span>프리팹 · 머티리얼 직접 렌더</span>
+              <span id="weaponCatalogCount">16종 등록</span>
             </div>
             <div class="unity-asset-grid" id="weaponAssetGallery"></div>
           </article>
@@ -136,7 +137,12 @@
         <section class="section-block page-section" id="memories" data-page="memories" hidden>
           <div class="section-heading">
             <div><p class="section-kicker">MEMORY COMBAT · ORDERED COMBO</p><h2>기억의 순서가 곧 나만의 콤보</h2></div>
-            <span class="section-note">실제 프로젝트 공격 기억 아이콘</span>
+            <div class="filter-tabs" id="memoryFilters" role="tablist" aria-label="기억 무게 필터">
+              <button class="active" data-filter="all" type="button">전체</button>
+              <button data-filter="light" type="button">가벼움</button>
+              <button data-filter="normal" type="button">보통</button>
+              <button data-filter="heavy" type="button">무거움</button>
+            </div>
           </div>
           <article class="memory-lab panel memory-intro">
             <div class="memory-copy">
@@ -153,7 +159,7 @@
           <article class="asset-showcase panel">
             <div class="asset-showcase-heading">
               <div><p class="section-kicker">IN-GAME ICONS</p><h3>구현된 공격 기억</h3></div>
-              <span>AttackCombo ScriptableData · UI Icon</span>
+              <span id="memoryCatalogCount">22종 등록</span>
             </div>
             <div class="unity-asset-grid memory-assets" id="memoryAssetGallery"></div>
           </article>
@@ -166,10 +172,32 @@
           </div>
           <article class="asset-showcase panel">
             <div class="asset-showcase-heading">
-              <div><p class="section-kicker">ARMOR</p><h3>현재 프로젝트 방어구</h3></div>
-              <span>Player Prefab · Equipment Assets</span>
+              <div><p class="section-kicker">ARMOR CATALOG</p><h3>프로젝트 전체 방어구</h3></div>
+              <span>ItemDatabase 기준 300종 · 6개 부위</span>
             </div>
-            <div class="unity-asset-grid" id="armorAssetGallery"></div>
+            <div class="catalog-toolbar">
+              <label class="catalog-search">
+                <span>방어구 검색</span>
+                <input id="armorSearch" type="search" placeholder="이름, 세트, 에셋명 검색" autocomplete="off">
+              </label>
+              <div class="filter-tabs armor-filters" id="armorFilters" role="tablist" aria-label="방어구 부위 필터">
+                <button class="active" data-filter="all" type="button">전체</button>
+                <button data-filter="featured" type="button">주요 세트</button>
+                <button data-filter="helmet" type="button">투구</button>
+                <button data-filter="armor" type="button">상의</button>
+                <button data-filter="gloves" type="button">장갑</button>
+                <button data-filter="pants" type="button">하의</button>
+                <button data-filter="boots" type="button">신발</button>
+                <button data-filter="belt" type="button">허리</button>
+              </div>
+            </div>
+            <div class="catalog-result-bar"><strong id="armorCatalogCount">300종</strong><span>Unity ItemDatabase와 동기화된 목록</span></div>
+            <div class="armor-catalog-grid" id="armorCatalogGrid"></div>
+            <nav class="catalog-pagination" aria-label="방어구 페이지">
+              <button class="secondary-button" id="armorPrev" type="button">← 이전</button>
+              <span id="armorPage">1 / 13</span>
+              <button class="secondary-button" id="armorNext" type="button">다음 →</button>
+            </nav>
           </article>
           <article class="asset-showcase panel accessory-showcase">
             <div class="asset-showcase-heading">
@@ -338,6 +366,7 @@
   </dialog>
 
   <script src="data.js"></script>
+  <script src="catalog-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
