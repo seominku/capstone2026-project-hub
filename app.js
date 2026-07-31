@@ -11,6 +11,8 @@
   const feedbackKey = "rootbound-project-feedback-v1";
   let feedback = loadFeedback();
   let taskFilter = "all";
+  let weaponFilter = "all";
+  let monsterFilter = "all";
 
   function loadFeedback() {
     try {
@@ -85,6 +87,82 @@
       </a>`).join("");
   }
 
+  function renderGameBible() {
+    $("#gameFacts").innerHTML = data.game.facts.map((fact) => `
+      <article class="game-fact panel">
+        <strong>${escapeHtml(fact.value)}</strong><span>${escapeHtml(fact.label)}</span><small>${escapeHtml(fact.detail)}</small>
+      </article>`).join("");
+    $("#pillarGrid").innerHTML = data.game.pillars.map((pillar) => `
+      <article class="pillar-card panel tone-${pillar.tone}">
+        <span>${pillar.index}</span><h3>${escapeHtml(pillar.title)}</h3><p>${escapeHtml(pillar.detail)}</p>
+      </article>`).join("");
+    $("#coreLoop").innerHTML = data.game.loop.map((step, index) => `
+      <div class="loop-step"><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(step)}</strong></div>`).join("");
+  }
+
+  function renderStory() {
+    $("#storyActs").innerHTML = data.game.story.map((chapter) => `
+      <article class="story-card panel story-${chapter.tone}">
+        <div class="story-index"><span>${escapeHtml(chapter.act)}</span><strong>${escapeHtml(chapter.chapters)}</strong></div>
+        <h3>${escapeHtml(chapter.title)}</h3><p>${escapeHtml(chapter.detail)}</p>
+        <small>${escapeHtml(chapter.place)}</small>
+      </article>`).join("");
+    $("#storyClues").innerHTML = data.game.clues.map((clue, index) => `
+      <div class="clue-item"><span>${String(index + 1).padStart(2, "0")}</span><div><strong>${escapeHtml(clue.label)}</strong><p>${escapeHtml(clue.detail)}</p></div></div>`).join("");
+  }
+
+  function renderArsenal() {
+    $("#weaponFamilies").innerHTML = data.game.weaponFamilies.map((family) => `
+      <article class="weapon-family panel tone-${family.tone}">
+        <span>${escapeHtml(family.name)}</span><strong>${escapeHtml(family.role)}</strong>
+        <div><b>${escapeHtml(family.fit)}</b><small>${escapeHtml(family.opposite)}</small></div>
+      </article>`).join("");
+    const weapons = data.game.weapons.filter((weapon) => weaponFilter === "all" || weapon.family === weaponFilter);
+    $("#weaponGrid").innerHTML = weapons.map((weapon) => `
+      <article class="weapon-card panel family-${weapon.family}">
+        <div class="weapon-silhouette" aria-hidden="true"><span></span></div>
+        <div class="weapon-heading"><span>${escapeHtml(weapon.rarity)}</span><small>${escapeHtml(weapon.type)}</small></div>
+        <h3>${escapeHtml(weapon.name)}</h3>
+        <strong class="weapon-damage">공격력 ${escapeHtml(weapon.damage)}</strong>
+        <p>${escapeHtml(weapon.detail)}</p>
+      </article>`).join("");
+    $("#memoryGrid").innerHTML = data.game.memories.map((memory) => `
+      <article class="memory-card rarity-${memory.rarity.toLowerCase()}">
+        <div><span>${escapeHtml(memory.rarity)}</span><b>${memory.damage}</b></div>
+        <strong>${escapeHtml(memory.name)}</strong>
+        <small>${escapeHtml(memory.weight)} · ${escapeHtml(memory.trait)}</small>
+      </article>`).join("");
+  }
+
+  function renderBestiary() {
+    $("#depthTrack").innerHTML = data.game.depths.map((depth, index) => `
+      <article class="depth-card tone-${depth.tone}">
+        <span>${escapeHtml(depth.chapters)}</span><strong>${escapeHtml(depth.title)}</strong><small>${escapeHtml(depth.detail)}</small>
+        ${index < data.game.depths.length - 1 ? '<i aria-hidden="true">→</i>' : ""}
+      </article>`).join("");
+    const monsters = data.game.monsters.filter((monster) => {
+      if (monsterFilter === "all") return true;
+      if (monsterFilter === "elite") return monster.rank === "네임드";
+      return monster.group === monsterFilter;
+    });
+    $("#monsterGrid").innerHTML = monsters.map((monster) => `
+      <article class="monster-card panel ${monster.rank === "네임드" ? "elite" : ""}">
+        <div class="monster-emblem" aria-hidden="true"><span>${monster.rank === "네임드" ? "✦" : "◇"}</span></div>
+        <div class="monster-meta"><span>${escapeHtml(monster.rank)}</span><small>${escapeHtml(monster.role)}</small></div>
+        <h3>${escapeHtml(monster.ko)}</h3><code>${escapeHtml(monster.name)}</code>
+        <p>${escapeHtml(monster.feature)}</p><b>${escapeHtml(monster.status)}</b>
+      </article>`).join("");
+  }
+
+  function renderBoss() {
+    $("#bossPhases").innerHTML = data.game.boss.phases.map((phase) => `
+      <article class="boss-phase panel tone-${phase.tone}">
+        <div><span>${escapeHtml(phase.phase)}</span><b>HP ${escapeHtml(phase.hp)}</b></div>
+        <h3>${escapeHtml(phase.title)}</h3>
+        <strong>${escapeHtml(phase.pattern)}</strong><p>${escapeHtml(phase.intent)}</p>
+      </article>`).join("");
+  }
+
   function feedbackLabel(status) {
     return { open: "검토 대기", in_progress: "진행 중", resolved: "반영 완료" }[status] || status;
   }
@@ -157,6 +235,20 @@
       $$("button", event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
       renderTasks();
     });
+    $("#weaponFilters").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button) return;
+      weaponFilter = button.dataset.filter;
+      $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
+      renderArsenal();
+    });
+    $("#monsterFilters").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button) return;
+      monsterFilter = button.dataset.filter;
+      $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
+      renderBestiary();
+    });
   }
 
   function searchIndex(query) {
@@ -166,7 +258,12 @@
       ...data.tasks.map((item) => ({ group: "작업", title: item.title, detail: `${item.id} · ${item.detail}`, href: "#sprint" })),
       ...data.qa.map((item) => ({ group: "QA", title: item.title, detail: `${item.id} · ${item.status}`, href: "#quality" })),
       ...data.changes.map((item) => ({ group: "변경", title: item.title, detail: item.detail, href: "#changes" })),
-      ...data.documents.map((item) => ({ group: "문서", title: item.title, detail: item.description, href: item.path }))
+      ...data.documents.map((item) => ({ group: "문서", title: item.title, detail: item.description, href: item.path })),
+      ...data.game.story.map((item) => ({ group: "스토리", title: item.title, detail: `${item.chapters} · ${item.detail}`, href: "#story" })),
+      ...data.game.weapons.map((item) => ({ group: "무기", title: item.name, detail: `${item.type} · 공격력 ${item.damage}`, href: "#arsenal" })),
+      ...data.game.memories.map((item) => ({ group: "기억", title: item.name, detail: `${item.weight} · ${item.trait}`, href: "#arsenal" })),
+      ...data.game.monsters.map((item) => ({ group: "몬스터", title: item.ko, detail: `${item.name} · ${item.feature}`, href: "#bestiary" })),
+      ...data.game.boss.phases.map((item) => ({ group: "보스", title: item.title, detail: `${item.phase} · ${item.pattern}`, href: "#boss" }))
     ].filter((item) => `${item.title} ${item.detail}`.toLowerCase().includes(normalized)).slice(0, 8);
   }
 
@@ -209,6 +306,11 @@
   renderQa();
   renderChanges();
   renderDocuments();
+  renderGameBible();
+  renderStory();
+  renderArsenal();
+  renderBestiary();
+  renderBoss();
   renderFeedback();
   setupFeedback();
   setupFilters();
