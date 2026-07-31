@@ -5,6 +5,17 @@
   const catalog = window.EQUIPMENT_CATALOG || { weapons: [], armor: [], memories: [] };
   const storyContent = window.STORY_CONTENT || { novel: data.game.novel, clues: data.game.clues };
   const systems = window.PROJECT_SYSTEMS || { categories: [], items: [], sources: [] };
+  const systemPdfSources = {
+    "docs/상세기획서.md": "pdf/상세기획서.pdf",
+    "docs/상세스토리.md": "pdf/상세스토리.pdf",
+    "docs/spec/01_절차적맵생성.md": "pdf/구현명세_01_절차적맵생성.pdf",
+    "docs/spec/02_전투판정_흐름시스템.md": "pdf/구현명세_02_전투판정_흐름시스템.pdf",
+    "docs/spec/03_적AI_FSM.md": "pdf/구현명세_03_적AI_FSM.pdf",
+    "docs/spec/04_세이브_죽음규칙.md": "pdf/구현명세_04_세이브_죽음규칙.pdf",
+    "docs/보스_설계_프롬프트.md": "pdf/상세기획서.pdf",
+    "docs/개발_체크리스트.md": "pdf/Capstone2026_프로젝트현황_체크리스트_2026-07-31.pdf"
+  };
+  const systemSourceHref = (path) => systemPdfSources[path] || path;
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const escapeHtml = (value = "") => String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[char]));
@@ -218,13 +229,13 @@
             <p>${escapeHtml(item.summary)}</p>
             <div class="system-metrics">${item.metrics.map((metric) => `<span><small>${escapeHtml(metric.label)}</small><strong>${escapeHtml(metric.value)}</strong></span>`).join("")}</div>
             <details><summary>세부 규칙 보기 <span>+</span></summary><ul>${item.rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ul></details>
-            <a class="system-source" href="${encodeURI(item.source)}">원본 문서에서 확인 ↗</a>
+            <a class="system-source" href="${encodeURI(systemSourceHref(item.source))}" target="_blank" rel="noreferrer">PDF 원본에서 확인 ↗</a>
           </article>`).join("")}</div>
       </section>`;
     }).join("") || `<div class="empty-state catalog-empty">검색 조건에 맞는 시스템이 없습니다.</div>`;
 
     $("#systemDocLinks").innerHTML = systems.sources.map((source, index) => `
-      <a href="${encodeURI(source.path)}"><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(source.label)}</strong><i>↗</i></a>`).join("");
+      <a href="${encodeURI(systemSourceHref(source.path))}" target="_blank" rel="noreferrer"><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(source.label)} PDF</strong><i>↗</i></a>`).join("");
   }
 
   function renderUnityAssetGallery(selector, items) {
