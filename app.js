@@ -13,16 +13,19 @@
   let taskFilter = "all";
   let weaponFilter = "all";
   let monsterFilter = "all";
-  const gameViews = new Set(["game-bible", "story", "arsenal", "bestiary", "boss"]);
+  const gameViews = new Set(["game-bible", "story", "weapons", "memories", "armor", "bestiary"]);
   const routeMap = {
     "": "game-bible",
     "#overview": "game-bible",
     "#world": "game-bible",
     "#game-bible": "game-bible",
     "#story": "story",
-    "#arsenal": "arsenal",
+    "#arsenal": "weapons",
+    "#weapons": "weapons",
+    "#memories": "memories",
+    "#armor": "armor",
     "#bestiary": "bestiary",
-    "#boss": "boss",
+    "#boss": "bestiary",
     "#development": "development",
     "#sprint": "development",
     "#changes": "development",
@@ -152,46 +155,45 @@
   }
 
   function renderStory() {
-    $("#storyActs").innerHTML = data.game.story.map((chapter) => `
-      <article class="story-card panel story-${chapter.tone}">
-        <div class="story-index"><span>${escapeHtml(chapter.act)}</span><strong>${escapeHtml(chapter.chapters)}</strong></div>
-        <h3>${escapeHtml(chapter.title)}</h3><p>${escapeHtml(chapter.detail)}</p>
-        <small>${escapeHtml(chapter.place)}</small>
-      </article>`).join("");
-    $("#storyClues").innerHTML = data.game.clues.map((clue, index) => `
-      <div class="clue-item"><span>${String(index + 1).padStart(2, "0")}</span><div><strong>${escapeHtml(clue.label)}</strong><p>${escapeHtml(clue.detail)}</p></div></div>`).join("");
+    $("#storyNovel").innerHTML = `
+      <header class="novel-title-page">
+        <span>ROOTBOUND · A TALE OF INHERITANCE</span>
+        <h3>잠들지 않는 숲</h3>
+        <p>검은 안개 속에서 되풀이되는 한 짐꾼과 오래된 수호자의 이야기</p>
+      </header>
+      ${data.game.novel.map((chapter, index) => `
+        <section class="novel-chapter">
+          <div class="novel-chapter-heading"><span>${escapeHtml(chapter.chapter)}</span><h4>${escapeHtml(chapter.title)}</h4></div>
+          <div class="novel-prose">${chapter.paragraphs.map((paragraph, paragraphIndex) => `<p class="${index === 0 && paragraphIndex === 0 ? "novel-opener" : ""}">${escapeHtml(paragraph)}</p>`).join("")}</div>
+        </section>`).join("")}
+      <footer class="novel-ending"><span>END OF ONE GENERATION</span><strong>그리고 다음 수레가 숲으로 들어온다.</strong></footer>`;
   }
 
   function renderUnityAssetGallery(selector, items) {
     $(selector).innerHTML = items.map((item) => `
-      <a class="unity-asset-card" href="${encodeURI(item.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(item.source)}">
+      <a class="unity-asset-card ${item.rank === "네임드" ? "asset-elite" : ""}" href="${encodeURI(item.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(item.source)}">
         <span class="unity-asset-image"><img src="${encodeURI(item.image)}" alt="Unity 프로젝트의 ${escapeHtml(item.name)} 프리팹 렌더" loading="lazy" width="768" height="768"></span>
-        <span class="unity-asset-copy"><small>${escapeHtml(item.type)}</small><strong>${escapeHtml(item.name)}</strong><i>확대 보기 ↗</i></span>
+        <span class="unity-asset-copy"><small>${escapeHtml(item.type)}</small><strong>${escapeHtml(item.name)}</strong>${item.detail ? `<em>${escapeHtml(item.detail)}</em>` : ""}<i>확대 보기 ↗</i></span>
       </a>`).join("");
   }
 
-  function renderArsenal() {
+  function renderWeapons() {
     $("#weaponFamilies").innerHTML = data.game.weaponFamilies.map((family) => `
       <article class="weapon-family panel tone-${family.tone}">
         <span>${escapeHtml(family.name)}</span><strong>${escapeHtml(family.role)}</strong>
         <div><b>${escapeHtml(family.fit)}</b><small>${escapeHtml(family.opposite)}</small></div>
       </article>`).join("");
-    renderUnityAssetGallery("#weaponAssetGallery", [...data.unityAssets.armor, ...data.unityAssets.weapons]);
-    const weapons = data.game.weapons.filter((weapon) => weaponFilter === "all" || weapon.family === weaponFilter);
-    $("#weaponGrid").innerHTML = weapons.map((weapon) => `
-      <article class="weapon-card panel family-${weapon.family}">
-        <div class="weapon-silhouette" aria-hidden="true"><span></span></div>
-        <div class="weapon-heading"><span>${escapeHtml(weapon.rarity)}</span><small>${escapeHtml(weapon.type)}</small></div>
-        <h3>${escapeHtml(weapon.name)}</h3>
-        <strong class="weapon-damage">공격력 ${escapeHtml(weapon.damage)}</strong>
-        <p>${escapeHtml(weapon.detail)}</p>
-      </article>`).join("");
-    $("#memoryGrid").innerHTML = data.game.memories.map((memory) => `
-      <article class="memory-card rarity-${memory.rarity.toLowerCase()}">
-        <div><span>${escapeHtml(memory.rarity)}</span><b>${memory.damage}</b></div>
-        <strong>${escapeHtml(memory.name)}</strong>
-        <small>${escapeHtml(memory.weight)} · ${escapeHtml(memory.trait)}</small>
-      </article>`).join("");
+    const weapons = data.unityAssets.weapons.filter((weapon) => weaponFilter === "all" || weapon.family === weaponFilter);
+    renderUnityAssetGallery("#weaponAssetGallery", weapons);
+  }
+
+  function renderMemories() {
+    renderUnityAssetGallery("#memoryAssetGallery", data.unityAssets.memories);
+  }
+
+  function renderArmor() {
+    renderUnityAssetGallery("#armorAssetGallery", data.unityAssets.armor);
+    renderUnityAssetGallery("#accessoryAssetGallery", data.unityAssets.accessories);
   }
 
   function renderBestiary() {
@@ -200,19 +202,13 @@
         <span>${escapeHtml(depth.chapters)}</span><strong>${escapeHtml(depth.title)}</strong><small>${escapeHtml(depth.detail)}</small>
         ${index < data.game.depths.length - 1 ? '<i aria-hidden="true">→</i>' : ""}
       </article>`).join("");
-    renderUnityAssetGallery("#monsterAssetGallery", data.unityAssets.monsters);
     const monsters = data.game.monsters.filter((monster) => {
       if (monsterFilter === "all") return true;
       if (monsterFilter === "elite") return monster.rank === "네임드";
       return monster.group === monsterFilter;
     });
-    $("#monsterGrid").innerHTML = monsters.map((monster) => `
-      <article class="monster-card panel ${monster.rank === "네임드" ? "elite" : ""}">
-        <div class="monster-emblem" aria-hidden="true"><span>${monster.rank === "네임드" ? "✦" : "◇"}</span></div>
-        <div class="monster-meta"><span>${escapeHtml(monster.rank)}</span><small>${escapeHtml(monster.role)}</small></div>
-        <h3>${escapeHtml(monster.ko)}</h3><code>${escapeHtml(monster.name)}</code>
-        <p>${escapeHtml(monster.feature)}</p><b>${escapeHtml(monster.status)}</b>
-      </article>`).join("");
+    const visibleAssets = data.unityAssets.monsters.filter((asset) => monsters.some((monster) => monster.ko === asset.name));
+    renderUnityAssetGallery("#monsterAssetGallery", visibleAssets);
   }
 
   function renderBoss() {
@@ -301,7 +297,7 @@
       if (!button) return;
       weaponFilter = button.dataset.filter;
       $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
-      renderArsenal();
+      renderWeapons();
     });
     $("#monsterFilters").addEventListener("click", (event) => {
       const button = event.target.closest("button[data-filter]");
@@ -321,9 +317,11 @@
       ...data.changes.map((item) => ({ group: "변경", title: item.title, detail: item.detail, href: "#changes" })),
       ...data.documents.map((item) => ({ group: "문서", title: item.title, detail: item.description, href: item.path })),
       ...data.game.story.map((item) => ({ group: "스토리", title: item.title, detail: `${item.chapters} · ${item.detail}`, href: "#story" })),
-      ...data.game.weapons.map((item) => ({ group: "무기", title: item.name, detail: `${item.type} · 공격력 ${item.damage}`, href: "#arsenal" })),
-      ...data.game.memories.map((item) => ({ group: "기억", title: item.name, detail: `${item.weight} · ${item.trait}`, href: "#arsenal" })),
-      ...data.game.monsters.map((item) => ({ group: "몬스터", title: item.ko, detail: `${item.name} · ${item.feature}`, href: "#bestiary" })),
+      ...data.unityAssets.weapons.map((item) => ({ group: "무기", title: item.name, detail: `${item.type} · ${item.detail}`, href: "#weapons" })),
+      ...data.unityAssets.memories.map((item) => ({ group: "기억", title: item.name, detail: `${item.type} · ${item.detail}`, href: "#memories" })),
+      ...data.unityAssets.armor.map((item) => ({ group: "방어구", title: item.name, detail: item.detail, href: "#armor" })),
+      ...data.unityAssets.accessories.map((item) => ({ group: "액세서리", title: item.name, detail: item.detail, href: "#armor" })),
+      ...data.unityAssets.monsters.map((item) => ({ group: "몬스터", title: item.name, detail: `${item.type} · ${item.detail}`, href: "#bestiary" })),
       ...data.game.boss.phases.map((item) => ({ group: "보스", title: item.title, detail: `${item.phase} · ${item.pattern}`, href: "#boss" }))
     ].filter((item) => `${item.title} ${item.detail}`.toLowerCase().includes(normalized)).slice(0, 8);
   }
@@ -386,7 +384,9 @@
   renderDocuments();
   renderGameBible();
   renderStory();
-  renderArsenal();
+  renderWeapons();
+  renderMemories();
+  renderArmor();
   renderBestiary();
   renderBoss();
   renderFeedback();

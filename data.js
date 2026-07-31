@@ -60,27 +60,42 @@ window.PROJECT_DATA = {
   ],
   unityAssets: {
     weapons: [
-      { name: "한손검 1형", type: "ONE-HANDED", image: "assets/unity/weapon-onehand-1.png", source: "PF_GS_OneHand_1_1.prefab" },
-      { name: "한손검 3형", type: "ONE-HANDED", image: "assets/unity/weapon-onehand-3.png", source: "PF_GS_OneHand_3_1.prefab" },
-      { name: "대검 1형", type: "GREAT SWORD", image: "assets/unity/weapon-great-1.png", source: "PF_GS_Great_1_1.prefab" },
-      { name: "대검 4형", type: "GREAT SWORD", image: "assets/unity/weapon-great-4.png", source: "PF_GS_Great_4_1.prefab" },
-      { name: "황금 장식검", type: "UNIQUE", image: "assets/unity/weapon-gold.png", source: "PF_Sword_Gold.prefab" },
-      { name: "그림자 검", type: "UNLOCK", image: "assets/unity/weapon-shadow.png", source: "PF_Sword_Shadow.prefab" },
-      { name: "서리 검", type: "UNLOCK", image: "assets/unity/weapon-frost.png", source: "PF_Sword_Frost.prefab" }
+      { name: "한손검 1형", type: "ONE-HANDED", family: "longsword", detail: "빠른 연계에 맞춘 표준 한손검", image: "assets/unity/weapon-onehand-1.png", source: "PF_GS_OneHand_1_1.prefab" },
+      { name: "한손검 3형", type: "ONE-HANDED", family: "longsword", detail: "넓은 칼날과 안정적인 무게 중심", image: "assets/unity/weapon-onehand-3.png", source: "PF_GS_OneHand_3_1.prefab" },
+      { name: "대검 1형", type: "GREAT SWORD", family: "greatsword", detail: "무거운 기억의 마무리에 특화", image: "assets/unity/weapon-great-1.png", source: "PF_GS_Great_1_1.prefab" },
+      { name: "대검 4형", type: "GREAT SWORD", family: "greatsword", detail: "긴 사거리와 강한 경직을 노리는 대검", image: "assets/unity/weapon-great-4.png", source: "PF_GS_Great_4_1.prefab" },
+      { name: "황금 장식검", type: "UNIQUE", family: "longsword", detail: "높은 기본 피해의 희귀 장식검", image: "assets/unity/weapon-gold.png", source: "PF_Sword_Gold.prefab" },
+      { name: "그림자 검", type: "UNLOCK", family: "longsword", detail: "속도와 돌진 기억을 잇는 경량 검", image: "assets/unity/weapon-shadow.png", source: "PF_Sword_Shadow.prefab" },
+      { name: "서리 검", type: "UNLOCK", family: "greatsword", detail: "냉기 테마의 중량 무기", image: "assets/unity/weapon-frost.png", source: "PF_Sword_Frost.prefab" }
     ],
     armor: [
-      { name: "기본 방어구 세트", type: "ARMOR", image: "assets/unity/armor-player-default.png", source: "Player.prefab" }
+      { name: "기본 모험가 세트", type: "EQUIPPED SET", detail: "현재 플레이어 프리팹에 적용된 기본 외형", image: "assets/unity/armor-player-default.png", source: "Player.prefab" },
+      { name: "황금 흉갑", type: "CHEST ARMOR", detail: "금빛 장식이 강조된 중갑 흉갑", image: "assets/unity/armor-golden.png", source: "Armor_Golden.fbx" },
+      { name: "가죽 흉갑", type: "CHEST ARMOR", detail: "기동성을 우선한 경량 가죽 방어구", image: "assets/unity/armor-leather.png", source: "Armor_Leather.fbx" },
+      { name: "금속 흉갑", type: "CHEST ARMOR", detail: "표준 방어 성능의 금속 흉갑", image: "assets/unity/armor-metal.png", source: "Armor_Metal2.fbx" }
+    ],
+    accessories: [
+      { name: "핏빛 반지", type: "ACCESSORY · RING", detail: "공격적인 빌드를 위한 붉은 금속 반지", image: "assets/unity/accessory-blood-ring.png", source: "BloodRing.asset" },
+      { name: "다이아몬드 반지", type: "ACCESSORY · RING", detail: "청색 보석을 세공한 장비 액세서리", image: "assets/unity/accessory-diamond-ring.png", source: "DiamondRing.asset" }
+    ],
+    memories: [
+      { name: "섬광 베기", type: "가벼움 · 피해 3", detail: "빠른 시작", image: "assets/unity/memory-flash-slash.png", source: "ICON_SmallAttack.png" },
+      { name: "질풍 이연격", type: "가벼움 · 피해 3", detail: "빠르게 두 번 베기", image: "assets/unity/memory-double-slash.png", source: "ICON_SmallAttack2.png" },
+      { name: "찌르는 빛", type: "가벼움 · 피해 4", detail: "전방 찌르기", image: "assets/unity/memory-thrust-light.png", source: "ICON_SmallAttack3.png" },
+      { name: "가로지르는 검", type: "보통 · 피해 5", detail: "교차 베기", image: "assets/unity/memory-cross-cut.png", source: "ICON_SmallAttack4.png" },
+      { name: "낙하 일섬", type: "무거움 · 피해 8", detail: "마무리 · 대지", image: "assets/unity/memory-falling-light.png", source: "ICON_HeavyTurnAttack.png" },
+      { name: "폭주하는 기억", type: "무거움 · 피해 12", detail: "마무리 · 전격 · 5연격", image: "assets/unity/memory-overdrive.png", source: "ICON_TripleAttack.png" }
     ],
     monsters: [
-      { name: "구울", type: "GHOUL", image: "assets/unity/monster-ghoul.png", source: "GhoulEnemy.prefab" },
-      { name: "고블린", type: "GOBLIN", image: "assets/unity/monster-goblin.png", source: "GoblinEnemy.prefab" },
-      { name: "골렘", type: "GOLEM", image: "assets/unity/monster-golem.png", source: "GolemEnemy.prefab" },
-      { name: "오우거", type: "OGRE", image: "assets/unity/monster-ogre.png", source: "OgreEnemy.prefab" },
-      { name: "오크", type: "ORC", image: "assets/unity/monster-orc.png", source: "OrcEnemy.prefab" },
-      { name: "스켈레톤 메이지", type: "SKELETON", image: "assets/unity/monster-skeleton-mage.png", source: "Skeleton_MageEnemy.prefab" },
-      { name: "스켈레톤 전사", type: "SKELETON", image: "assets/unity/monster-skeleton-warrior.png", source: "Skeleton_WarriorEnemy.prefab" },
-      { name: "트롤", type: "TROLL", image: "assets/unity/monster-troll.png", source: "TrollEnemy.prefab" },
-      { name: "좀비", type: "ZOMBIE", image: "assets/unity/monster-zombie.png", source: "Zombie_MEnemy.prefab" }
+      { name: "구울", type: "GHOUL · 일반 · 근접", group: "surface", rank: "일반", detail: "거친 움직임으로 표층을 배회하는 뒤틀린 생물", image: "assets/unity/monster-ghoul.png", source: "GhoulEnemy.prefab" },
+      { name: "고블린", type: "GOBLIN · 일반 · 근접", group: "surface", rank: "일반", detail: "숲 표층에서 가장 먼저 마주치는 기본 적", image: "assets/unity/monster-goblin.png", source: "GoblinEnemy.prefab" },
+      { name: "골렘", type: "GOLEM · 네임드", group: "depths", rank: "네임드", detail: "HP 500 · 공격 30 · 슈퍼아머 6히트", image: "assets/unity/monster-golem.png", source: "GolemEnemy.prefab" },
+      { name: "오우거", type: "OGRE · 네임드", group: "depths", rank: "네임드", detail: "HP 400 · 공격 35 · 슈퍼아머 5히트", image: "assets/unity/monster-ogre.png", source: "OgreEnemy.prefab" },
+      { name: "오크", type: "ORC · 네임드 · 방패", group: "village", rank: "네임드", detail: "HP 300 · 정면 방어와 가드 브레이크", image: "assets/unity/monster-orc.png", source: "OrcEnemy.prefab" },
+      { name: "스켈레톤 메이지", type: "SKELETON · 네임드", group: "depths", rank: "네임드", detail: "불·얼음·전기 중 하나를 무작위 시전", image: "assets/unity/monster-skeleton-mage.png", source: "Skeleton_MageEnemy.prefab" },
+      { name: "스켈레톤 전사", type: "SKELETON · 일반 · 방패", group: "village", rank: "일반", detail: "정면 완전 방어 · 4회 가드 브레이크", image: "assets/unity/monster-skeleton-warrior.png", source: "Skeleton_WarriorEnemy.prefab" },
+      { name: "트롤", type: "TROLL · 일반 · 대형", group: "depths", rank: "일반", detail: "깊은 곳을 지키는 육중한 근접 크리처", image: "assets/unity/monster-troll.png", source: "TrollEnemy.prefab" },
+      { name: "좀비", type: "ZOMBIE · 일반 · 근접", group: "surface", rank: "일반", detail: "느린 걸음으로 전진하며 공간을 압박", image: "assets/unity/monster-zombie.png", source: "Zombie_MEnemy.prefab" }
     ]
   },
   game: {
@@ -103,6 +118,41 @@ window.PROJECT_DATA = {
       { act: "ACT I", chapters: "1~3장", title: "물든 숲", detail: "밝은 개활지와 뒤틀린 짐승 사이에서 먼저 지나간 누군가의 무기와 기억을 발견한다. 주인공은 그 흔적이 자신의 것임을 모른다.", place: "숲 개활지 · 짐승과 나무", tone: "green" },
       { act: "ACT II", chapters: "4~6장", title: "삼켜진 마을", detail: "오늘 아침 향하던 마을이 수십 년째 폐허였다는 사실이 드러난다. 시신은 없고, 여울목과 미로 아래에서 사람의 흔적이 짙어진다.", place: "폐허 마을 · 여울목 · 미로", tone: "amber" },
       { act: "ACT III", chapters: "7~9장", title: "뿌리 아래", detail: "뿌리가 뽑혀 나온 땅의 상처로 내려간다. 상대는 짐승에서 사람이었던 것으로 바뀌고, 가장 깊은 곳에서 늙은 수호자와 마주한다.", place: "심층 던전 · 원형 미로 · 마지막 장", tone: "violet" }
+    ],
+    novel: [
+      { chapter: "서막", title: "검은 안개가 텐트를 에워쌌다", paragraphs: [
+        "모험가는 해가 지기 전에 마을에 도착할 생각이었다. 수레에는 곡물 자루와 약병, 녹슨 농기구를 고칠 쇳조각이 실려 있었다. 이름난 용사도, 숲의 비밀을 쫓는 학자도 아닌 그는 그저 약속한 물자를 제때 가져다주는 사람이었다.",
+        "그러나 밤이 내려앉자 길은 갑자기 끝났다. 텐트 밖으로 나온 그는 검은 안개가 나무 사이가 아니라 세상의 경계처럼 서 있는 것을 보았다. 안개에 손을 뻗을 때마다 차가운 벽이 밀어냈고, 수레를 돌리려 하자 땅속에서 솟은 거대한 뿌리가 돌아갈 길을 찢어 놓았다.",
+        "텐트 곁에는 무덤이 네 개 있었다. 모두 오래된 것처럼 이끼가 끼어 있었지만 흙은 방금 덮은 듯 축축했다. 그는 묘비의 글자를 읽지 못했다. 비에 지워진 것이 아니라, 글씨가 자신의 손과 너무 닮아 눈이 뜻을 거부하는 것 같았다."
+      ]},
+      { chapter: "1장–3장", title: "물든 숲", paragraphs: [
+        "아침은 오지 않았다. 안개 너머의 하늘은 밝아졌지만 숲은 밤의 색을 놓지 않았다. 고블린과 구울, 이름을 잃은 짐승들이 길가를 서성였고, 나무껍질 아래에서는 검은 핏줄 같은 것이 꿈틀거렸다.",
+        "쓰러진 적의 곁에는 낯선 무기와 공격의 기억이 남았다. 검을 쥐자 몸이 먼저 움직였다. 한 번 베고, 몸을 낮춰 파고들고, 마지막 일격을 내리꽂는 순서를 손과 발이 알고 있었다. 배운 적 없는 동작이었다. 기억은 새로 얻은 지식이 아니라 오래전에 잃어버린 습관처럼 돌아왔다.",
+        "숲은 그가 익숙해질 때마다 길을 바꾸었다. 전날 있던 개울이 사라지고 빈터 한가운데 뿌리의 벽이 생겼다. 그래도 텐트와 수레, 네 개의 무덤만은 움직이지 않았다. 그 변하지 않는 것들이 오히려 가장 불길했다."
+      ]},
+      { chapter: "4장–6장", title: "삼켜진 마을", paragraphs: [
+        "물소리가 들리는 여울목부터 안개는 더 무거워졌다. 오래 머물수록 물은 불어나 발목을 삼켰고, 길가의 짐승 대신 녹슨 검을 든 뼈와 썩지 못한 사람들이 나타났다. 그들은 길을 막는 것이 아니라 그를 더 깊은 곳으로 몰아가는 것처럼 싸웠다.",
+        "마침내 나무 사이로 지붕이 보였다. 그가 오늘 아침까지 물자를 전하려 했던 마을이었다. 하지만 우물은 말라 있었고 집의 들보에는 수십 년 묵은 균열이 가득했다. 밥 짓는 연기도, 기다리던 사람도, 시신조차 없었다. 마을 전체가 어느 날 한꺼번에 땅 아래로 끌려간 듯 비어 있었다.",
+        "무너진 집에서 발견한 기록에는 마을을 지키는 수호자의 이야기가 적혀 있었다. 재난이 닥칠 때마다 뿌리가 벽이 되었고, 짐승이 내려올 때마다 숲이 길을 감췄다. 마지막 장에는 같은 문장이 여러 번 덧씌워져 있었다. ‘우리를 지키려는 힘이 우리를 놓아주지 않는다.’"
+      ]},
+      { chapter: "7장–9장", title: "뿌리 아래", paragraphs: [
+        "마을 뒤편에서 뿌리 하나가 땅을 들어 올리고 있었다. 모험가가 가까이 다가가자 그것은 문처럼 갈라졌다. 아래로 이어지는 길은 동굴이 아니었다. 나무의 속, 거대한 생명의 상처 안으로 들어가는 통로였다.",
+        "깊이 내려갈수록 벽에 박힌 물건들이 눈에 띄었다. 아이의 신발, 부러진 괭이, 마을 문장이 새겨진 방패. 수호자는 사람들을 버리지 않았다. 너무 오래, 너무 강하게 보호하려다 마을 전체를 자신의 안쪽으로 끌어안은 것이다. 그 안에서 사람은 뼈가 되고 흙이 되고, 끝내 숲을 지키는 괴물이 되었다.",
+        "그제야 모험가는 자신이 숲을 지나온 것이 아니라 처음부터 수호자의 몸속을 걸어왔음을 알았다. 안개는 침입자를 가두기 위한 저주가 아니었다. 늙은 수호자의 몸에서 새어 나오는 고통이었고, 되풀이되는 길은 마지막 남은 의지가 후계자를 찾기 위해 만든 시험이었다."
+      ]},
+      { chapter: "마지막 장", title: "잠들지 않는 뿌리", paragraphs: [
+        "가장 깊은 원형의 방에서 오래된 수호자가 눈을 떴다. 땅을 찢고 솟은 뿌리들은 팔처럼 휘둘렸고, 검은 안개가 호흡마다 쏟아졌다. 처음 두 번의 격돌에서 모험가는 통제되지 않는 힘의 파편과 싸웠다.",
+        "마지막 순간, 수호자의 가슴에서 빛나는 코어가 드러났다. 방어가 무너진 것이 아니었다. 남아 있던 의지가 스스로 문을 연 것이었다. 칼끝이 코어에 닿자 숲 전체가 긴 숨을 내쉬었다. 그 일격은 살해가 아니라, 너무 오래 깨어 있던 존재에게 허락된 잠이었다."
+      ]},
+      { chapter: "종장", title: "물자를 내려놓는 사람", paragraphs: [
+        "안개가 걷힌 뒤 모험가는 수레로 돌아왔다. 무덤은 다섯 개가 되어 있었다. 그는 묻지 않았다. 몇 번이나 이 길을 걸었는지, 몇 번이나 자신의 무덤을 만들었는지 이제는 알 것 같았기 때문이다.",
+        "그는 빈 마을까지 수레를 끌고 가 약속한 물자를 한 집씩 나누어 내려놓았다. 받을 사람은 없었지만, 그 일만큼은 끝내고 싶었다. 마지막 자루를 내려놓았을 때 숲 아래에서 새 뿌리가 천천히 움직였다.",
+        "모험가는 수호자가 있던 자리에 앉았다. 힘은 저주처럼 이어진 것이 아니라 누군가가 다음 사람을 위해 버티겠다고 선택한 약속으로 넘어왔다. 먼 훗날 또 다른 수레가 숲길에 들어오면, 이제 그가 안개와 길과 괴물 사이에서 후계자를 기다리게 될 것이다."
+      ]},
+      { chapter: "반복의 규칙", title: "숲은 장소를 기억하고, 사람은 몸으로 기억한다", paragraphs: [
+        "죽음 뒤 숲은 장소를 다시 세우지만 완전히 같은 모양으로 만들지는 못한다. 흩어진 기억은 길 위에 놓이고, 모험가의 성장은 일부만 몸에 남는다. 골드는 사라져도 무덤과 상처, 손이 기억한 콤보의 순서는 다음 밤까지 이어진다.",
+        "그러므로 반복은 실패의 취소가 아니다. 한 세대가 다음 세대에게 자리를 넘기는 연습이다. 더 어려운 숲에서 기다리는 보스는 이전 난이도에서 끝까지 살아남은 주인공이며, 여섯 번째 계승까지 이어지는 수호자들은 타락한 잔재가 아니라 누군가를 지키기 위해 남은 사람들이다."
+      ]}
     ],
     clues: [
       { label: "기록자", detail: "동물이 흘린 기억을 다시 길에 놓고 은신처와 무덤을 만든다." },
@@ -127,10 +177,10 @@ window.PROJECT_DATA = {
     ],
     memories: [
       { name: "섬광 베기", weight: "가벼움", damage: 3, trait: "빠른 시작", rarity: "NORMAL" },
-      { name: "연무 일섬", weight: "보통", damage: 5, trait: "돌진", rarity: "RARE" },
-      { name: "꿰뚫기", weight: "보통", damage: 6, trait: "상승", rarity: "RARE" },
+      { name: "질풍 이연격", weight: "가벼움", damage: 3, trait: "빠르게 두 번 베기", rarity: "NORMAL" },
+      { name: "찌르는 빛", weight: "가벼움", damage: 4, trait: "전방 찌르기", rarity: "NORMAL" },
+      { name: "가로지르는 검", weight: "보통", damage: 5, trait: "교차 베기", rarity: "RARE" },
       { name: "낙하 일섬", weight: "무거움", damage: 8, trait: "마무리 · 대지", rarity: "RARE" },
-      { name: "폭풍 가르기", weight: "무거움", damage: 9, trait: "마무리 · 화염", rarity: "EPIC" },
       { name: "폭주하는 기억", weight: "무거움", damage: 12, trait: "마무리 · 전격 · 5연격", rarity: "UNIQUE" }
     ],
     depths: [

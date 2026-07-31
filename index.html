@@ -46,9 +46,10 @@
     <span class="subnav-title">GAME BIBLE</span>
     <a class="subnav-link active" href="#game-bible" data-view="game-bible">개요</a>
     <a class="subnav-link" href="#story" data-view="story">스토리</a>
-    <a class="subnav-link" href="#arsenal" data-view="arsenal">무기 · 기억</a>
-    <a class="subnav-link" href="#bestiary" data-view="bestiary">몬스터</a>
-    <a class="subnav-link" href="#boss" data-view="boss">보스</a>
+    <a class="subnav-link" href="#weapons" data-view="weapons">무기</a>
+    <a class="subnav-link" href="#memories" data-view="memories">기억</a>
+    <a class="subnav-link" href="#armor" data-view="armor">방어구</a>
+    <a class="subnav-link" href="#bestiary" data-view="bestiary">몬스터 · 보스</a>
   </nav>
 
   <main class="main-content">
@@ -103,37 +104,21 @@
 
         <section class="section-block page-section" id="story" data-page="story" hidden>
           <div class="section-heading">
-            <div><p class="section-kicker">NARRATIVE · 9 CHAPTERS</p><h2>한 번의 밤, 세 개의 하강</h2></div>
-            <span class="section-note">매 런은 같은 이야기의 다른 판본</span>
+            <div><p class="section-kicker">THE COMPLETE STORY · 9 CHAPTERS</p><h2>잠들지 않는 숲</h2></div>
+            <span class="section-note">상세스토리 원문을 바탕으로 엮은 하나의 이야기</span>
           </div>
           <figure class="section-visual story-visual panel">
             <img src="assets/concept/story-forest.png" alt="검은 안개가 뒤덮은 숲길에서 폐허 마을로 향하는 짐수레 모험가" loading="lazy">
-            <figcaption><strong>한 번의 밤</strong><span>검은 안개가 숲을 다시 세우기 전, 폐허 마을로 물자를 운반한다.</span></figcaption>
+            <figcaption><strong>한 번의 밤, 끝나지 않는 길</strong><span>마을에 물자를 전하려던 평범한 모험가는 검은 안개 속에서 오래된 수호자의 마지막 부탁을 듣는다.</span></figcaption>
           </figure>
-          <div class="story-grid" id="storyActs"></div>
-          <div class="story-bottom-grid">
-            <article class="panel clue-panel">
-              <p class="section-kicker">ENVIRONMENTAL STORYTELLING</p>
-              <h3>나무는 말하지 못한다. 대신 장면을 배치한다.</h3>
-              <div class="clue-list" id="storyClues"></div>
-            </article>
-            <details class="panel ending-card">
-              <summary><span>결말 · 세대의 인계</span><small>스포일러 펼치기</small></summary>
-              <div>
-                <p>보스를 쓰러뜨리는 것은 살해가 아니라 해방이다. 안개가 걷힌 뒤 주인공은 원래 하려던 대로 폐허가 된 마을에 물자를 내려놓는다.</p>
-                <blockquote>그는 수호자의 자리에 앉는다. 그리고 다음 세대의 수레가 숲으로 들어온다.</blockquote>
-                <span class="ending-rule">하드 N단계의 보스 = 하드 N−1단계의 주인공</span>
-              </div>
-            </details>
-          </div>
+          <article class="novel-reader panel" id="storyNovel" aria-label="잠들지 않는 숲 상세 이야기"></article>
         </section>
 
-        <section class="section-block page-section" id="arsenal" data-page="arsenal" hidden>
+        <section class="section-block page-section" id="weapons" data-page="weapons" hidden>
           <div class="section-heading">
-            <div><p class="section-kicker">ARSENAL · MEMORY COMBAT</p><h2>무기가 콤보의 문법을 바꾼다</h2></div>
+            <div><p class="section-kicker">ARSENAL · WEAPONS</p><h2>무기가 콤보의 문법을 바꾼다</h2></div>
             <div class="filter-tabs" id="weaponFilters" role="tablist" aria-label="무기 계열 필터">
               <button class="active" data-filter="all" type="button">전체</button>
-              <button data-filter="dagger" type="button">단검</button>
               <button data-filter="longsword" type="button">장검</button>
               <button data-filter="greatsword" type="button">대검</button>
             </div>
@@ -146,15 +131,52 @@
             </div>
             <div class="unity-asset-grid" id="weaponAssetGallery"></div>
           </article>
-          <div class="weapon-grid" id="weaponGrid"></div>
-          <article class="memory-lab panel">
+        </section>
+
+        <section class="section-block page-section" id="memories" data-page="memories" hidden>
+          <div class="section-heading">
+            <div><p class="section-kicker">MEMORY COMBAT · ORDERED COMBO</p><h2>기억의 순서가 곧 나만의 콤보</h2></div>
+            <span class="section-note">실제 프로젝트 공격 기억 아이콘</span>
+          </div>
+          <article class="memory-lab panel memory-intro">
             <div class="memory-copy">
               <p class="section-kicker">22 ATTACK MEMORIES</p>
-              <h3>기억의 순서가 곧 나만의 콤보</h3>
+              <h3>가볍게 열고, 이어 붙이고, 무겁게 끝낸다</h3>
               <p>가볍게 흐름을 열고, 상승과 돌진으로 연결한 뒤, 무거운 마무리에 누적 배율을 쏟아붓는다. 피격 시 흐름은 흩어지지만 회피 캔슬 중에는 유지된다.</p>
               <div class="flow-formula"><span>가벼움</span><i>→</i><span>상승 · 돌진</span><i>→</i><span>마무리</span><b>×1.0 → ×1.8</b></div>
             </div>
-            <div class="memory-grid" id="memoryGrid"></div>
+            <div class="memory-rule-copy">
+              <strong>장착한 순서 그대로 발동</strong>
+              <p>사망 후 다음 런에서도 보유 기억과 장착 순서를 유지합니다. 락온 중에는 Q로 지정한 대상을 우선해 돌진 공격을 연결합니다.</p>
+            </div>
+          </article>
+          <article class="asset-showcase panel">
+            <div class="asset-showcase-heading">
+              <div><p class="section-kicker">IN-GAME ICONS</p><h3>구현된 공격 기억</h3></div>
+              <span>AttackCombo ScriptableData · UI Icon</span>
+            </div>
+            <div class="unity-asset-grid memory-assets" id="memoryAssetGallery"></div>
+          </article>
+        </section>
+
+        <section class="section-block page-section" id="armor" data-page="armor" hidden>
+          <div class="section-heading">
+            <div><p class="section-kicker">EQUIPMENT · ARMOR & ACCESSORIES</p><h2>방어구와 액세서리</h2></div>
+            <span class="section-note">액세서리는 방어구 분류에 통합</span>
+          </div>
+          <article class="asset-showcase panel">
+            <div class="asset-showcase-heading">
+              <div><p class="section-kicker">ARMOR</p><h3>현재 프로젝트 방어구</h3></div>
+              <span>Player Prefab · Equipment Assets</span>
+            </div>
+            <div class="unity-asset-grid" id="armorAssetGallery"></div>
+          </article>
+          <article class="asset-showcase panel accessory-showcase">
+            <div class="asset-showcase-heading">
+              <div><p class="section-kicker">ACCESSORIES</p><h3>액세서리</h3></div>
+              <span>RingData · 장비 슬롯</span>
+            </div>
+            <div class="unity-asset-grid accessory-assets" id="accessoryAssetGallery"></div>
           </article>
         </section>
 
@@ -177,11 +199,11 @@
             </div>
             <div class="unity-asset-grid monster-assets" id="monsterAssetGallery"></div>
           </article>
-          <div class="monster-grid" id="monsterGrid"></div>
-        </section>
-
-        <section class="section-block page-section" id="boss" data-page="boss" hidden>
-          <div class="boss-showcase panel">
+          <div class="boss-divider">
+            <span>FINAL ENCOUNTER</span>
+            <i aria-hidden="true"></i>
+          </div>
+          <div class="boss-showcase panel" id="boss">
             <div class="boss-copy">
               <p class="section-kicker">FINAL BOSS · CHAPTER 9</p>
               <span class="boss-status">설계·레퍼런스 확정 · 모델 제작 대기</span>
