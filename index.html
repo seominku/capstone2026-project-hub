@@ -46,6 +46,7 @@
     <span class="subnav-title">GAME BIBLE</span>
     <a class="subnav-link active" href="#game-bible" data-view="game-bible">개요</a>
     <a class="subnav-link" href="#story" data-view="story">스토리</a>
+    <a class="subnav-link" href="#systems" data-view="systems">시스템</a>
     <a class="subnav-link" href="#weapons" data-view="weapons">무기</a>
     <a class="subnav-link" href="#memories" data-view="memories">기억</a>
     <a class="subnav-link" href="#armor" data-view="armor">방어구</a>
@@ -112,6 +113,36 @@
             <figcaption><strong>한 번의 밤, 끝나지 않는 길</strong><span>마을에 물자를 전하려던 평범한 모험가는 검은 안개 속에서 오래된 수호자의 마지막 부탁을 듣는다.</span></figcaption>
           </figure>
           <article class="novel-reader panel" id="storyNovel" aria-label="잠들지 않는 숲 상세 이야기"></article>
+        </section>
+
+        <section class="section-block page-section" id="systems" data-page="systems" hidden>
+          <div class="section-heading system-page-heading">
+            <div><p class="section-kicker">PROJECT SYSTEMS · COMPLETE GUIDE</p><h2>프로젝트를 움직이는 모든 시스템</h2></div>
+            <span class="section-note">기획 문서 · 구현 명세 · 현재 상태를 한곳에 통합</span>
+          </div>
+          <article class="system-manifesto panel">
+            <div>
+              <p class="section-kicker">HOW ROOTBOUND WORKS</p>
+              <h3>기억을 조립하고, 위험과 거래하며,<br>죽음 너머로 다음 세대를 준비한다.</h3>
+              <p>이 페이지는 게임 규칙과 실제 구현 상태를 함께 설명합니다. 시스템 이름만 나열하지 않고 무엇을 입력하면 어떤 규칙을 거쳐 무엇이 남는지, 아직 어떤 작업이 필요한지까지 연결합니다.</p>
+            </div>
+            <div class="system-overview" id="systemOverview" aria-label="시스템 현황 요약"></div>
+          </article>
+          <article class="system-browser panel">
+            <div class="system-toolbar">
+              <label class="catalog-search system-search">
+                <span>시스템 검색</span>
+                <input id="systemSearch" type="search" placeholder="기억, 세이브, 계약, 락온 등" autocomplete="off">
+              </label>
+              <div class="filter-tabs system-filters" id="systemFilters" role="tablist" aria-label="시스템 대분류 필터"></div>
+            </div>
+            <div class="system-result-bar"><strong id="systemResultCount">전체 시스템</strong><span>카드를 열면 세부 규칙과 수치를 볼 수 있습니다.</span></div>
+            <div class="system-catalog" id="systemCatalog"></div>
+          </article>
+          <article class="system-docs panel">
+            <div><p class="section-kicker">SOURCE DOCUMENTS</p><h3>더 깊이 확인하기</h3><p>각 시스템 카드는 현재 프로젝트 문서를 기준으로 정리했습니다.</p></div>
+            <div class="system-doc-links" id="systemDocLinks"></div>
+          </article>
         </section>
 
         <section class="section-block page-section" id="weapons" data-page="weapons" hidden>
@@ -367,6 +398,8 @@
 
   <script src="data.js"></script>
   <script src="catalog-data.js"></script>
+  <script src="story-data.js"></script>
+  <script src="systems-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

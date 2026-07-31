@@ -3,6 +3,8 @@
 
   const data = window.PROJECT_DATA;
   const catalog = window.EQUIPMENT_CATALOG || { weapons: [], armor: [], memories: [] };
+  const storyContent = window.STORY_CONTENT || { novel: data.game.novel, clues: data.game.clues };
+  const systems = window.PROJECT_SYSTEMS || { categories: [], items: [], sources: [] };
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const escapeHtml = (value = "") => String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[char]));
@@ -17,15 +19,18 @@
   let armorFilter = "all";
   let armorQuery = "";
   let armorPage = 1;
+  let systemFilter = "all";
+  let systemQuery = "";
   let monsterFilter = "all";
   const armorPageSize = 24;
-  const gameViews = new Set(["game-bible", "story", "weapons", "memories", "armor", "bestiary"]);
+  const gameViews = new Set(["game-bible", "story", "systems", "weapons", "memories", "armor", "bestiary"]);
   const routeMap = {
     "": "game-bible",
     "#overview": "game-bible",
     "#world": "game-bible",
     "#game-bible": "game-bible",
     "#story": "story",
+    "#systems": "systems",
     "#arsenal": "weapons",
     "#weapons": "weapons",
     "#memories": "memories",
@@ -167,12 +172,59 @@
         <h3>잠들지 않는 숲</h3>
         <p>검은 안개 속에서 되풀이되는 한 짐꾼과 오래된 수호자의 이야기</p>
       </header>
-      ${data.game.novel.map((chapter, index) => `
+      ${storyContent.novel.map((chapter, index) => `
         <section class="novel-chapter">
           <div class="novel-chapter-heading"><span>${escapeHtml(chapter.chapter)}</span><h4>${escapeHtml(chapter.title)}</h4></div>
           <div class="novel-prose">${chapter.paragraphs.map((paragraph, paragraphIndex) => `<p class="${index === 0 && paragraphIndex === 0 ? "novel-opener" : ""}">${escapeHtml(paragraph)}</p>`).join("")}</div>
         </section>`).join("")}
+      <aside class="story-lore-notes">
+        <div class="story-lore-heading"><span>STORY KEYS</span><h4>이 이야기에서 놓치면 안 되는 단서</h4></div>
+        <div class="story-lore-grid">${storyContent.clues.map((clue, index) => `
+          <article><span>${String(index + 1).padStart(2, "0")}</span><div><strong>${escapeHtml(clue.label)}</strong><p>${escapeHtml(clue.detail)}</p></div></article>`).join("")}</div>
+      </aside>
       <footer class="novel-ending"><span>END OF ONE GENERATION</span><strong>그리고 다음 수레가 숲으로 들어온다.</strong></footer>`;
+  }
+
+  function renderSystems() {
+    const normalized = systemQuery.trim().toLowerCase();
+    const visible = systems.items.filter((item) => {
+      const matchesGroup = systemFilter === "all" || item.group === systemFilter;
+      const searchText = `${item.title} ${item.kicker} ${item.summary} ${item.status} ${item.rules.join(" ")} ${item.metrics.map((metric) => `${metric.label} ${metric.value}`).join(" ")}`.toLowerCase();
+      return matchesGroup && (!normalized || searchText.includes(normalized));
+    });
+    const counts = systems.items.reduce((map, item) => ({ ...map, [item.statusKey]: (map[item.statusKey] || 0) + 1 }), {});
+
+    $("#systemOverview").innerHTML = [
+      { label: "등록 시스템", value: systems.items.length, detail: `${systems.categories.length}개 대분류` },
+      { label: "구현 완료", value: counts.done || 0, detail: "현재 플레이 가능" },
+      { label: "보완·QA", value: (counts.partial || 0) + (counts.qa || 0), detail: "동작 후 검증 포함" },
+      { label: "제작 대기", value: counts.planned || 0, detail: "보스·엔딩 핵심" }
+    ].map((item) => `<div><span>${escapeHtml(item.label)}</span><strong>${item.value}</strong><small>${escapeHtml(item.detail)}</small></div>`).join("");
+
+    $("#systemFilters").innerHTML = [
+      { id: "all", name: "전체" },
+      ...systems.categories
+    ].map((category) => `<button class="${systemFilter === category.id ? "active" : ""}" data-filter="${escapeHtml(category.id)}" type="button">${escapeHtml(category.name)}</button>`).join("");
+
+    $("#systemResultCount").textContent = `${visible.length} / ${systems.items.length}개 시스템`;
+    $("#systemCatalog").innerHTML = systems.categories.map((category) => {
+      const items = visible.filter((item) => item.group === category.id);
+      if (!items.length) return "";
+      return `<section class="system-group tone-${escapeHtml(category.tone)}">
+        <header class="system-group-heading"><span>${escapeHtml(category.name)}</span><div><h3>${escapeHtml(category.name)}</h3><p>${escapeHtml(category.description)}</p></div><b>${items.length}</b></header>
+        <div class="system-card-grid">${items.map((item) => `
+          <article class="system-card" id="system-${escapeHtml(item.id)}">
+            <header><div><small>${escapeHtml(item.kicker)}</small><h4>${escapeHtml(item.title)}</h4></div><span class="system-status status-${escapeHtml(item.statusKey)}">${escapeHtml(item.status)}</span></header>
+            <p>${escapeHtml(item.summary)}</p>
+            <div class="system-metrics">${item.metrics.map((metric) => `<span><small>${escapeHtml(metric.label)}</small><strong>${escapeHtml(metric.value)}</strong></span>`).join("")}</div>
+            <details><summary>세부 규칙 보기 <span>+</span></summary><ul>${item.rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ul></details>
+            <a class="system-source" href="${encodeURI(item.source)}">원본 문서에서 확인 ↗</a>
+          </article>`).join("")}</div>
+      </section>`;
+    }).join("") || `<div class="empty-state catalog-empty">검색 조건에 맞는 시스템이 없습니다.</div>`;
+
+    $("#systemDocLinks").innerHTML = systems.sources.map((source, index) => `
+      <a href="${encodeURI(source.path)}"><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(source.label)}</strong><i>↗</i></a>`).join("");
   }
 
   function renderUnityAssetGallery(selector, items) {
@@ -365,6 +417,16 @@
       renderArmor();
       $("#armorCatalogGrid").scrollIntoView({ behavior: "smooth", block: "start" });
     });
+    $("#systemFilters").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button) return;
+      systemFilter = button.dataset.filter;
+      renderSystems();
+    });
+    $("#systemSearch").addEventListener("input", (event) => {
+      systemQuery = event.currentTarget.value;
+      renderSystems();
+    });
     $("#monsterFilters").addEventListener("click", (event) => {
       const button = event.target.closest("button[data-filter]");
       if (!button) return;
@@ -383,6 +445,7 @@
       ...data.changes.map((item) => ({ group: "변경", title: item.title, detail: item.detail, href: "#changes" })),
       ...data.documents.map((item) => ({ group: "문서", title: item.title, detail: item.description, href: item.path })),
       ...data.game.story.map((item) => ({ group: "스토리", title: item.title, detail: `${item.chapters} · ${item.detail}`, href: "#story" })),
+      ...systems.items.map((item) => ({ group: "시스템", title: item.title, detail: `${item.status} · ${item.summary}`, href: "#systems" })),
       ...catalog.weapons.map((item) => ({ group: "무기", title: item.name, detail: `${item.className} · 공격력 ${item.damage}`, href: "#weapons" })),
       ...catalog.memories.map((item) => ({ group: "기억", title: item.name, detail: `${item.weightName} · 피해 ${item.damage} · ${item.tag}`, href: "#memories" })),
       ...catalog.armor.map((item) => ({ group: "방어구", title: item.name, detail: `${item.slotName} · ${item.collection}`, href: "#armor" })),
@@ -450,6 +513,7 @@
   renderDocuments();
   renderGameBible();
   renderStory();
+  renderSystems();
   renderWeapons();
   renderMemories();
   renderArmor();
