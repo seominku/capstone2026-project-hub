@@ -162,12 +162,21 @@
       <div class="clue-item"><span>${String(index + 1).padStart(2, "0")}</span><div><strong>${escapeHtml(clue.label)}</strong><p>${escapeHtml(clue.detail)}</p></div></div>`).join("");
   }
 
+  function renderUnityAssetGallery(selector, items) {
+    $(selector).innerHTML = items.map((item) => `
+      <a class="unity-asset-card" href="${encodeURI(item.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(item.source)}">
+        <span class="unity-asset-image"><img src="${encodeURI(item.image)}" alt="Unity 프로젝트의 ${escapeHtml(item.name)} 프리팹 렌더" loading="lazy" width="768" height="768"></span>
+        <span class="unity-asset-copy"><small>${escapeHtml(item.type)}</small><strong>${escapeHtml(item.name)}</strong><i>확대 보기 ↗</i></span>
+      </a>`).join("");
+  }
+
   function renderArsenal() {
     $("#weaponFamilies").innerHTML = data.game.weaponFamilies.map((family) => `
       <article class="weapon-family panel tone-${family.tone}">
         <span>${escapeHtml(family.name)}</span><strong>${escapeHtml(family.role)}</strong>
         <div><b>${escapeHtml(family.fit)}</b><small>${escapeHtml(family.opposite)}</small></div>
       </article>`).join("");
+    renderUnityAssetGallery("#weaponAssetGallery", [...data.unityAssets.armor, ...data.unityAssets.weapons]);
     const weapons = data.game.weapons.filter((weapon) => weaponFilter === "all" || weapon.family === weaponFilter);
     $("#weaponGrid").innerHTML = weapons.map((weapon) => `
       <article class="weapon-card panel family-${weapon.family}">
@@ -191,6 +200,7 @@
         <span>${escapeHtml(depth.chapters)}</span><strong>${escapeHtml(depth.title)}</strong><small>${escapeHtml(depth.detail)}</small>
         ${index < data.game.depths.length - 1 ? '<i aria-hidden="true">→</i>' : ""}
       </article>`).join("");
+    renderUnityAssetGallery("#monsterAssetGallery", data.unityAssets.monsters);
     const monsters = data.game.monsters.filter((monster) => {
       if (monsterFilter === "all") return true;
       if (monsterFilter === "elite") return monster.rank === "네임드";

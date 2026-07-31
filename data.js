@@ -1,7 +1,7 @@
 window.PROJECT_DATA = {
   meta: {
     name: "잠들지 않는 숲",
-    updated: "2026-07-31",
+    updated: "2026-08-01",
     scene: "Arena",
     unity: "6.3.10f1",
     total: 122,
@@ -58,6 +58,31 @@ window.PROJECT_DATA = {
     { title: "구현 명세 01~04", description: "맵·전투·AI·죽음 규칙", type: "SPEC", path: "pdf/구현명세서.pdf", accent: "violet" },
     { title: "현황·체크리스트 PDF", description: "공유용 최신 고정본", type: "PDF", path: "pdf/Capstone2026_프로젝트현황_체크리스트_2026-07-31.pdf", accent: "cyan" }
   ],
+  unityAssets: {
+    weapons: [
+      { name: "한손검 1형", type: "ONE-HANDED", image: "assets/unity/weapon-onehand-1.png", source: "PF_GS_OneHand_1_1.prefab" },
+      { name: "한손검 3형", type: "ONE-HANDED", image: "assets/unity/weapon-onehand-3.png", source: "PF_GS_OneHand_3_1.prefab" },
+      { name: "대검 1형", type: "GREAT SWORD", image: "assets/unity/weapon-great-1.png", source: "PF_GS_Great_1_1.prefab" },
+      { name: "대검 4형", type: "GREAT SWORD", image: "assets/unity/weapon-great-4.png", source: "PF_GS_Great_4_1.prefab" },
+      { name: "황금 장식검", type: "UNIQUE", image: "assets/unity/weapon-gold.png", source: "PF_Sword_Gold.prefab" },
+      { name: "그림자 검", type: "UNLOCK", image: "assets/unity/weapon-shadow.png", source: "PF_Sword_Shadow.prefab" },
+      { name: "서리 검", type: "UNLOCK", image: "assets/unity/weapon-frost.png", source: "PF_Sword_Frost.prefab" }
+    ],
+    armor: [
+      { name: "기본 방어구 세트", type: "ARMOR", image: "assets/unity/armor-player-default.png", source: "Player.prefab" }
+    ],
+    monsters: [
+      { name: "구울", type: "GHOUL", image: "assets/unity/monster-ghoul.png", source: "GhoulEnemy.prefab" },
+      { name: "고블린", type: "GOBLIN", image: "assets/unity/monster-goblin.png", source: "GoblinEnemy.prefab" },
+      { name: "골렘", type: "GOLEM", image: "assets/unity/monster-golem.png", source: "GolemEnemy.prefab" },
+      { name: "오우거", type: "OGRE", image: "assets/unity/monster-ogre.png", source: "OgreEnemy.prefab" },
+      { name: "오크", type: "ORC", image: "assets/unity/monster-orc.png", source: "OrcEnemy.prefab" },
+      { name: "스켈레톤 메이지", type: "SKELETON", image: "assets/unity/monster-skeleton-mage.png", source: "Skeleton_MageEnemy.prefab" },
+      { name: "스켈레톤 전사", type: "SKELETON", image: "assets/unity/monster-skeleton-warrior.png", source: "Skeleton_WarriorEnemy.prefab" },
+      { name: "트롤", type: "TROLL", image: "assets/unity/monster-troll.png", source: "TrollEnemy.prefab" },
+      { name: "좀비", type: "ZOMBIE", image: "assets/unity/monster-zombie.png", source: "Zombie_MEnemy.prefab" }
+    ]
+  },
   game: {
     facts: [
       { value: "9", label: "이야기 장", detail: "3막 구조" },

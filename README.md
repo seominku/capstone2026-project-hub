@@ -21,6 +21,8 @@ Capstone2026의 세계관, 스토리, 무기, 기억, 몬스터, 보스와 프�
 - 원본 문서: `docs/`
 - 공유용 PDF: `pdf/`
 - 공유 미리보기 이미지: `og.png`
+- 세계관·보스 콘셉트 이미지: `assets/concept/`
+- Unity 프리팹 캡처: `assets/unity/` (몬스터 9종, 무기 7종, 기본 방어구 1종)
 - 피드백: 브라우저 `localStorage`의 `rootbound-project-feedback-v1`
 
 프로젝트 원본 Markdown이 바뀌면 `data.js`의 지표·작업 요약과 `docs/` 복사본을 함께 갱신합니다.
