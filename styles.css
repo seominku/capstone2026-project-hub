@@ -806,7 +806,7 @@ body::before {
 body {
   background-color: #dfe8df;
   background-image:
-    linear-gradient(180deg, rgba(226, 235, 227, .76) 0%, rgba(238, 243, 238, .88) 42%, rgba(238, 243, 238, .94) 100%),
+    linear-gradient(180deg, rgba(226, 235, 227, .61) 0%, rgba(238, 243, 238, .73) 42%, rgba(238, 243, 238, .79) 100%),
     url("assets/background/camp-forest.png");
   background-position: center top, center top;
   background-size: cover, cover;
