@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b100d">
+  <meta name="theme-color" content="#f4f7f3">
   <meta name="description" content="잠들지 않는 숲의 세계관, 스토리, 무기, 기억, 몬스터, 보스와 개발 현황을 한곳에서 보는 ROOTBOUND 프로젝트 허브">
   <meta property="og:type" content="website">
   <meta property="og:title" content="잠들지 않는 숲 · ROOTBOUND Project Hub">
@@ -18,60 +18,42 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar" aria-label="주요 메뉴">
-      <a class="brand" href="#overview" aria-label="프로젝트 허브 홈">
-        <span class="brand-mark" aria-hidden="true"><span></span></span>
-        <span><strong>ROOTBOUND</strong><small>PROJECT HUB</small></span>
-      </a>
+  <header class="topbar">
+    <a class="brand top-brand" href="#game-bible" data-view="game-bible" aria-label="게임 바이블 홈">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span><strong>ROOTBOUND</strong><small>PROJECT HUB</small></span>
+    </a>
+    <button class="mobile-menu" type="button" aria-label="상단 메뉴 열기" aria-controls="primaryNav" aria-expanded="false">☰</button>
+    <nav class="primary-nav" id="primaryNav" aria-label="상단 주요 메뉴">
+      <a class="top-nav-link active" href="#game-bible" data-view="game-bible">GAME BIBLE</a>
+      <a class="top-nav-link" href="#development" data-view="development">개발 현황</a>
+      <a class="top-nav-link" href="#quality" data-view="quality">로드맵 · QA</a>
+      <a class="top-nav-link" href="#documents" data-view="documents">문서</a>
+      <a class="top-nav-link" href="#feedback" data-view="feedback">피드백</a>
+    </nav>
+    <div class="top-actions">
+      <label class="search-box">
+        <span aria-hidden="true">⌕</span>
+        <input id="globalSearch" type="search" placeholder="전체 검색" autocomplete="off">
+        <kbd>Ctrl K</kbd>
+      </label>
+      <a class="figma-link" href="https://www.figma.com/design/VUbSL5UgQZpliih2Y8Ud8a?node-id=1-2" target="_blank" rel="noreferrer">Figma ↗</a>
+      <button class="primary-button" id="openFeedback" type="button">+ 피드백</button>
+    </div>
+  </header>
 
-      <nav class="side-nav">
-        <p class="nav-label">PROJECT</p>
-        <a class="nav-link active" href="#overview"><span>⌂</span>개요</a>
-        <a class="nav-link" href="#sprint"><span>◫</span>현재 작업</a>
-        <a class="nav-link" href="#roadmap"><span>⌁</span>로드맵</a>
-        <a class="nav-link" href="#quality"><span>◇</span>버그 · QA</a>
-        <p class="nav-label">GAME BIBLE</p>
-        <a class="nav-link" href="#world"><span>◉</span>세계관</a>
-        <a class="nav-link" href="#story"><span>⌇</span>스토리</a>
-        <a class="nav-link" href="#arsenal"><span>†</span>무기 · 기억</a>
-        <a class="nav-link" href="#bestiary"><span>♜</span>몬스터</a>
-        <a class="nav-link" href="#boss"><span>✧</span>보스</a>
-        <p class="nav-label">KNOWLEDGE</p>
-        <a class="nav-link" href="#changes"><span>↻</span>변경이력</a>
-        <a class="nav-link" href="#documents"><span>▤</span>문서</a>
-        <a class="nav-link" href="#feedback"><span>✦</span>피드백</a>
-      </nav>
+  <nav class="game-subnav" id="gameSubnav" aria-label="게임 바이블 세부 메뉴">
+    <span class="subnav-title">GAME BIBLE</span>
+    <a class="subnav-link active" href="#game-bible" data-view="game-bible">개요</a>
+    <a class="subnav-link" href="#story" data-view="story">스토리</a>
+    <a class="subnav-link" href="#arsenal" data-view="arsenal">무기 · 기억</a>
+    <a class="subnav-link" href="#bestiary" data-view="bestiary">몬스터</a>
+    <a class="subnav-link" href="#boss" data-view="boss">보스</a>
+  </nav>
 
-      <div class="sidebar-card">
-        <span class="live-dot"></span>
-        <div><strong>Unity 연결됨</strong><small>Arena · Play Mode</small></div>
-      </div>
-
-      <div class="sidebar-footer">
-        <div class="avatar">민</div>
-        <div><strong>구민서</strong><small>Solo Developer</small></div>
-        <button class="icon-button" type="button" title="설정 준비 중" aria-label="설정">•••</button>
-      </div>
-    </aside>
-
-    <main class="main-content">
-      <header class="topbar">
-        <button class="mobile-menu" type="button" aria-label="메뉴 열기">☰</button>
-        <div class="breadcrumbs"><span>CAPSTONE 2026</span><i>/</i><strong>PROJECT OVERVIEW</strong></div>
-        <div class="top-actions">
-          <label class="search-box">
-            <span aria-hidden="true">⌕</span>
-            <input id="globalSearch" type="search" placeholder="스토리, 무기, 몬스터, 작업 검색" autocomplete="off">
-            <kbd>Ctrl K</kbd>
-          </label>
-          <a class="figma-link" href="https://www.figma.com/design/VUbSL5UgQZpliih2Y8Ud8a?node-id=1-2" target="_blank" rel="noreferrer">Figma 초안 ↗</a>
-          <button class="primary-button" id="openFeedback" type="button">+ 피드백 남기기</button>
-        </div>
-      </header>
-
+  <main class="main-content">
       <div class="page-wrap">
-        <section class="hero" id="overview">
+        <section class="hero page-section" id="overview" data-page="game-bible">
           <div>
             <p class="eyebrow">DARK FANTASY ROGUELITE · UNITY 6</p>
             <h1>잠들지 않는 숲</h1>
@@ -92,7 +74,7 @@
           </div>
         </section>
 
-        <section class="stats-grid" aria-label="프로젝트 핵심 지표">
+        <section class="stats-grid page-section" id="development" data-page="development" aria-label="프로젝트 핵심 지표" hidden>
           <article class="progress-card panel">
             <div class="progress-ring" id="progressRing"><span id="progressValue">0%</span></div>
             <div>
@@ -104,7 +86,7 @@
           <div class="metric-cards" id="metricCards"></div>
         </section>
 
-        <section class="section-block game-bible" id="world">
+        <section class="section-block game-bible page-section" id="world" data-page="game-bible">
           <div class="section-heading">
             <div><p class="section-kicker">GAME BIBLE · WORLD</p><h2>검은 안개가 숲을 다시 세운다</h2></div>
             <a class="text-link" href="docs/상세스토리.md">전체 스토리 문서 ↗</a>
@@ -124,7 +106,7 @@
           </article>
         </section>
 
-        <section class="section-block" id="story">
+        <section class="section-block page-section" id="story" data-page="story" hidden>
           <div class="section-heading">
             <div><p class="section-kicker">NARRATIVE · 9 CHAPTERS</p><h2>한 번의 밤, 세 개의 하강</h2></div>
             <span class="section-note">매 런은 같은 이야기의 다른 판본</span>
@@ -147,7 +129,7 @@
           </div>
         </section>
 
-        <section class="section-block" id="arsenal">
+        <section class="section-block page-section" id="arsenal" data-page="arsenal" hidden>
           <div class="section-heading">
             <div><p class="section-kicker">ARSENAL · MEMORY COMBAT</p><h2>무기가 콤보의 문법을 바꾼다</h2></div>
             <div class="filter-tabs" id="weaponFilters" role="tablist" aria-label="무기 계열 필터">
@@ -170,7 +152,7 @@
           </article>
         </section>
 
-        <section class="section-block" id="bestiary">
+        <section class="section-block page-section" id="bestiary" data-page="bestiary" hidden>
           <div class="section-heading">
             <div><p class="section-kicker">BESTIARY · THE TWISTED</p><h2>깊어질수록 짐승에서 사람으로</h2></div>
             <div class="filter-tabs" id="monsterFilters" role="tablist" aria-label="몬스터 깊이 필터">
@@ -185,7 +167,7 @@
           <div class="monster-grid" id="monsterGrid"></div>
         </section>
 
-        <section class="section-block" id="boss">
+        <section class="section-block page-section" id="boss" data-page="boss" hidden>
           <div class="boss-showcase panel">
             <div class="boss-copy">
               <p class="section-kicker">FINAL BOSS · CHAPTER 9</p>
@@ -204,7 +186,7 @@
           <div class="boss-phase-grid" id="bossPhases"></div>
         </section>
 
-        <section class="section-block" id="sprint">
+        <section class="section-block page-section" id="sprint" data-page="development" hidden>
           <div class="section-heading">
             <div><p class="section-kicker">NOW BUILDING</p><h2>현재 작업</h2></div>
             <div class="filter-tabs" id="taskFilters" role="tablist" aria-label="작업 상태 필터">
@@ -217,7 +199,7 @@
           <div class="task-grid" id="taskGrid"></div>
         </section>
 
-        <section class="section-block" id="roadmap">
+        <section class="section-block page-section" id="roadmap" data-page="quality" hidden>
           <div class="section-heading">
             <div><p class="section-kicker">MILESTONES</p><h2>완성으로 가는 길</h2></div>
             <span class="section-note">매달 말 시연 가능한 빌드 유지</span>
@@ -225,7 +207,7 @@
           <div class="roadmap panel" id="roadmapTrack"></div>
         </section>
 
-        <section class="dashboard-grid" id="quality">
+        <section class="dashboard-grid page-section" id="quality" data-page="quality" hidden>
           <article class="panel qa-panel">
             <div class="panel-heading">
               <div><p class="section-kicker">QUALITY GATE</p><h2>버그 · QA</h2></div>
@@ -247,7 +229,7 @@
           </article>
         </section>
 
-        <section class="dashboard-grid" id="changes">
+        <section class="dashboard-grid page-section" id="changes" data-page="development" hidden>
           <article class="panel change-panel">
             <div class="panel-heading">
               <div><p class="section-kicker">RECENT ACTIVITY</p><h2>최근 변경사항</h2></div>
@@ -269,7 +251,7 @@
           </article>
         </section>
 
-        <section class="section-block" id="documents">
+        <section class="section-block page-section" id="documents" data-page="documents" hidden>
           <div class="section-heading">
             <div><p class="section-kicker">SOURCE OF TRUTH</p><h2>프로젝트 문서</h2></div>
             <a class="text-link" href="docs/README.md">문서 인덱스 열기 ↗</a>
@@ -277,7 +259,7 @@
           <div class="document-grid" id="documentGrid"></div>
         </section>
 
-        <section class="section-block feedback-section" id="feedback">
+        <section class="section-block feedback-section page-section" id="feedback" data-page="feedback" hidden>
           <div class="section-heading">
             <div><p class="section-kicker">LOCAL FEEDBACK BOARD</p><h2>피드백</h2></div>
             <p class="section-note">이 브라우저에 자동 저장됩니다.</p>
@@ -296,8 +278,7 @@
           <span>문서와 구현이 다르면 실제 코드·에셋·플레이 결과를 우선합니다.</span>
         </footer>
       </div>
-    </main>
-  </div>
+  </main>
 
   <div class="search-results" id="searchResults" hidden></div>
 

@@ -13,6 +13,57 @@
   let taskFilter = "all";
   let weaponFilter = "all";
   let monsterFilter = "all";
+  const gameViews = new Set(["game-bible", "story", "arsenal", "bestiary", "boss"]);
+  const routeMap = {
+    "": "game-bible",
+    "#overview": "game-bible",
+    "#world": "game-bible",
+    "#game-bible": "game-bible",
+    "#story": "story",
+    "#arsenal": "arsenal",
+    "#bestiary": "bestiary",
+    "#boss": "boss",
+    "#development": "development",
+    "#sprint": "development",
+    "#changes": "development",
+    "#quality": "quality",
+    "#roadmap": "quality",
+    "#documents": "documents",
+    "#feedback": "feedback"
+  };
+
+  function resolveView(hash = window.location.hash) {
+    return routeMap[hash.toLowerCase()] || "game-bible";
+  }
+
+  function showView(view, options = {}) {
+    const { updateHistory = false, hash = `#${view}`, smooth = true } = options;
+    const nextView = [...gameViews, "development", "quality", "documents", "feedback"].includes(view) ? view : "game-bible";
+
+    $$(".page-section").forEach((section) => {
+      section.hidden = section.dataset.page !== nextView;
+    });
+    $$(".top-nav-link").forEach((link) => {
+      const active = link.dataset.view === "game-bible" ? gameViews.has(nextView) : link.dataset.view === nextView;
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+    $$(".subnav-link").forEach((link) => {
+      const active = link.dataset.view === nextView;
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+
+    const subnav = $("#gameSubnav");
+    subnav.hidden = !gameViews.has(nextView);
+    $("#primaryNav").classList.remove("open");
+    $(".mobile-menu").setAttribute("aria-expanded", "false");
+
+    if (updateHistory) window.history.pushState({ view: nextView }, "", hash);
+    if (smooth) window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   function loadFeedback() {
     try {
@@ -284,20 +335,37 @@
     document.addEventListener("keydown", (event) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); input.focus(); input.select(); }
     });
+    results.addEventListener("click", (event) => {
+      const link = event.target.closest("a[href^='#']");
+      if (!link) return;
+      event.preventDefault();
+      input.value = "";
+      results.hidden = true;
+      showView(resolveView(link.getAttribute("href")), { updateHistory: true, hash: link.getAttribute("href") });
+    });
     document.addEventListener("click", (event) => { if (!event.target.closest(".search-box") && !event.target.closest(".search-results")) results.hidden = true; });
   }
 
   function setupNavigation() {
-    const links = $$(".nav-link");
-    const sections = links.map((link) => $(link.getAttribute("href"))).filter(Boolean);
-    const observer = new IntersectionObserver((entries) => {
-      const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (!current) return;
-      links.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === `#${current.target.id}`));
-    }, { rootMargin: "-18% 0px -65%", threshold: [0.05, 0.25] });
-    sections.forEach((section) => observer.observe(section));
-    $(".mobile-menu").addEventListener("click", () => $(".sidebar").classList.toggle("open"));
-    links.forEach((link) => link.addEventListener("click", () => $(".sidebar").classList.remove("open")));
+    $$("[data-view]").forEach((link) => link.addEventListener("click", (event) => {
+      event.preventDefault();
+      showView(link.dataset.view, { updateHistory: true, hash: link.getAttribute("href") });
+    }));
+
+    $(".mobile-menu").addEventListener("click", (event) => {
+      event.stopPropagation();
+      const nav = $("#primaryNav");
+      const open = nav.classList.toggle("open");
+      event.currentTarget.setAttribute("aria-expanded", String(open));
+    });
+    document.addEventListener("click", (event) => {
+      if (event.target.closest("#primaryNav") || event.target.closest(".mobile-menu")) return;
+      $("#primaryNav").classList.remove("open");
+      $(".mobile-menu").setAttribute("aria-expanded", "false");
+    });
+    window.addEventListener("popstate", () => showView(resolveView(), { smooth: false }));
+    window.addEventListener("hashchange", () => showView(resolveView(), { smooth: false }));
+    showView(resolveView(), { smooth: false });
   }
 
   renderOverview();
