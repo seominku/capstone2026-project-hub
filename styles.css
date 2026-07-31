@@ -801,3 +801,30 @@ body::before {
   .system-card > header { flex-direction: column; }
   .system-metrics { grid-template-columns: 1fr; }
 }
+
+/* Forest camp page backdrop */
+body {
+  background-color: #dfe8df;
+  background-image:
+    linear-gradient(180deg, rgba(226, 235, 227, .76) 0%, rgba(238, 243, 238, .88) 42%, rgba(238, 243, 238, .94) 100%),
+    url("assets/background/camp-forest.png");
+  background-position: center top, center top;
+  background-size: cover, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 78% 4%, rgba(255, 198, 112, .09), transparent 25%),
+    radial-gradient(circle at 15% 65%, rgba(25, 78, 43, .09), transparent 38%),
+    linear-gradient(90deg, rgba(16, 40, 23, .055), transparent 24%, transparent 76%, rgba(16, 40, 23, .055));
+}
+
+@media (max-width: 700px) {
+  body {
+    background-position: center top, 52% top;
+    background-size: cover, auto 100vh;
+    background-attachment: scroll, fixed;
+  }
+}
