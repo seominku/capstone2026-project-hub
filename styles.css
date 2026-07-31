@@ -528,6 +528,81 @@ body::before {
   .unity-asset-copy { min-height: 62px; padding: 9px 10px 10px; }
 }
 
+/* Development progress pair */
+.stats-grid.has-asset-progress { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.stats-grid.has-asset-progress .metric-cards { grid-column: 1 / -1; }
+.asset-progress-card { border-color: rgba(184, 130, 43, .24); background: linear-gradient(135deg, #fff, #fffaf0); }
+.asset-progress-ring { background: radial-gradient(circle 39px, #fff 97%, transparent 100%), conic-gradient(var(--amber) var(--progress), #e9e1d2 0); box-shadow: inset 0 0 0 1px rgba(184, 130, 43, .18), 0 0 28px rgba(184, 130, 43, .1); }
+.asset-progress-card .section-kicker { color: #a16d21; }
+.asset-progress-card h2 { color: #3d3121; }
+.asset-progress-link { display: inline-flex; margin-top: 11px; color: #98651c; font-size: 11px; font-weight: 800; }
+.asset-progress-link:hover { color: #74480a; }
+
+@media (max-width: 900px) {
+  .stats-grid.has-asset-progress { grid-template-columns: 1fr; }
+}
+
+/* Unity asset replacement checklist */
+.asset-swap-section { padding-top: 26px; }
+.asset-swap-heading { align-items: flex-end; }
+.asset-swap-heading .section-note { max-width: 640px; margin-top: 8px; }
+.asset-swap-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.asset-swap-stat { display: grid; grid-template-columns: 1fr auto auto; align-items: baseline; gap: 4px; min-height: 106px; padding: 20px; border: 1px solid #d7e2d9; border-radius: 13px; background: #fff; box-shadow: 0 8px 22px rgba(28, 62, 38, .06); }
+.asset-swap-stat span { grid-column: 1 / -1; color: #66776c; font-size: 10px; font-weight: 800; letter-spacing: .05em; }
+.asset-swap-stat strong { color: #244c32; font-family: Georgia, serif; font-size: 34px; }
+.asset-swap-stat small { color: #89958d; font-size: 10px; }
+.asset-swap-stat.tone-need-new strong { color: #a16b1d; }
+.asset-swap-stat.tone-placeholder strong { color: #527b60; }
+.asset-swap-stat.tone-done strong { color: #278455; }
+.asset-swap-audit { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.audit-card { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 20px; }
+.audit-card > span { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 14px; color: #2d7548; background: #e8f4eb; font-family: Georgia, serif; font-size: 25px; }
+.audit-card.removed > span { color: #94642a; background: #f8eedf; }
+.audit-card strong { color: #263e2f; font-size: 13px; }
+.audit-card p { margin: 6px 0 0; color: #6a786e; font-size: 11px; line-height: 1.7; }
+.asset-swap-browser { padding: 22px; }
+.asset-swap-toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.asset-swap-filters { flex-wrap: wrap; }
+.asset-swap-search { flex: 0 1 280px; }
+.asset-swap-result { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 18px 0 11px; color: #79857d; font-size: 10px; }
+.asset-swap-result strong { color: #285e3c; font-size: 13px; }
+.asset-swap-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.asset-swap-item { min-width: 0; overflow: hidden; display: grid; grid-template-columns: 90px minmax(0, 1fr); border: 1px solid #d8e2da; border-radius: 11px; background: #fff; }
+.asset-swap-item-head { display: grid; align-content: start; gap: 8px; padding: 16px 12px; background: #f2f6f2; }
+.asset-swap-category { color: #285b3b; font-size: 10px; font-weight: 900; }
+.asset-swap-status { color: #77847b; font-size: 8px; font-weight: 800; }
+.status-need-new .asset-swap-item-head { background: #fbf1df; }
+.status-need-new .asset-swap-category { color: #93601a; }
+.status-done .asset-swap-item-head { background: #e8f5ec; }
+.asset-swap-item-copy { min-width: 0; padding: 15px 16px; }
+.asset-swap-item-copy small { color: #7c8b81; font-size: 8px; font-weight: 800; letter-spacing: .04em; }
+.asset-swap-item-copy h3 { margin: 5px 0 7px; color: #213729; font-size: 13px; }
+.asset-swap-item-copy p { min-height: 31px; margin: 0 0 10px; color: #68776d; font-size: 10px; line-height: 1.55; }
+.asset-swap-item-copy code { display: block; overflow: hidden; color: #4b6b56; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.asset-swap-empty { grid-column: 1 / -1; padding: 45px 20px; }
+
+@media (max-width: 900px) {
+  .asset-swap-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .asset-swap-toolbar { align-items: stretch; flex-direction: column; }
+  .asset-swap-search { flex-basis: auto; }
+}
+
+@media (max-width: 700px) {
+  .asset-swap-heading { align-items: stretch; }
+  .asset-swap-audit, .asset-swap-list { grid-template-columns: 1fr; }
+  .asset-swap-browser { padding: 15px; }
+  .asset-swap-result span { display: none; }
+}
+
+@media (max-width: 430px) {
+  .asset-swap-summary { grid-template-columns: 1fr 1fr; }
+  .asset-swap-stat { min-height: 92px; padding: 15px; }
+  .asset-swap-stat strong { font-size: 28px; }
+  .audit-card { grid-template-columns: 50px 1fr; padding: 15px; }
+  .audit-card > span { width: 46px; height: 46px; font-size: 20px; }
+  .asset-swap-item { grid-template-columns: 74px minmax(0, 1fr); }
+}
+
 /* Game Bible detail pages */
 .novel-reader {
   max-width: 940px;

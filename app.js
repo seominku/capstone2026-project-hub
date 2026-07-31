@@ -5,15 +5,21 @@
   const catalog = window.EQUIPMENT_CATALOG || { weapons: [], armor: [], memories: [] };
   const storyContent = window.STORY_CONTENT || { novel: data.game.novel, clues: data.game.clues };
   const systems = window.PROJECT_SYSTEMS || { categories: [], items: [], sources: [] };
+  const assetSwap = window.ASSET_SWAP_DATA || { summary: { total: 0, placeholder: 0, needNew: 0, done: 0, categories: {}, audit: { added: [], removed: [] } }, items: [] };
   const systemPdfSources = {
+    "docs/README.md": "pdf/문서_인덱스.pdf",
+    "docs/프로젝트_현황.md": "pdf/프로젝트_현황.pdf",
+    "docs/변경이력.md": "pdf/변경이력.pdf",
+    "docs/기획서.md": "pdf/기획서.pdf",
     "docs/상세기획서.md": "pdf/상세기획서.pdf",
     "docs/상세스토리.md": "pdf/상세스토리.pdf",
     "docs/spec/01_절차적맵생성.md": "pdf/구현명세_01_절차적맵생성.pdf",
     "docs/spec/02_전투판정_흐름시스템.md": "pdf/구현명세_02_전투판정_흐름시스템.pdf",
     "docs/spec/03_적AI_FSM.md": "pdf/구현명세_03_적AI_FSM.pdf",
     "docs/spec/04_세이브_죽음규칙.md": "pdf/구현명세_04_세이브_죽음규칙.pdf",
-    "docs/보스_설계_프롬프트.md": "pdf/상세기획서.pdf",
-    "docs/개발_체크리스트.md": "pdf/Capstone2026_프로젝트현황_체크리스트_2026-07-31.pdf"
+    "docs/보스_설계_프롬프트.md": "pdf/보스_설계_프롬프트.pdf",
+    "docs/개발_체크리스트.md": "pdf/개발_체크리스트.pdf",
+    "docs/에셋_교체_체크리스트.md": "pdf/에셋_교체_체크리스트.pdf"
   };
   const systemSourceHref = (path) => systemPdfSources[path] || path;
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -22,6 +28,9 @@
 
   const activeTotal = data.meta.total - data.meta.cut;
   const progress = Math.round((data.meta.done / activeTotal) * 100);
+  const assetProgress = assetSwap.summary.total
+    ? Math.round((assetSwap.summary.done / assetSwap.summary.total) * 100)
+    : 0;
   const feedbackKey = "rootbound-project-feedback-v1";
   let feedback = loadFeedback();
   let taskFilter = "all";
@@ -33,6 +42,8 @@
   let systemFilter = "all";
   let systemQuery = "";
   let monsterFilter = "all";
+  let assetSwapFilter = "need-new";
+  let assetSwapQuery = "";
   const armorPageSize = 24;
   const gameViews = new Set(["game-bible", "story", "systems", "weapons", "memories", "armor", "bestiary"]);
   const routeMap = {
@@ -49,6 +60,7 @@
     "#bestiary": "bestiary",
     "#boss": "bestiary",
     "#development": "development",
+    "#asset-swap": "development",
     "#sprint": "development",
     "#changes": "development",
     "#quality": "quality",
@@ -107,6 +119,9 @@
     $("#progressValue").textContent = `${progress}%`;
     $("#progressRing").style.setProperty("--progress", `${progress * 3.6}deg`);
     $("#progressCaption").textContent = `완료 ${data.meta.done} · 대기 ${data.meta.todo} · 제외 ${data.meta.cut}`;
+    $("#assetProgressValue").textContent = `${assetProgress}%`;
+    $("#assetProgressRing").style.setProperty("--progress", `${assetProgress * 3.6}deg`);
+    $("#assetProgressCaption").textContent = `완료 ${assetSwap.summary.done} · 신규 제작 ${assetSwap.summary.needNew} · 교체 대기 ${assetSwap.summary.placeholder}`;
     $("#metricCards").innerHTML = data.metrics.map((metric) => `
       <article class="metric-card panel tone-${metric.tone}">
         <span class="metric-icon">${metric.icon}</span>
@@ -157,10 +172,44 @@
 
   function renderDocuments() {
     $("#documentGrid").innerHTML = data.documents.map((doc) => `
-      <a class="document-card panel accent-${doc.accent}" href="${encodeURI(doc.path)}">
+      <a class="document-card panel accent-${doc.accent}" href="${encodeURI(systemSourceHref(doc.path))}" target="_blank" rel="noreferrer">
         <span class="doc-type">${doc.type}</span><span class="doc-arrow">↗</span>
         <h3>${escapeHtml(doc.title)}</h3><p>${escapeHtml(doc.description)}</p>
       </a>`).join("");
+  }
+
+  function renderAssetSwap() {
+    const summary = assetSwap.summary;
+    const query = assetSwapQuery.trim().toLowerCase();
+    const items = assetSwap.items.filter((item) => {
+      const matchesFilter = assetSwapFilter === "all"
+        || item.statusKey === assetSwapFilter
+        || item.categoryKey === assetSwapFilter;
+      const haystack = `${item.title} ${item.tag} ${item.path} ${item.description}`.toLowerCase();
+      return matchesFilter && (!query || haystack.includes(query));
+    });
+    const counts = [
+      ["전체", summary.total, "total"],
+      ["교체 대기", summary.placeholder, "placeholder"],
+      ["신규 제작", summary.needNew, "need-new"],
+      ["완료", summary.done, "done"]
+    ];
+    $("#assetSwapSummary").innerHTML = counts.map(([label, value, tone]) => `
+      <article class="asset-swap-stat tone-${tone}"><span>${label}</span><strong>${value}</strong><small>개</small></article>`).join("");
+    $("#assetSwapResult").innerHTML = `<strong>${items.length}개</strong><span>표시 중 · UI ${summary.categories.UI || 0} · 사운드 ${summary.categories["사운드"] || 0} · 모델 ${summary.categories["모델"] || 0}</span>`;
+    $("#assetSwapList").innerHTML = items.length ? items.map((item) => `
+      <article class="asset-swap-item status-${item.statusKey}">
+        <div class="asset-swap-item-head">
+          <span class="asset-swap-category">${escapeHtml(item.category)}</span>
+          <span class="asset-swap-status">${escapeHtml(item.status)}</span>
+        </div>
+        <div class="asset-swap-item-copy">
+          <small>${escapeHtml(item.tag)}</small>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.description || "교체 대상 에셋")}</p>
+          <code>${escapeHtml(item.path)}</code>
+        </div>
+      </article>`).join("") : `<div class="empty-state asset-swap-empty">조건에 맞는 에셋이 없습니다.</div>`;
   }
 
   function renderGameBible() {
@@ -445,6 +494,17 @@
       $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
       renderBestiary();
     });
+    $("#assetSwapFilters").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-filter]");
+      if (!button) return;
+      assetSwapFilter = button.dataset.filter;
+      $$("button", event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
+      renderAssetSwap();
+    });
+    $("#assetSwapSearch").addEventListener("input", (event) => {
+      assetSwapQuery = event.currentTarget.value;
+      renderAssetSwap();
+    });
   }
 
   function searchIndex(query) {
@@ -454,7 +514,7 @@
       ...data.tasks.map((item) => ({ group: "작업", title: item.title, detail: `${item.id} · ${item.detail}`, href: "#sprint" })),
       ...data.qa.map((item) => ({ group: "QA", title: item.title, detail: `${item.id} · ${item.status}`, href: "#quality" })),
       ...data.changes.map((item) => ({ group: "변경", title: item.title, detail: item.detail, href: "#changes" })),
-      ...data.documents.map((item) => ({ group: "문서", title: item.title, detail: item.description, href: item.path })),
+      ...data.documents.map((item) => ({ group: "문서", title: item.title, detail: item.description, href: systemSourceHref(item.path) })),
       ...data.game.story.map((item) => ({ group: "스토리", title: item.title, detail: `${item.chapters} · ${item.detail}`, href: "#story" })),
       ...systems.items.map((item) => ({ group: "시스템", title: item.title, detail: `${item.status} · ${item.summary}`, href: "#systems" })),
       ...catalog.weapons.map((item) => ({ group: "무기", title: item.name, detail: `${item.className} · 공격력 ${item.damage}`, href: "#weapons" })),
@@ -462,6 +522,7 @@
       ...catalog.armor.map((item) => ({ group: "방어구", title: item.name, detail: `${item.slotName} · ${item.collection}`, href: "#armor" })),
       ...data.unityAssets.accessories.map((item) => ({ group: "액세서리", title: item.name, detail: item.detail, href: "#armor" })),
       ...data.unityAssets.monsters.map((item) => ({ group: "몬스터", title: item.name, detail: `${item.type} · ${item.detail}`, href: "#bestiary" })),
+      ...assetSwap.items.map((item) => ({ group: "에셋 교체", title: item.title, detail: `${item.status} · ${item.category} · ${item.path}`, href: "#asset-swap" })),
       ...data.game.boss.phases.map((item) => ({ group: "보스", title: item.title, detail: `${item.phase} · ${item.pattern}`, href: "#boss" }))
     ].filter((item) => `${item.title} ${item.detail}`.toLowerCase().includes(normalized)).slice(0, 8);
   }
@@ -472,7 +533,7 @@
     const update = () => {
       const found = searchIndex(input.value);
       if (!input.value.trim()) { results.hidden = true; return; }
-      results.innerHTML = found.length ? found.map((item) => `<a href="${encodeURI(item.href)}"><span>${item.group}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.detail)}</small></a>`).join("") : `<div class="empty-state">검색 결과가 없습니다.</div>`;
+      results.innerHTML = found.length ? found.map((item) => `<a href="${encodeURI(item.href)}"${item.href.toLowerCase().endsWith(".pdf") ? ' target="_blank" rel="noreferrer"' : ""}><span>${item.group}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.detail)}</small></a>`).join("") : `<div class="empty-state">검색 결과가 없습니다.</div>`;
       results.hidden = false;
       const box = input.closest(".search-box").getBoundingClientRect();
       results.style.top = `${box.bottom + 8}px`;
@@ -530,6 +591,7 @@
   renderArmor();
   renderBestiary();
   renderBoss();
+  renderAssetSwap();
   renderFeedback();
   setupFeedback();
   setupFilters();

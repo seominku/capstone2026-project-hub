@@ -15,7 +15,7 @@ window.PROJECT_DATA = {
     { label: "완료 작업", value: "91", detail: "Unity 체크리스트", tone: "green", icon: "✓" },
     { label: "대기 작업", value: "27", detail: "P0~P5 전체", tone: "amber", icon: "↗" },
     { label: "콘솔 오류", value: "0", detail: "경고 1건", tone: "cyan", icon: "◇" },
-    { label: "문서 원본", value: "12", detail: "Markdown 동기화", tone: "violet", icon: "▤" }
+    { label: "문서 원본", value: "13", detail: "Markdown 동기화", tone: "violet", icon: "▤" }
   ],
   tasks: [
     { id: "story-chapter-label", title: "챕터 표기 통일", detail: "B1~B9를 1장~9장으로 교체", priority: "P0", status: "todo", tag: "스토리", risk: true },
@@ -42,6 +42,7 @@ window.PROJECT_DATA = {
     { id: "regression-drop-readability", title: "등급 드랍 원거리 가독성", status: "실맵 QA", severity: "P2", tone: "cyan" }
   ],
   changes: [
+    { time: "23:20", group: "ASSET", title: "에셋 교체 체크리스트 동기화", detail: "프로젝트 재스캔으로 42개 추가·확장, 5개 제외·대체, 총 128개 정리", tone: "amber" },
     { time: "22:37", group: "DOCUMENT", title: "프로젝트 문서 전체 동기화", detail: "현황·체크리스트·변경이력 신설, spec 01~04 갱신", tone: "violet" },
     { time: "21:50", group: "COMBAT", title: "무기 15종 그립·칼날 방향 정비", detail: "GoldSword 파지 위치와 비대칭 칼날 방향 보정", tone: "green" },
     { time: "20:42", group: "VFX", title: "장비 등급 드랍 표현 완성", detail: "지면 기둥·원형·나선 레이어, 무기만 부유", tone: "cyan" },
@@ -51,6 +52,7 @@ window.PROJECT_DATA = {
   documents: [
     { title: "프로젝트 현황", description: "현재 완성도, 위험, 다음 순서", type: "STATUS", path: "docs/프로젝트_현황.md", accent: "green" },
     { title: "개발 체크리스트", description: "작업 ID와 완료 조건", type: "CHECKLIST", path: "docs/개발_체크리스트.md", accent: "amber" },
+    { title: "에셋 교체 체크리스트", description: "UI·사운드·모델 교체 현황 128개", type: "ASSET", path: "docs/에셋_교체_체크리스트.md", accent: "amber" },
     { title: "변경이력", description: "최근 구현·버그 수정 기록", type: "CHANGELOG", path: "docs/변경이력.md", accent: "violet" },
     { title: "1페이지 기획서", description: "컨셉과 핵심 규칙", type: "CONCEPT", path: "docs/기획서.md", accent: "cyan" },
     { title: "상세기획서", description: "전체 시스템·콘텐츠 구성", type: "SYSTEM", path: "docs/상세기획서.md", accent: "green" },
