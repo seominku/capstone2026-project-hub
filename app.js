@@ -45,7 +45,7 @@
   let assetSwapFilter = "need-new";
   let assetSwapQuery = "";
   const armorPageSize = 24;
-  const gameViews = new Set(["game-bible", "story", "systems", "weapons", "memories", "armor", "bestiary"]);
+  const gameViews = new Set(["game-bible", "story", "systems", "ui-ux", "weapons", "memories", "armor", "bestiary"]);
   const routeMap = {
     "": "game-bible",
     "#overview": "game-bible",
@@ -53,6 +53,7 @@
     "#game-bible": "game-bible",
     "#story": "story",
     "#systems": "systems",
+    "#ui-ux": "ui-ux",
     "#arsenal": "weapons",
     "#weapons": "weapons",
     "#memories": "memories",

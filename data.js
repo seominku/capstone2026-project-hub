@@ -1,21 +1,21 @@
 window.PROJECT_DATA = {
   meta: {
     name: "잠들지 않는 숲",
-    updated: "2026-08-01",
-    scene: "Arena",
+    updated: "2026-08-24",
+    scene: "ForestPath",
     unity: "6.3.10f1",
-    total: 122,
-    done: 91,
+    total: 125,
+    done: 94,
     todo: 27,
     cut: 4,
     errors: 0,
-    warnings: 1
+    warnings: 0
   },
   metrics: [
-    { label: "완료 작업", value: "91", detail: "Unity 체크리스트", tone: "green", icon: "✓" },
+    { label: "완료 작업", value: "94", detail: "웹 통합 체크리스트", tone: "green", icon: "✓" },
     { label: "대기 작업", value: "27", detail: "P0~P5 전체", tone: "amber", icon: "↗" },
-    { label: "콘솔 오류", value: "0", detail: "경고 1건", tone: "cyan", icon: "◇" },
-    { label: "문서 원본", value: "13", detail: "Markdown 동기화", tone: "violet", icon: "▤" }
+    { label: "콘솔 오류", value: "0", detail: "최신 UI 회귀 경고 0건", tone: "cyan", icon: "◇" },
+    { label: "문서 원본", value: "14", detail: "2026.08.24 동기화", tone: "violet", icon: "▤" }
   ],
   tasks: [
     { id: "story-chapter-label", title: "챕터 표기 통일", detail: "B1~B9를 1장~9장으로 교체", priority: "P0", status: "todo", tag: "스토리", risk: true },
@@ -23,14 +23,22 @@ window.PROJECT_DATA = {
     { id: "lockon-strafe-fix", title: "락온 스트레이프 수정", detail: "A/D 원형 횡이동, S 후진과 애니메이션 블렌드 정합", priority: "P1", status: "todo", tag: "전투", risk: true },
     { id: "boss-model", title: "보스 모델 · 리깅", detail: "잠들지 않는 뿌리의 반고정형 본체와 코어 구조", priority: "P0", status: "todo", tag: "보스", risk: true },
     { id: "regression-death-second-run", title: "사망 2회차 회귀 테스트", detail: "장비 인식, 기억 순서, 입력 상태, 포션을 연속 검증", priority: "P0", status: "todo", tag: "QA", risk: true },
+    { id: "ui-full-run-regression", title: "전체 UI 흐름·해상도 QA", detail: "캠프부터 사망 복귀까지 2회, 16:9 해상도와 입력 누수 검증", priority: "P1", status: "todo", tag: "UI/UX", risk: true },
+    { id: "ui-camp-camera-rebind", title: "사망 후 캠프·미리보기 복구", detail: "씬 재로드 뒤 캠프 구도와 커스터마이징 캐릭터를 재연결", priority: "P1", status: "done", tag: "UI/UX" },
+    { id: "ui-management-overhaul", title: "캐릭터 관리·기억 구성 개편", detail: "공통 탭, 드래그 장착, 선택 정보, 나무 프레임 테마 적용", priority: "P1", status: "done", tag: "UI/UX" },
+    { id: "ui-flow-overhaul", title: "메뉴·HUD·지도·사망 UI 개편", detail: "난이도·옵션·화톳불·HUD·빅맵·사망 화면과 한국어 표기 통일", priority: "P1", status: "done", tag: "UI/UX" },
     { id: "equipment-drop-presentation", title: "3D 등급 드랍 표현", detail: "에픽 원형 · 유니크 노랑 · 레전더리 하늘색 기둥", priority: "P2", status: "done", tag: "VFX" },
     { id: "weapon-grip-normalization", title: "무기 15종 그립 정비", detail: "칼날·히트박스·트레일 기준 통합", priority: "P2", status: "done", tag: "전투" },
-    { id: "death-memory-starter", title: "죽음·기억·시작 단검", detail: "최대 1개/미선택, 기억 순서 유지, 단검 재지급", priority: "P0", status: "done", tag: "세이브" }
+    { id: "death-memory-starter", title: "죽음·기억·시작 단검", detail: "최대 1개/미선택, 기억 순서 유지, 단검 재지급", priority: "P0", status: "done", tag: "세이브" },
+    { id: "player-attack-tempo", title: "플레이어 공격 템포 개선", detail: "기억별 기존 배속을 보존하면서 모든 공격의 최종 재생 속도를 2배로 조정", priority: "P1", status: "done", tag: "전투" },
+    { id: "player-slash-vfx-hd", title: "플레이어 참격 VFX · 고해상도화", detail: "FXTags 브러시 리본, 5.1 스케일, 셀 512 재베이크와 풀 재사용 검증", priority: "P1", status: "done", tag: "VFX" },
+    { id: "dungeon-modular-authoring", title: "던전 모듈 Blender 편집 준비", detail: "왕좌·기둥·벽·바닥을 가져오고 타일 비율, 계단과 아치 크기를 독립 조절하는 제작 흐름 정리", priority: "P2", status: "done", tag: "3D" }
   ],
   roadmap: [
     { date: "07.31", title: "핵심 시스템", state: "done", detail: "전투 · 죽음 · 계약 · 맵" },
-    { date: "08 초", title: "스토리 반영", state: "active", detail: "5종 + 스트레이프" },
-    { date: "08~09", title: "보스 제작", state: "next", detail: "모델 · 3페이즈" },
+    { date: "08.09", title: "UI/UX 전면 개편", state: "done", detail: "관리 · HUD · 지도 · 사망 · 카메라" },
+    { date: "08.10", title: "공격 표현 개선", state: "done", detail: "템포 · 참격 · 고해상도" },
+    { date: "08~09", title: "스토리 · 보스", state: "active", detail: "인게임 반영 · 모델 · 3페이즈" },
     { date: "09 말", title: "전체 QA", state: "next", detail: "2회 런 · 사운드" },
     { date: "10", title: "최종 빌드", state: "next", detail: "발표 · 시연" }
   ],
@@ -38,10 +46,18 @@ window.PROJECT_DATA = {
     { id: "lockon-strafe-fix", title: "락온 후 스트레이프 이동", status: "수정 필요", severity: "P1", tone: "danger" },
     { id: "regression-monster-animation", title: "몬스터 소실·지면 침투 회귀", status: "검증 대기", severity: "P1", tone: "amber" },
     { id: "regression-audio-headphones", title: "몬스터 3D 발소리 헤드폰 QA", status: "청취 대기", severity: "P2", tone: "amber" },
-    { id: "warn-pushdoor-panel", title: "Wall_12_Door_01 패널 경고", status: "경고 1건", severity: "P4", tone: "neutral" },
+    { id: "ui-full-run-regression", title: "전체 UI 흐름·다중 해상도", status: "검증 대기", severity: "P1", tone: "amber" },
     { id: "regression-drop-readability", title: "등급 드랍 원거리 가독성", status: "실맵 QA", severity: "P2", tone: "cyan" }
   ],
   changes: [
+    { time: "08.24", group: "WEB", title: "프로젝트 허브 최신 상태 동기화", detail: "8월 9일 이후 전투·VFX·Blender 제작 흐름과 검증 이미지를 Game Bible·시스템·개발 현황에 반영", tone: "violet" },
+    { time: "08.10", group: "VFX", title: "참격 VFX 고해상도 재베이크", detail: "역할별 셀을 256에서 512로 올리고 Uncompressed·Clamp·Mip Off로 5.1배 확대 선명도 회복", tone: "cyan" },
+    { time: "08.10", group: "COMBAT", title: "공격 속도와 참격 크기 조정", detail: "모든 플레이어 공격 최종 재생 속도 ×2, 참격 루트 1.7→5.1과 0.60초 풀링 계약 적용", tone: "green" },
+    { time: "08.10", group: "COMBAT", title: "타격별 참격 방향 직접 조정", detail: "AttackCombo Inspector에서 EnableHitbox 순서별 Local Euler·Mirror X를 지정하고 TripleAttack 세 타격을 개별 튜닝", tone: "amber" },
+    { time: "08.10", group: "3D", title: "던전 모듈 Blender 편집 파이프라인", detail: "Ground·Wall·Column·Throne을 가져와 벽돌 비율을 유지한 바닥 확장과 계단·아치 독립 조절 흐름을 준비", tone: "violet" },
+    { time: "23:05", group: "UI/UX", title: "사망 후 캠프·커스터마이징 카메라 복구", detail: "ForestPath 재로드 뒤 캠프 구도와 캐릭터 미리보기를 재바인딩, 전용 레이어와 카메라 1개 유지 검증", tone: "cyan" },
+    { time: "21:40", group: "UI/UX", title: "관리·메뉴·HUD 화면 전면 개편", detail: "인벤토리·기억·커스터마이징·해금·옵션·난이도·지도·사망 화면을 나무 프레임 테마와 공통 UX로 통일", tone: "green" },
+    { time: "20:10", group: "LOCALIZATION", title: "UI 언어와 문자열 테이블 통일", detail: "현재 화면은 한국어만 노출하고 한국어/영어 키 기반 런타임 바인딩 구성", tone: "violet" },
     { time: "23:20", group: "ASSET", title: "에셋 교체 체크리스트 동기화", detail: "프로젝트 재스캔으로 42개 추가·확장, 5개 제외·대체, 총 128개 정리", tone: "amber" },
     { time: "22:37", group: "DOCUMENT", title: "프로젝트 문서 전체 동기화", detail: "현황·체크리스트·변경이력 신설, spec 01~04 갱신", tone: "violet" },
     { time: "21:50", group: "COMBAT", title: "무기 15종 그립·칼날 방향 정비", detail: "GoldSword 파지 위치와 비대칭 칼날 방향 보정", tone: "green" },
@@ -57,8 +73,9 @@ window.PROJECT_DATA = {
     { title: "1페이지 기획서", description: "컨셉과 핵심 규칙", type: "CONCEPT", path: "docs/기획서.md", accent: "cyan" },
     { title: "상세기획서", description: "전체 시스템·콘텐츠 구성", type: "SYSTEM", path: "docs/상세기획서.md", accent: "green" },
     { title: "상세스토리", description: "수호자, 안개, 세대 교체", type: "STORY", path: "docs/상세스토리.md", accent: "amber" },
+    { title: "VFX 제작 컨텍스트", description: "참격·드랍 VFX 제작 계약과 검증 결과", type: "VFX", path: "docs/VFX_CONTEXT.md", accent: "cyan" },
     { title: "구현 명세 01~04", description: "맵·전투·AI·죽음 규칙", type: "SPEC", path: "pdf/구현명세서.pdf", accent: "violet" },
-    { title: "현황·체크리스트 PDF", description: "공유용 최신 고정본", type: "PDF", path: "pdf/Capstone2026_프로젝트현황_체크리스트_2026-07-31.pdf", accent: "cyan" }
+    { title: "현황·체크리스트 PDF", description: "2026.08.09 공유용 최신 고정본", type: "PDF", path: "pdf/Capstone2026_프로젝트현황_체크리스트_2026-08-09.pdf", accent: "cyan" }
   ],
   unityAssets: {
     weapons: [

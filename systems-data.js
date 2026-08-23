@@ -1,5 +1,5 @@
 window.PROJECT_SYSTEMS = {
-  updatedAt: "2026.08.01",
+  updatedAt: "2026.08.24",
   categories: [
     { id: "combat", name: "전투 · 기억", description: "공격 기억을 조립하고 흐름을 쌓아 마무리하는 핵심 전투", tone: "green" },
     { id: "growth", name: "장비 · 성장", description: "장비 파밍, 등급, 강화와 영구 해금이 만드는 성장 구조", tone: "amber" },
@@ -34,7 +34,7 @@ window.PROJECT_SYSTEMS = {
       id: "weapon-synergy", group: "combat", title: "무기 시너지 · 공격 스텝 · 그립", kicker: "WEAPON HANDLING", status: "구현 완료", statusKey: "done",
       summary: "무기 계열마다 잘 맞는 기억 무게가 다르고, 공격 진입과 그립·히트박스·트레일이 같은 기준으로 움직인다.",
       metrics: [{ label: "궁합", value: "×1.20" }, { label: "역궁합", value: "×0.85" }, { label: "물리 무기", value: "15종" }],
-      rules: ["경량은 가벼움, 표준은 보통, 중량은 무거운 기억과 잘 맞는다.", "첫 타는 5m 안의 대상에게 약 2m 접근하고 1.2m 앞에서 멈춘다.", "락온 중에는 Q로 고정한 대상에게만 회전·돌진한다.", "무기 기본 그립과 기억별 그립을 합성해 메시·히트박스·트레일 이탈을 막는다."],
+      rules: ["경량은 가벼움, 표준은 보통, 중량은 무거운 기억과 잘 맞는다.", "첫 타는 5m 안의 대상에게 약 2m 접근하고 1.2m 앞에서 멈춘다.", "락온 중에는 Q로 고정한 대상에게만 회전·돌진한다.", "무기 기본 그립과 기억별 그립을 합성해 메시·히트박스·트레일 이탈을 막는다.", "현재 모든 플레이어 공격은 기억별 기본 배속을 보존한 채 최종 재생 속도에 공통 ×2를 적용한다."],
       source: "docs/spec/02_전투판정_흐름시스템.md"
     },
     {
@@ -43,6 +43,13 @@ window.PROJECT_SYSTEMS = {
       metrics: [{ label: "속성", value: "4종" }, { label: "피해 표시", value: "1.2초 합산" }, { label: "히트스톱", value: "약 0.06초" }],
       rules: ["화염은 지속 피해, 냉기는 둔화, 대지는 경직, 전격은 직격 피해를 강화한다.", "피해량 비례 히트스톱과 선택형 카메라 셰이크를 적용한다.", "속성별 Impact VFX와 애니메이션 이벤트 기반 스윙음이 타격 시점에 맞는다.", "적 체력바 아래 누적 피해가 표시되고 1.2초 동안 공격이 없으면 초기화된다."],
       source: "docs/상세기획서.md"
+    },
+    {
+      id: "player-slash-vfx", group: "combat", title: "플레이어 참격 · 공격 방향", kicker: "SLASH PRESENTATION", status: "구현·검증 완료", statusKey: "done",
+      summary: "남청색 브러시 리본과 아이보리 코어를 공격 정면에 고정하고, 각 타격의 기울기만 기억 데이터에서 직접 조절한다.",
+      metrics: [{ label: "크기", value: "5.1" }, { label: "재생", value: "0.60초" }, { label: "셀", value: "512px" }],
+      rules: ["위치는 플레이어 정면 오프셋 (0, 1.0, 0.9)에 고정하고 효과 평면의 +Z가 공격 정면을 향한다.", "AttackCombo는 EnableHitbox 순서별 Local Euler와 Mirror X를 Inspector에 노출해 다단 공격을 개별 튜닝한다.", "Rear·Body·Core·Debris 네 시트는 4×3, 12프레임, 셀 512의 고해상도 재래스터화 결과를 사용한다.", "Loop·그림자·판정은 없고 같은 인스턴스의 Play→Stop→Play에서 렌더러와 파티클 초기화를 검증했다."],
+      source: "docs/VFX_CONTEXT.md"
     },
     {
       id: "equipment-catalog", group: "growth", title: "무기 · 방어구 · 악세서리", kicker: "EQUIPMENT", status: "구현 완료", statusKey: "done",
@@ -129,6 +136,13 @@ window.PROJECT_SYSTEMS = {
       source: "docs/spec/01_절차적맵생성.md"
     },
     {
+      id: "dungeon-modular-authoring", group: "world", title: "던전 모듈 · Blender 편집", kicker: "MODULAR ENVIRONMENT", status: "편집 흐름 준비", statusKey: "partial",
+      summary: "Unity의 저폴리 던전 프롭을 Blender에서 비파괴적으로 조절해 방 크기에 맞는 바닥·계단·아치 변형을 제작하는 흐름이다.",
+      metrics: [{ label: "가져온 모듈", value: "6종" }, { label: "바닥", value: "타일 비율 유지" }, { label: "아치", value: "폭·높이 분리" }],
+      rules: ["Throne_01, Column_05/06, Wall_03/34, Ground_13을 편집 기준 모듈로 사용한다.", "Ground_13은 단순 비균일 스케일 대신 벽돌 비율을 유지하며 면적을 늘리고 앞 계단도 별도로 조절한다.", "Wall_34 아치는 폭과 높이를 바꿔도 벽돌이 찌그러지지 않게 하고 생긴 빈 공간은 벽돌 반복으로 메운다.", "현재는 Blender 제작·검수 단계이며 최종 Unity 프리팹 교체는 별도 적용 확인이 필요하다."],
+      source: "docs/프로젝트_현황.md"
+    },
+    {
       id: "river-fluid", group: "world", title: "여울목 · GPU 유체", kicker: "RIVER CROSSING", status: "부분 구현", statusKey: "partial",
       summary: "강·호수·폭포가 연결된 여울목에서 얕은 물 방정식 기반 GPU 유체가 흐르고 지형과 배치를 함께 제한한다.",
       metrics: [{ label: "필드", value: "165×140m" }, { label: "유체 격자", value: "256" }, { label: "초기 수심", value: "1.3m" }],
@@ -185,10 +199,10 @@ window.PROJECT_SYSTEMS = {
       source: "docs/상세기획서.md"
     },
     {
-      id: "ui-onboarding", group: "interface", title: "HUD · 메뉴 · 온보딩", kicker: "UI / UX", status: "부분 구현", statusKey: "partial",
-      summary: "캠프부터 전투, 카드 선택, 사망과 귀환까지 필요한 정보를 전용 화면과 HUD로 연결한다.",
-      metrics: [{ label: "첫 안내", value: "1회" }, { label: "자동 진행", value: "3초" }, { label: "선택 화면", value: "시간 정지" }],
-      rules: ["체력·적 HP·미니맵·골드·정수·포션·흐름·상태 칩을 HUD에서 확인한다.", "첫 캠프에서 이동→공격→회피→락온→상호작용 순으로 안내한다.", "사망 결과창은 시간·도달 장·처치·피해를 보여준 뒤 장비 선택으로 이어진다.", "기억 아이콘 정식 아트와 일부 탑 기준 튜토리얼 문구 교체가 남아 있다."],
+      id: "ui-onboarding", group: "interface", title: "관리 화면 · HUD · 메뉴 · 온보딩", kicker: "UI / UX", status: "구현 완료 · 회귀 QA", statusKey: "qa",
+      summary: "캐릭터 관리부터 전투 HUD, 지도, 사망과 캠프 귀환까지 같은 나무 프레임 테마와 입력 규칙으로 연결한다.",
+      metrics: [{ label: "기준", value: "1920×1080" }, { label: "언어", value: "한국어" }, { label: "최신 콘솔", value: "0 / 0" }],
+      rules: ["인벤토리 장비는 부위 슬롯에 드래그해 장착·해제하고 장착 슬롯도 클릭해 상세 정보를 본다.", "기억 구성은 보유함·선택 정보·장착 슬롯으로 나뉘며 배치 순서가 실제 콤보 순서다.", "HP·적 HP·미니맵·골드·정수·포션·흐름·상태 칩은 배경과 아이콘으로 구분한다.", "사망 후 캠프와 커스터마이징 미리보기 카메라는 복구됐으며 다중 해상도 전체 런 회귀 QA가 남아 있다."],
       source: "docs/상세기획서.md"
     },
     {

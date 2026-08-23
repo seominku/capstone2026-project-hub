@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4f7f3">
-  <meta name="description" content="잠들지 않는 숲의 세계관, 스토리, 무기, 기억, 몬스터, 보스와 개발 현황을 한곳에서 보는 ROOTBOUND 프로젝트 허브">
+  <meta name="description" content="잠들지 않는 숲의 세계관, 스토리, 시스템, UI/UX, 무기, 기억, 몬스터, 보스와 개발 현황을 한곳에서 보는 ROOTBOUND 프로젝트 허브">
   <meta property="og:type" content="website">
   <meta property="og:title" content="잠들지 않는 숲 · ROOTBOUND Project Hub">
-  <meta property="og:description" content="스토리부터 무기·몬스터·보스, 실제 개발 진행사항까지 한곳에서 확인하세요.">
+  <meta property="og:description" content="스토리와 UI/UX부터 무기·몬스터·보스, 실제 개발 진행사항까지 한곳에서 확인하세요.">
   <meta property="og:image" content="https://seominku.github.io/capstone2026-project-hub/og.png">
   <meta property="og:image:alt" content="거대한 뿌리 수호자 앞에 선 짐수레 모험가와 잠들지 않는 숲 타이틀">
   <meta name="twitter:card" content="summary_large_image">
@@ -47,6 +47,7 @@
     <a class="subnav-link active" href="#game-bible" data-view="game-bible">개요</a>
     <a class="subnav-link" href="#story" data-view="story">스토리</a>
     <a class="subnav-link" href="#systems" data-view="systems">시스템</a>
+    <a class="subnav-link" href="#ui-ux" data-view="ui-ux">UI · UX</a>
     <a class="subnav-link" href="#weapons" data-view="weapons">무기</a>
     <a class="subnav-link" href="#memories" data-view="memories">기억</a>
     <a class="subnav-link" href="#armor" data-view="armor">방어구</a>
@@ -62,7 +63,7 @@
             <p class="hero-copy">검은 안개가 다시 세우는 숲. 세계관과 전투 설계부터 실제 구현, 다음 작업과 피드백까지 한곳에서 확인하는 게임 바이블입니다.</p>
             <div class="hero-meta">
               <span class="status-pill"><i></i>핵심 시스템 완성</span>
-              <span>최종 동기화 2026.08.01</span>
+              <span>최종 동기화 2026.08.24</span>
               <span>Windows · URP</span>
             </div>
           </div>
@@ -151,6 +152,72 @@
           <article class="system-docs panel">
             <div><p class="section-kicker">SOURCE DOCUMENTS</p><h3>더 깊이 확인하기</h3><p>각 시스템 카드는 현재 프로젝트 문서를 기준으로 정리했습니다.</p></div>
             <div class="system-doc-links" id="systemDocLinks"></div>
+          </article>
+        </section>
+
+        <section class="section-block ui-ux-page page-section" id="ui-ux" data-page="ui-ux" hidden>
+          <div class="section-heading ui-ux-heading">
+            <div><p class="section-kicker">INTERFACE · EXPERIENCE · CURRENT BUILD</p><h2>숲의 분위기를 유지하면서, 조작은 더 분명하게</h2></div>
+            <a class="text-link" href="pdf/상세기획서.pdf" target="_blank" rel="noreferrer">UI/UX 기획 PDF ↗</a>
+          </div>
+
+          <article class="ui-ux-hero panel">
+            <div class="ui-ux-hero-copy">
+              <span class="ui-status-badge">2026.08.24 프로젝트 동기화</span>
+              <h3>나무 프레임 하나로<br>캠프부터 죽음까지 연결했습니다.</h3>
+              <p>캐릭터 관리, 기억 구성, 커스터마이징, 장비 해금, 옵션, 난이도, HUD, 지도와 사망 화면을 같은 시각 언어와 입력 규칙으로 정리했습니다. 화면을 닫으면 커서·카메라·게임 입력이 원래 상태로 돌아오며, 최근에는 공격 템포와 참격 방향·해상도까지 실제 플레이 가독성 기준으로 보강했습니다.</p>
+              <dl class="ui-ux-summary">
+                <div><dt>기준 화면</dt><dd>1920 × 1080</dd></div>
+                <div><dt>현재 언어</dt><dd>한국어 통일</dd></div>
+                <div><dt>최신 QA</dt><dd>오류 0 · 경고 0</dd></div>
+              </dl>
+            </div>
+            <div class="ui-ux-latest-captures">
+              <figure><img src="assets/ui/camp-after-death.png" alt="사망 후 다시 로드된 캠프 시작 화면" loading="lazy"><figcaption>사망 후 캠프 카메라 복구</figcaption></figure>
+              <figure><img src="assets/ui/customization-after-death.png" alt="사망 후 캠프에서 다시 연 커스터마이징 화면" loading="lazy"><figcaption>커스터마이징 미리보기 재연결</figcaption></figure>
+            </div>
+          </article>
+
+          <div class="ui-principle-grid" aria-label="UI UX 공통 원칙">
+            <article class="panel"><span>01</span><h3>같은 행동, 같은 피드백</h3><p>클릭은 선택과 상세 보기, 드래그는 장착·해제·배치, 호버는 작은 확대와 강조로 통일합니다.</p></article>
+            <article class="panel"><span>02</span><h3>이미지 기준 안전 여백</h3><p>좌표만 맞추지 않고 실제 캡처에서 프레임, 글, 아이콘, 슬롯과 설명창의 겹침을 검증합니다.</p></article>
+            <article class="panel"><span>03</span><h3>플레이 입력과 완전 분리</h3><p>관리·옵션 화면이 열리면 카메라 Look을 막고, 닫을 때 커서·시간·입력 맵을 복구합니다.</p></article>
+            <article class="panel"><span>04</span><h3>현재는 한국어만</h3><p>화면에는 한 언어만 표시하고 한국어/영어 원문은 로컬라이징 테이블 키로 함께 관리합니다.</p></article>
+          </div>
+
+          <div class="section-heading ui-screen-heading">
+            <div><p class="section-kicker">SCREEN SYSTEMS</p><h2>개편한 주요 화면</h2></div>
+            <span class="section-note">기능과 남은 QA를 함께 표시합니다.</span>
+          </div>
+          <div class="ui-screen-grid">
+            <article class="ui-screen-card panel"><img src="assets/ui/inventory.png" alt="캐릭터 관리와 인벤토리 화면" loading="lazy"><div><span>구현 완료</span><h3>캐릭터 관리 · 인벤토리</h3><p>인벤토리↔장비 슬롯 드래그, 양쪽 슬롯 클릭 상세 보기, 빈 부위 실루엣과 호버 피드백.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/ui/memory-loadout.png" alt="보유 기억과 장착 기억을 구성하는 화면" loading="lazy"><div><span>구현 완료</span><h3>기억 구성</h3><p>왼쪽 보유 기억, 오른쪽 선택 정보와 장착 슬롯. 배치 순서가 실제 콤보 순서입니다.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/ui/customization-after-death.png" alt="부위와 파츠를 그리드에서 선택하는 커스터마이징 화면" loading="lazy"><div><span>08.09 회귀 수정</span><h3>커스터마이징</h3><p>부위→파츠 그리드→색상 선택, 장비 미착용 기본값, 캐릭터 전용 미리보기 레이어.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/ui/difficulty.png" alt="쉬움 보통 어려움 난이도 선택 화면" loading="lazy"><div><span>구현 완료</span><h3>난이도 선택</h3><p>쉬움 흰색·보통 노란색·어려움 빨간색으로 구분하고 선택 뒤 런 진입 흐름을 연결했습니다.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/ui/gameplay-hud.png" alt="체력 포션 골드 정수 미니맵이 표시된 인게임 HUD" loading="lazy"><div><span>구현 완료</span><h3>게임플레이 HUD</h3><p>HP, 포션, 골드, 정수, 흐름, 상태 칩과 미니맵을 배경·아이콘 단위로 읽기 쉽게 분리했습니다.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/ui/big-map.png" alt="Fog of War가 적용된 전체 지도 화면" loading="lazy"><div><span>구현 완료</span><h3>미니맵 · 전체 지도</h3><p>미니맵 범위 클램프와 맵 밖 검정, M 전체 지도와 Fog of War 탐험 상태를 공유합니다.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/ui/bonfire.png" alt="골드를 사용해 성장하는 화톳불 화면" loading="lazy"><div><span>아트 폴리싱 남음</span><h3>화톳불 성장</h3><p>비용과 상승 수치를 먼저 확인합니다. 월드 오브젝트의 뿌리 제단 리스킨은 다음 아트 작업입니다.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/ui/death-screen.png" alt="런 결과를 보여주는 사망 화면" loading="lazy"><div><span>구현 완료</span><h3>사망 결과 · 장비 유지</h3><p>런 기록 뒤 장비 최대 1개 또는 미선택으로 이어지며 무료 단검과 소모품은 후보에서 제외됩니다.</p></div></article>
+          </div>
+
+          <div class="section-heading ui-screen-heading">
+            <div><p class="section-kicker">COMBAT FEEDBACK · CURRENT BUILD</p><h2>최근 전투 표현 개선</h2></div>
+            <a class="text-link" href="docs/VFX_CONTEXT.md" target="_blank" rel="noreferrer">VFX 검증 문서 ↗</a>
+          </div>
+          <div class="ui-screen-grid">
+            <article class="ui-screen-card vfx-card panel"><img src="assets/vfx/player-slash-hd.png" alt="고해상도 청백색 플레이어 참격 효과" loading="lazy"><div><span>구현·검증 완료</span><h3>FXTags 브러시 참격</h3><p>공격 정면에 고정되는 남청색 리본과 아이보리 코어. 루트 크기 5.1, 재생 0.60초, 풀 3개로 운용합니다.</p></div></article>
+            <article class="ui-screen-card vfx-card panel"><img src="assets/vfx/player-slash-direction-down.png" alt="수직 내려찍기 방향으로 기울어진 참격 효과" loading="lazy"><div><span>타격별 직접 조정</span><h3>다단 공격 방향</h3><p>각 기억의 EnableHitbox 순서마다 Local Euler와 좌우 반전을 지정해 수평 베기와 내려찍기를 독립적으로 맞춥니다.</p></div></article>
+            <article class="ui-screen-card vfx-card panel"><img src="assets/vfx/player-slash-resolution-compare.png" alt="셀 256과 512 참격 효과의 확대 비교" loading="lazy"><div><span>셀 256 → 512</span><h3>3배 확대 해상도 보강</h3><p>완성 이미지를 늘리지 않고 절차 도형을 2배 해상도로 다시 렌더했습니다. 형태와 피벗은 유지하고 외곽선·코어만 선명해졌습니다.</p></div></article>
+            <article class="ui-screen-card vfx-card panel"><img src="assets/vfx/player-slash-particles.png" alt="참격 본체 뒤에 짧게 남는 파편과 불티" loading="lazy"><div><span>풀 재사용 통과</span><h3>파편 · 불티 감쇠</h3><p>본체 뒤에 짧은 파편만 남기고 Play→Stop→Play에서 렌더러·파티클·미러 상태가 완전히 초기화됩니다.</p></div></article>
+          </div>
+
+          <article class="ui-qa-panel panel">
+            <div><p class="section-kicker">NEXT QUALITY GATE</p><h3>남은 것은 화면 추가보다 전체 흐름 검증입니다.</h3></div>
+            <ul>
+              <li>1920×1080과 다른 16:9 해상도에서 글·아이콘·슬롯·프레임 겹침 확인</li>
+              <li>캠프→난이도→런→옵션→사망→캠프를 2회 반복하며 입력·카메라 상태 확인</li>
+              <li>기억 정식 아이콘과 화톳불 뿌리 제단 아트 교체</li>
+            </ul>
           </article>
         </section>
 
