@@ -119,7 +119,7 @@
   function renderOverview() {
     $("#progressValue").textContent = `${progress}%`;
     $("#progressRing").style.setProperty("--progress", `${progress * 3.6}deg`);
-    $("#progressCaption").textContent = `완료 ${data.meta.done} · 대기 ${data.meta.todo} · 제외 ${data.meta.cut}`;
+    $("#progressCaption").textContent = `완료 ${data.meta.done} · 미완료 ${data.meta.todo} · 제외 ${data.meta.cut} (Unity 목록 기준)`;
     $("#assetProgressValue").textContent = `${assetProgress}%`;
     $("#assetProgressRing").style.setProperty("--progress", `${assetProgress * 3.6}deg`);
     $("#assetProgressCaption").textContent = `완료 ${assetSwap.summary.done} · 신규 제작 ${assetSwap.summary.needNew} · 교체 대기 ${assetSwap.summary.placeholder}`;
@@ -143,6 +143,18 @@
         <p>${escapeHtml(task.detail)}</p>
         <div class="task-bottom"><code>${escapeHtml(task.id)}</code><span>${task.status === "done" ? "완료 ✓" : "대기 →"}</span></div>
       </article>`).join("");
+  }
+
+  function renderUIProgress() {
+    const ui = data.uiProgress;
+    if (!ui) return;
+    $$('[data-ui-progress]').forEach((root) => {
+      root.innerHTML = `<div class="section-heading"><div><p class="section-kicker">UI / UX · ${escapeHtml(ui.checkedAt)}</p><h2>구현과 최종 검증을 나누어 봅니다</h2></div><strong>${ui.features.length}개 기능 연결</strong></div>
+        <label class="ui-stage-label">구조·테마·기능 구현 <span>${ui.features.length} / ${ui.features.length}</span><progress value="${ui.features.length}" max="${ui.features.length}" aria-label="UI 기능 구현 항목"></progress></label>
+        <div class="ui-stage-grid"><article><span class="ui-stage-done">구현 완료</span><h3>화면과 조작</h3><p>공통 테마, 드래그, 선택, 호버, 화면 전환과 입력 복구를 연결했습니다.</p></article><article><span class="ui-stage-pending">검증 대기</span><h3>전체 흐름·해상도</h3><p>${escapeHtml(ui.gates[0])}</p></article><article><span class="ui-stage-pending">폴리싱 대기</span><h3>최종 아트</h3><p>${escapeHtml(ui.gates[1])}</p></article></div>
+        <details><summary>구현 완료 ${ui.features.length}개 항목 보기</summary><ul class="ui-feature-list">${ui.features.map((feature) => `<li>✓ ${escapeHtml(feature)}</li>`).join('')}</ul></details>
+        <p class="ui-stage-note">기능 구현 완료는 전체 UI QA 통과를 뜻하지 않습니다. 화면 예시는 ${escapeHtml(ui.captureDate)} 캡처이며, 진행 상태는 ${escapeHtml(ui.checkedAt)} 코드·체크리스트 기준입니다.</p>`;
+    });
   }
 
   function renderRoadmap() {
@@ -579,6 +591,7 @@
   }
 
   renderOverview();
+  renderUIProgress();
   renderTasks();
   renderRoadmap();
   renderQa();

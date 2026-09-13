@@ -63,7 +63,7 @@
             <p class="hero-copy">검은 안개가 다시 세우는 숲. 세계관과 전투 설계부터 실제 구현, 다음 작업과 피드백까지 한곳에서 확인하는 게임 바이블입니다.</p>
             <div class="hero-meta">
               <span class="status-pill"><i></i>핵심 시스템 완성</span>
-              <span>최종 동기화 2026.08.24</span>
+              <span>최종 동기화 2026.09.14</span>
               <span>Windows · URP</span>
             </div>
           </div>
@@ -84,7 +84,7 @@
           <article class="progress-card asset-progress-card panel">
             <div class="progress-ring asset-progress-ring" id="assetProgressRing"><span id="assetProgressValue">0%</span></div>
             <div>
-              <p class="section-kicker">ASSET REPLACEMENT PROGRESS</p>
+              <p class="section-kicker">ASSET REPLACEMENT · 2026.08.01 SNAPSHOT</p>
               <h2>신규 에셋부터 확보하고,<br>화면과 소리를 교체하는 중</h2>
               <p id="assetProgressCaption"></p>
               <a class="asset-progress-link" href="#asset-swap">상세 교체 목록 보기 ↓</a>
@@ -92,6 +92,8 @@
           </article>
           <div class="metric-cards" id="metricCards"></div>
         </section>
+
+        <section class="section-block panel ui-progress-panel page-section" data-page="development" data-ui-progress aria-label="UI UX 진행 단계" hidden></section>
 
         <section class="section-block game-bible page-section" id="world" data-page="game-bible">
           <div class="section-heading">
@@ -163,13 +165,13 @@
 
           <article class="ui-ux-hero panel">
             <div class="ui-ux-hero-copy">
-              <span class="ui-status-badge">2026.08.24 프로젝트 동기화</span>
-              <h3>나무 프레임 하나로<br>캠프부터 죽음까지 연결했습니다.</h3>
-              <p>캐릭터 관리, 기억 구성, 커스터마이징, 장비 해금, 옵션, 난이도, HUD, 지도와 사망 화면을 같은 시각 언어와 입력 규칙으로 정리했습니다. 화면을 닫으면 커서·카메라·게임 입력이 원래 상태로 돌아오며, 최근에는 공격 템포와 참격 방향·해상도까지 실제 플레이 가독성 기준으로 보강했습니다.</p>
+              <span class="ui-status-badge">2026.09.14 진행 상태 확인</span>
+              <h3>캠프부터 죽음까지,<br>하나의 나무 프레임으로.</h3>
+              <p>캐릭터 관리, 기억 구성, 커스터마이징, 장비 해금, 옵션, 난이도, HUD, 지도와 사망 화면을 같은 시각 언어와 입력 규칙으로 정리했습니다. 드래그·선택·호버·입력 복구 기능은 연결되었으며, 전체 런을 반복하는 흐름 검사와 다중 해상도 QA는 남아 있습니다.</p>
               <dl class="ui-ux-summary">
                 <div><dt>기준 화면</dt><dd>1920 × 1080</dd></div>
                 <div><dt>현재 언어</dt><dd>한국어 통일</dd></div>
-                <div><dt>최신 QA</dt><dd>오류 0 · 경고 0</dd></div>
+                <div><dt>현재 단계</dt><dd>기능 완료 · 종합 QA 대기</dd></div>
               </dl>
             </div>
             <div class="ui-ux-latest-captures">
@@ -177,6 +179,8 @@
               <figure><img src="assets/ui/customization-after-death.png" alt="사망 후 캠프에서 다시 연 커스터마이징 화면" loading="lazy"><figcaption>커스터마이징 미리보기 재연결</figcaption></figure>
             </div>
           </article>
+
+          <article class="panel ui-progress-panel" data-ui-progress aria-label="UI UX 구현과 검증 현황"></article>
 
           <div class="ui-principle-grid" aria-label="UI UX 공통 원칙">
             <article class="panel"><span>01</span><h3>같은 행동, 같은 피드백</h3><p>클릭은 선택과 상세 보기, 드래그는 장착·해제·배치, 호버는 작은 확대와 강조로 통일합니다.</p></article>
@@ -187,7 +191,7 @@
 
           <div class="section-heading ui-screen-heading">
             <div><p class="section-kicker">SCREEN SYSTEMS</p><h2>개편한 주요 화면</h2></div>
-            <span class="section-note">기능과 남은 QA를 함께 표시합니다.</span>
+            <span class="section-note">08.09 캡처 · 09.14 기능 현황. 전체 흐름 QA는 별도입니다.</span>
           </div>
           <div class="ui-screen-grid">
             <article class="ui-screen-card panel"><img src="assets/ui/inventory.png" alt="캐릭터 관리와 인벤토리 화면" loading="lazy"><div><span>구현 완료</span><h3>캐릭터 관리 · 인벤토리</h3><p>인벤토리↔장비 슬롯 드래그, 양쪽 슬롯 클릭 상세 보기, 빈 부위 실루엣과 호버 피드백.</p></div></article>
@@ -202,13 +206,13 @@
 
           <div class="section-heading ui-screen-heading">
             <div><p class="section-kicker">COMBAT FEEDBACK · CURRENT BUILD</p><h2>최근 전투 표현 개선</h2></div>
-            <a class="text-link" href="docs/VFX_CONTEXT.md" target="_blank" rel="noreferrer">VFX 검증 문서 ↗</a>
+            <a class="text-link" href="pdf/전투모션_보정_2026-09-14.pdf" target="_blank" rel="noreferrer">전투 모션 검증 PDF ↗</a>
           </div>
           <div class="ui-screen-grid">
-            <article class="ui-screen-card vfx-card panel"><img src="assets/vfx/player-slash-hd.png" alt="고해상도 청백색 플레이어 참격 효과" loading="lazy"><div><span>구현·검증 완료</span><h3>FXTags 브러시 참격</h3><p>공격 정면에 고정되는 남청색 리본과 아이보리 코어. 루트 크기 5.1, 재생 0.60초, 풀 3개로 운용합니다.</p></div></article>
-            <article class="ui-screen-card vfx-card panel"><img src="assets/vfx/player-slash-direction-down.png" alt="수직 내려찍기 방향으로 기울어진 참격 효과" loading="lazy"><div><span>타격별 직접 조정</span><h3>다단 공격 방향</h3><p>각 기억의 EnableHitbox 순서마다 Local Euler와 좌우 반전을 지정해 수평 베기와 내려찍기를 독립적으로 맞춥니다.</p></div></article>
-            <article class="ui-screen-card vfx-card panel"><img src="assets/vfx/player-slash-resolution-compare.png" alt="셀 256과 512 참격 효과의 확대 비교" loading="lazy"><div><span>셀 256 → 512</span><h3>3배 확대 해상도 보강</h3><p>완성 이미지를 늘리지 않고 절차 도형을 2배 해상도로 다시 렌더했습니다. 형태와 피벗은 유지하고 외곽선·코어만 선명해졌습니다.</p></div></article>
-            <article class="ui-screen-card vfx-card panel"><img src="assets/vfx/player-slash-particles.png" alt="참격 본체 뒤에 짧게 남는 파편과 불티" loading="lazy"><div><span>풀 재사용 통과</span><h3>파편 · 불티 감쇠</h3><p>본체 뒤에 짧은 파편만 남기고 Play→Stop→Play에서 렌더러·파티클·미러 상태가 완전히 초기화됩니다.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/combat/goblin.png" alt="보정한 고블린의 실제 공격 판정 검사" loading="lazy"><div><span>09.14 플레이 검증</span><h3>몬스터 공격 모션</h3><p>기존 13종·27클립의 준비·타격·회복과 체중 이동을 정비했습니다. 근접 72개 타격·회피·취소 사례 통과.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/combat/memory.png" alt="보정한 기억을 실제 장착 무기로 재생하는 플레이어" loading="lazy"><div><span>23개 기억 + 순서 콤보</span><h3>기억 리타게팅</h3><p>원본 96파일을 백업하고 CS 12개 관절·바닥 높이를 보정했습니다. 기존 믹사모 11개와 배속·타격 이벤트는 유지합니다.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/combat/player-hit.png" alt="공격을 맞고 경직되는 플레이어" loading="lazy"><div><span>17개 피격 사례</span><h3>경직과 짧은 넉백</h3><p>0.45초 경직에 0.38m/0.16초 넉백을 연결했습니다. 벽 충돌, 방향, 공격 취소와 조작 복구를 검사했습니다.</p></div></article>
+            <article class="ui-screen-card panel"><img src="assets/combat/wolf-pounce.png" alt="목표 방향으로 도약하며 접근하는 늑대" loading="lazy"><div><span>전진 도약</span><h3>늑대 강공격</h3><p>점프 모션에 지면 전진을 연결하고 방향을 확정합니다. 벽·NavMesh 경계·피격 취소·일시정지 안전성을 검증합니다.</p></div></article>
           </div>
 
           <article class="ui-qa-panel panel">
@@ -375,7 +379,7 @@
 
         <section class="section-block asset-swap-section page-section" id="asset-swap" data-page="development" hidden>
           <div class="section-heading asset-swap-heading">
-            <div><p class="section-kicker">ASSET REPLACEMENT</p><h2>에셋 교체 체크리스트</h2><p class="section-note">Unity 프로젝트를 다시 스캔해 추가·삭제·교체 대상을 한곳에 모았습니다.</p></div>
+            <div><p class="section-kicker">ASSET REPLACEMENT · 2026.08.01</p><h2>에셋 교체 체크리스트</h2><p class="section-note">이 목록은 08.01 스캔 기록이며 재감사가 필요합니다. 이후 보스 모델과 UI 기능은 구현되었습니다. 최신 구현 단계는 위 개발 현황을 기준으로 확인해 주세요.</p></div>
             <a class="secondary-button" href="pdf/에셋_교체_체크리스트.pdf" target="_blank" rel="noreferrer">전체 체크리스트 PDF ↗</a>
           </div>
           <div class="asset-swap-summary" id="assetSwapSummary"></div>

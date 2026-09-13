@@ -804,6 +804,21 @@ body::before {
 
 /* UI / UX bible */
 .ui-ux-page { display: grid; gap: 18px; }
+.ui-progress-panel { padding: 26px; }
+.ui-stage-label { display: block; font-size: 15px; font-weight: 700; }
+.ui-stage-label span { float: right; }
+.ui-stage-label progress { display: block; width: 100%; height: 14px; margin: 12px 0 20px; accent-color: #427951; }
+.ui-stage-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-bottom: 20px; }
+.ui-stage-grid article { border: 1px solid #d8dfd5; border-radius: 12px; padding: 18px; background: #fafbf7; }
+.ui-stage-grid h3 { font-size: 18px; margin: 12px 0 8px; }
+.ui-stage-grid p, .ui-stage-note, .ui-feature-list { font-size: 14px; line-height: 1.7; }
+.ui-stage-done { color: #285e35; font-weight: 700; }
+.ui-stage-pending { color: #875809; font-weight: 700; }
+.ui-feature-list { columns: 2; padding-left: 0; list-style: none; }
+.ui-feature-list li { break-inside: avoid; margin: 7px 0; }
+.ui-stage-note { color: #617067; margin-bottom: 0; }
+.ui-progress-panel summary { cursor: pointer; font-size: 15px; }
+@media (max-width: 760px) { .ui-stage-grid { grid-template-columns: 1fr; } .ui-feature-list { columns: 1; } .ui-progress-panel { padding: 18px; } }
 .ui-ux-heading { margin-bottom: 0; }
 .ui-ux-hero {
   display: grid;

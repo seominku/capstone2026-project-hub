@@ -1,27 +1,33 @@
 window.PROJECT_DATA = {
   meta: {
     name: "잠들지 않는 숲",
-    updated: "2026-08-24",
+    updated: "2026-09-14",
     scene: "ForestPath",
     unity: "6.3.10f1",
-    total: 125,
-    done: 94,
-    todo: 27,
+    total: 128,
+    done: 101,
+    todo: 23,
     cut: 4,
     errors: 0,
-    warnings: 0
+    warnings: 1
   },
   metrics: [
-    { label: "완료 작업", value: "94", detail: "웹 통합 체크리스트", tone: "green", icon: "✓" },
-    { label: "대기 작업", value: "27", detail: "P0~P5 전체", tone: "amber", icon: "↗" },
-    { label: "콘솔 오류", value: "0", detail: "최신 UI 회귀 경고 0건", tone: "cyan", icon: "◇" },
-    { label: "문서 원본", value: "14", detail: "2026.08.24 동기화", tone: "violet", icon: "▤" }
+    { label: "완료 작업", value: "101", detail: "Unity 체크리스트 기준 · 전체 런 완료율 아님", tone: "green", icon: "✓" },
+    { label: "미완료 작업", value: "23", detail: "대기 22 · 진행 1 (Unity 목록)", tone: "amber", icon: "↗" },
+    { label: "기억 모션 검증", value: "24", detail: "23개 개별 재생 + 순서 콤보 1개 통과", tone: "cyan", icon: "◇" },
+    { label: "UI 기능", value: "13/13", detail: "구현 연결 완료 · 전체 흐름 QA 별도", tone: "violet", icon: "▤" }
   ],
+  uiProgress: {
+    checkedAt: "2026-09-14",
+    captureDate: "2026-08-09",
+    features: ["나무 프레임 v2 공통 테마", "인벤토리·장비 드래그 장착/해제", "기억 배치·캐릭터 관리 탭", "슬롯 선택·상세 정보·호버", "부위·파츠 그리드·색상·미리보기", "장비 해금·정수 비용", "일시정지·옵션 화면 전환", "난이도 선택·런 진입", "HP·포션·골드·정수 HUD", "미니맵·M 전체 지도", "사망 결과·장비 유지/미선택", "캠프·외형 카메라 재연결", "한국어·영어 로컬라이징 테이블"],
+    gates: ["캠프→런→옵션→사망→캠프 2회 및 다중 해상도 회귀 QA", "기억 정식 아이콘·화톳불 뿌리 제단 최종 아트"]
+  },
   tasks: [
     { id: "story-chapter-label", title: "챕터 표기 통일", detail: "B1~B9를 1장~9장으로 교체", priority: "P0", status: "todo", tag: "스토리", risk: true },
     { id: "story-camp-exit-root", title: "캠프 출구 · 7장 뿌리", detail: "첫 동선을 지상으로, 뿌리를 심층 진입점으로", priority: "P0", status: "todo", tag: "스토리", risk: true },
-    { id: "lockon-strafe-fix", title: "락온 스트레이프 수정", detail: "A/D 원형 횡이동, S 후진과 애니메이션 블렌드 정합", priority: "P1", status: "todo", tag: "전투", risk: true },
-    { id: "boss-model", title: "보스 모델 · 리깅", detail: "잠들지 않는 뿌리의 반고정형 본체와 코어 구조", priority: "P0", status: "todo", tag: "보스", risk: true },
+    { id: "lockon-strafe-fix", title: "락온 스트레이프 수정", detail: "대상 기준 WASD·후진·Sword and Shield 블렌드, 회피 중 락온 유지 구현", priority: "P1", status: "done", tag: "전투" },
+    { id: "boss-model", title: "보스 모델 · 리깅", detail: "Meshy 모델·리그·20모션 연결. 2100 HP, 3페이즈 구현; 최종 밸런스 별도", priority: "P0", status: "done", tag: "보스" },
     { id: "regression-death-second-run", title: "사망 2회차 회귀 테스트", detail: "장비 인식, 기억 순서, 입력 상태, 포션을 연속 검증", priority: "P0", status: "todo", tag: "QA", risk: true },
     { id: "ui-full-run-regression", title: "전체 UI 흐름·해상도 QA", detail: "캠프부터 사망 복귀까지 2회, 16:9 해상도와 입력 누수 검증", priority: "P1", status: "todo", tag: "UI/UX", risk: true },
     { id: "ui-camp-camera-rebind", title: "사망 후 캠프·미리보기 복구", detail: "씬 재로드 뒤 캠프 구도와 커스터마이징 캐릭터를 재연결", priority: "P1", status: "done", tag: "UI/UX" },
@@ -30,26 +36,32 @@ window.PROJECT_DATA = {
     { id: "equipment-drop-presentation", title: "3D 등급 드랍 표현", detail: "에픽 원형 · 유니크 노랑 · 레전더리 하늘색 기둥", priority: "P2", status: "done", tag: "VFX" },
     { id: "weapon-grip-normalization", title: "무기 15종 그립 정비", detail: "칼날·히트박스·트레일 기준 통합", priority: "P2", status: "done", tag: "전투" },
     { id: "death-memory-starter", title: "죽음·기억·시작 단검", detail: "최대 1개/미선택, 기억 순서 유지, 단검 재지급", priority: "P0", status: "done", tag: "세이브" },
-    { id: "player-attack-tempo", title: "플레이어 공격 템포 개선", detail: "기억별 기존 배속을 보존하면서 모든 공격의 최종 재생 속도를 2배로 조정", priority: "P1", status: "done", tag: "전투" },
-    { id: "player-slash-vfx-hd", title: "플레이어 참격 VFX · 고해상도화", detail: "FXTags 브러시 리본, 5.1 스케일, 셀 512 재베이크와 풀 재사용 검증", priority: "P1", status: "done", tag: "VFX" },
+    { id: "player-attack-tempo", title: "플레이어 공격 배속 원복", detail: "공통 2배 가속 제거. 기억별 지정 배속과 무게 기반 속도 유지", priority: "P1", status: "done", tag: "전투" },
+    { id: "player-slash-vfx-hd", title: "추가 참격 VFX 제거", detail: "사용자 요청으로 플레이어 추가 참격은 현재 미사용. 기존 무기 트레일과 구분", priority: "P1", status: "done", tag: "전투" },
+    { id: "combat-feel-legacy-v2", title: "기존 몬스터 전용 모션 보정", detail: "13종·27클립 타격 시간, 체중 이동, 접지 정비. 근접 72사례 통과", priority: "P1", status: "done", tag: "전투" },
+    { id: "player-hit-knockback", title: "플레이어 피격·짧은 넉백", detail: "0.45초 경직 + 0.38m/0.16초 넉백. 벽 충돌·조작 복구 포함 17사례 통과", priority: "P1", status: "done", tag: "전투" },
+    { id: "memory-retarget-v2", title: "기억 리타게팅·접지 보정", detail: "96파일 원본 백업, CS 12개 복사본 보정. 기억 23개+순서 콤보 검증", priority: "P1", status: "done", tag: "전투" },
+    { id: "wolf-forward-pounce", title: "늑대 전진 도약 강공격", detail: "확정 방향·최대 3.2m 전진·벽 차단·피격 취소·일시정지, 전투/이동 포함 17사례 통과", priority: "P1", status: "done", tag: "전투" },
     { id: "dungeon-modular-authoring", title: "던전 모듈 Blender 편집 준비", detail: "왕좌·기둥·벽·바닥을 가져오고 타일 비율, 계단과 아치 크기를 독립 조절하는 제작 흐름 정리", priority: "P2", status: "done", tag: "3D" }
   ],
   roadmap: [
     { date: "07.31", title: "핵심 시스템", state: "done", detail: "전투 · 죽음 · 계약 · 맵" },
     { date: "08.09", title: "UI/UX 전면 개편", state: "done", detail: "관리 · HUD · 지도 · 사망 · 카메라" },
-    { date: "08.10", title: "공격 표현 개선", state: "done", detail: "템포 · 참격 · 고해상도" },
-    { date: "08~09", title: "스토리 · 보스", state: "active", detail: "인게임 반영 · 모델 · 3페이즈" },
+    { date: "09.12", title: "보스 구현", state: "done", detail: "모델 · 상황별 AI · 3페이즈 (밸런스 별도)" },
+    { date: "09.14", title: "전투 모션 안정화", state: "active", detail: "몬스터 · 기억 · 피격 · 도약 · 실맵 QA" },
     { date: "09 말", title: "전체 QA", state: "next", detail: "2회 런 · 사운드" },
     { date: "10", title: "최종 빌드", state: "next", detail: "발표 · 시연" }
   ],
   qa: [
-    { id: "lockon-strafe-fix", title: "락온 후 스트레이프 이동", status: "수정 필요", severity: "P1", tone: "danger" },
+    { id: "lockon-strafe-fix", title: "락온 후 스트레이프 이동", status: "구현 완료 · 실맵 QA", severity: "P1", tone: "cyan" },
     { id: "regression-monster-animation", title: "몬스터 소실·지면 침투 회귀", status: "검증 대기", severity: "P1", tone: "amber" },
     { id: "regression-audio-headphones", title: "몬스터 3D 발소리 헤드폰 QA", status: "청취 대기", severity: "P2", tone: "amber" },
     { id: "ui-full-run-regression", title: "전체 UI 흐름·다중 해상도", status: "검증 대기", severity: "P1", tone: "amber" },
     { id: "regression-drop-readability", title: "등급 드랍 원거리 가독성", status: "실맵 QA", severity: "P2", tone: "cyan" }
   ],
   changes: [
+    { time: "09.14", group: "COMBAT", title: "기존 모션과 비교한 리타게팅 보정", detail: "몬스터 준비·회복 시간과 하체 고정을 보정하고 기억 관절 뒤집힘·바닥 침투를 완화. 원본 보존", tone: "green" },
+    { time: "09.14", group: "UI/UX", title: "UI 진행 단계와 웹 정보 정정", detail: "13개 기능 구현, 전체 흐름·다중 해상도 QA 및 최종 아트를 분리. 공통 2배·추가 참격은 현재 미사용으로 정정", tone: "violet" },
     { time: "08.24", group: "WEB", title: "프로젝트 허브 최신 상태 동기화", detail: "8월 9일 이후 전투·VFX·Blender 제작 흐름과 검증 이미지를 Game Bible·시스템·개발 현황에 반영", tone: "violet" },
     { time: "08.10", group: "VFX", title: "참격 VFX 고해상도 재베이크", detail: "역할별 셀을 256에서 512로 올리고 Uncompressed·Clamp·Mip Off로 5.1배 확대 선명도 회복", tone: "cyan" },
     { time: "08.10", group: "COMBAT", title: "공격 속도와 참격 크기 조정", detail: "모든 플레이어 공격 최종 재생 속도 ×2, 참격 루트 1.7→5.1과 0.60초 풀링 계약 적용", tone: "green" },
@@ -75,7 +87,7 @@ window.PROJECT_DATA = {
     { title: "상세스토리", description: "수호자, 안개, 세대 교체", type: "STORY", path: "docs/상세스토리.md", accent: "amber" },
     { title: "VFX 제작 컨텍스트", description: "참격·드랍 VFX 제작 계약과 검증 결과", type: "VFX", path: "docs/VFX_CONTEXT.md", accent: "cyan" },
     { title: "구현 명세 01~04", description: "맵·전투·AI·죽음 규칙", type: "SPEC", path: "pdf/구현명세서.pdf", accent: "violet" },
-    { title: "현황·체크리스트 PDF", description: "2026.08.09 공유용 최신 고정본", type: "PDF", path: "pdf/Capstone2026_프로젝트현황_체크리스트_2026-08-09.pdf", accent: "cyan" }
+    { title: "전투 모션 보정 PDF", description: "2026.09.14 비교 원인·백업·적용·검사 범위", type: "PDF", path: "pdf/전투모션_보정_2026-09-14.pdf", accent: "cyan" }
   ],
   unityAssets: {
     weapons: [
@@ -223,9 +235,9 @@ window.PROJECT_DATA = {
     boss: {
       name: "잠들지 않는 뿌리",
       phases: [
-        { phase: "PHASE 01", hp: "100~66%", title: "붙어서 흐름을 배운다", pattern: "느린 후려치기 · Punch · Slash · Smack", intent: "큰 빈틈 사이에서 가벼운 기억으로 흐름을 쌓는다.", tone: "green" },
-        { phase: "PHASE 02", hp: "66~33%", title: "거리를 관리한다", pattern: "기본 근접 + 유도 투사체", intent: "락온을 유지하며 지형과 회피로 원거리 압박을 넘긴다.", tone: "amber" },
-        { phase: "PHASE 03", hp: "33~0%", title: "허락된 코어에 마무리한다", pattern: "광역 뿌리 강타 · Step · Swing · 강화 슈퍼아머", intent: "회피 캔슬로 빠져나온 뒤 쌓아 둔 흐름을 무거운 마무리에 쏟는다.", tone: "violet" }
+        { phase: "PHASE 01", hp: "2100~1400", title: "거리와 예고를 읽는다", pattern: "횡타·어퍼컷 · 단발 내려찍기 · 씨앗 · 랜덤 통로 파동", intent: "근접·원거리 거리에 따라 다른 패턴이 선택됩니다.", tone: "green" },
+        { phase: "PHASE 02", hp: "1400~700", title: "변형과 연계를 넘긴다", pattern: "2연속 내려찍기 · 어퍼컷 연계 · 넓은 뿌리 · 제한된 복합 공격", intent: "먼저 구른 위치에 무조건 명중하지 않도록 조준 고정과 회피 공간을 둡니다.", tone: "amber" },
+        { phase: "PHASE 03", hp: "700~0", title: "허락된 코어에 마무리한다", pattern: "뿌리 · 황금탄 · 공동 붕괴 · 코어 광선", intent: "본체 팔 공격은 중단됩니다. 코어를 타격하고 해방 모션 뒤 승리 출구로 이어집니다.", tone: "violet" }
       ]
     }
   },

@@ -34,7 +34,7 @@ window.PROJECT_SYSTEMS = {
       id: "weapon-synergy", group: "combat", title: "무기 시너지 · 공격 스텝 · 그립", kicker: "WEAPON HANDLING", status: "구현 완료", statusKey: "done",
       summary: "무기 계열마다 잘 맞는 기억 무게가 다르고, 공격 진입과 그립·히트박스·트레일이 같은 기준으로 움직인다.",
       metrics: [{ label: "궁합", value: "×1.20" }, { label: "역궁합", value: "×0.85" }, { label: "물리 무기", value: "15종" }],
-      rules: ["경량은 가벼움, 표준은 보통, 중량은 무거운 기억과 잘 맞는다.", "첫 타는 5m 안의 대상에게 약 2m 접근하고 1.2m 앞에서 멈춘다.", "락온 중에는 Q로 고정한 대상에게만 회전·돌진한다.", "무기 기본 그립과 기억별 그립을 합성해 메시·히트박스·트레일 이탈을 막는다.", "현재 모든 플레이어 공격은 기억별 기본 배속을 보존한 채 최종 재생 속도에 공통 ×2를 적용한다."],
+      rules: ["경량은 가벼움, 표준은 보통, 중량은 무거운 기억과 잘 맞는다.", "첫 타는 5m 안의 대상에게 약 2m 접근하고 1.2m 앞에서 멈춘다.", "락온 중에는 Q로 고정한 대상에게만 회전·돌진한다.", "무기 기본 그립과 기억별 그립을 합성해 메시·히트박스·트레일 이탈을 막는다.", "공통 2배 가속은 제거했다. 기억별 지정 배속 또는 무게 기반 속도를 사용한다.", "CS 기억 12개는 원본 백업 뒤 관절 비틀림·과신전·바닥 높이를 별도 클립에서 보정했다. 기존 믹사모 기억 11개와 콤보 순서·타격 이벤트는 유지한다."],
       source: "docs/spec/02_전투판정_흐름시스템.md"
     },
     {
@@ -45,11 +45,11 @@ window.PROJECT_SYSTEMS = {
       source: "docs/상세기획서.md"
     },
     {
-      id: "player-slash-vfx", group: "combat", title: "플레이어 참격 · 공격 방향", kicker: "SLASH PRESENTATION", status: "구현·검증 완료", statusKey: "done",
-      summary: "남청색 브러시 리본과 아이보리 코어를 공격 정면에 고정하고, 각 타격의 기울기만 기억 데이터에서 직접 조절한다.",
-      metrics: [{ label: "크기", value: "5.1" }, { label: "재생", value: "0.60초" }, { label: "셀", value: "512px" }],
-      rules: ["위치는 플레이어 정면 오프셋 (0, 1.0, 0.9)에 고정하고 효과 평면의 +Z가 공격 정면을 향한다.", "AttackCombo는 EnableHitbox 순서별 Local Euler와 Mirror X를 Inspector에 노출해 다단 공격을 개별 튜닝한다.", "Rear·Body·Core·Debris 네 시트는 4×3, 12프레임, 셀 512의 고해상도 재래스터화 결과를 사용한다.", "Loop·그림자·판정은 없고 같은 인스턴스의 Play→Stop→Play에서 렌더러와 파티클 초기화를 검증했다."],
-      source: "docs/VFX_CONTEXT.md"
+      id: "player-slash-vfx", group: "combat", title: "피격 반응 · 현재 공격 표현", kicker: "COMBAT RESPONSE", status: "구현 · 실맵 QA", statusKey: "qa",
+      summary: "추가 참격 효과와 공통 공격 2배 가속은 미사용이다. 실제 모션과 무기 트레일, 피격 경직·짧은 넉백으로 공격 결과를 전달한다.",
+      metrics: [{ label: "경직", value: "0.45초" }, { label: "넉백", value: "0.38m" }, { label: "이동 시간", value: "0.16초" }],
+      rules: ["직접 피해를 받고 경직이 수락된 경우에만 공격자 반대 방향으로 밀린다.", "CharacterController 충돌로 벽 통과를 막고 공격·구르기·음용 취소 뒤 조작을 복구한다.", "지속 피해와 구르기 무적 구간에는 추가 경직·넉백이 발생하지 않는다.", "연속 피격 제한은 피해 무적을 추가하지 않는다. 17개 격리 플레이 사례를 검증했으며 전체 런 체감은 별도다."],
+      source: "pdf/전투모션_보정_2026-09-14.pdf"
     },
     {
       id: "equipment-catalog", group: "growth", title: "무기 · 방어구 · 악세서리", kicker: "EQUIPMENT", status: "구현 완료", statusKey: "done",
@@ -185,17 +185,17 @@ window.PROJECT_SYSTEMS = {
       source: "docs/상세기획서.md"
     },
     {
-      id: "boss", group: "enemy", title: "보스 — 잠들지 않는 뿌리", kicker: "FINAL ENCOUNTER", status: "제작 대기", statusKey: "planned",
+      id: "boss", group: "enemy", title: "보스 — 잠들지 않는 뿌리", kicker: "FINAL ENCOUNTER", status: "구현 · 밸런스 QA", statusKey: "qa",
       summary: "반고정형 나무 정령이 3페이즈 동안 근접, 투사체와 광역 뿌리 강타로 흐름·회피·락온을 함께 검증한다.",
-      metrics: [{ label: "페이즈", value: "3개" }, { label: "이동", value: "반고정" }, { label: "현재", value: "모델 대기" }],
-      rules: ["한자리에 뿌리내리고 플레이어 쪽으로 회전하며 페이즈 전환 때 지하 이동한다.", "1페이즈는 근접, 2페이즈는 투사체, 3페이즈는 광역 강타와 강화 슈퍼아머다.", "코어 노출은 방어가 무너지는 것이 아니라 끝을 허락하는 서사 장면이다.", "모델·리깅·BossController·실제 사망 이벤트와 엔딩 연결이 남아 있다."],
-      source: "docs/보스_설계_프롬프트.md"
+      metrics: [{ label: "체력", value: "2100" }, { label: "전환", value: "1400 / 700" }, { label: "모션", value: "20개" }],
+      rules: ["Meshy 모델·Blender 리그·전투 모션을 연결했다. 순간이동과 잡기는 사용하지 않는다.", "거리·최근 패턴 이력·제한된 예측으로 선택하며 2페이즈부터 2연속 내려찍기와 연계가 추가된다.", "3페이즈는 본체 팔 공격을 멈추고 코어를 개방한다. 뿌리·황금탄·공동 붕괴·코어 광선으로 저항한다.", "해방 모션 뒤 승리 출구까지 연결했다. 전체 입력·장비·카메라 밸런스와 숲 정화·계승·크레딧은 남아 있다."],
+      source: "docs/프로젝트_현황.md"
     },
     {
-      id: "input-lockon", group: "interface", title: "조작 · 회피 · Q 락온", kicker: "PLAYER CONTROL", status: "수정 필요", statusKey: "qa",
-      summary: "키보드·마우스 조작과 방향 회피, 대상 고정 공격이 구현됐으며 락온 스트레이프 이동은 보정이 남아 있다.",
+      id: "input-lockon", group: "interface", title: "조작 · 회피 · Q 락온", kicker: "PLAYER CONTROL", status: "구현 · 실맵 QA", statusKey: "qa",
+      summary: "대상 기준 WASD 스트레이프와 후진, 방향 회피·기억 돌진을 연결하고 구르기 중 카메라 락온을 유지한다.",
       metrics: [{ label: "공격", value: "좌클릭" }, { label: "회피", value: "Space" }, { label: "락온", value: "Q" }],
-      rules: ["WASD 이동, E 상호작용, F 포션, Tab 인벤토리, M 지도를 사용한다.", "회피 중 완전 무적이며 공격 도중 캔슬해도 흐름이 유지된다.", "10m 안에서 카메라 정면의 적을 우선 고정하고 15m 이탈·사망 시 해제한다.", "락온 중 A/D 원형 횡이동과 S 후진의 실제 벡터·애니메이션 정합이 수정 대기다."],
+      rules: ["WASD 이동, E 상호작용, F 포션, Tab 인벤토리, M 지도를 사용한다.", "구르기 이동 0.8초 중 기본 무적은 앞 0.3초다. 공격 캔슬로 회피해도 흐름은 유지된다.", "10m 안에서 카메라 정면의 적을 우선 고정하고 15m 이탈·사망 시 해제한다.", "락온 중 좌우·앞뒤 이동과 Sword and Shield 방향 블렌드를 적용했다. 전체 런과 가림 지형 카메라는 추가 QA 대상이다."],
       source: "docs/상세기획서.md"
     },
     {
