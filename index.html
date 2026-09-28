@@ -1,514 +1,95 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f7f3">
-  <meta name="description" content="잠들지 않는 숲의 세계관, 스토리, 시스템, UI/UX, 무기, 기억, 몬스터, 보스와 개발 현황을 한곳에서 보는 ROOTBOUND 프로젝트 허브">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="잠들지 않는 숲 · ROOTBOUND Project Hub">
-  <meta property="og:description" content="스토리와 UI/UX부터 무기·몬스터·보스, 실제 개발 진행사항까지 한곳에서 확인하세요.">
-  <meta property="og:image" content="https://seominku.github.io/capstone2026-project-hub/og.png">
-  <meta property="og:image:alt" content="거대한 뿌리 수호자 앞에 선 짐수레 모험가와 잠들지 않는 숲 타이틀">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="잠들지 않는 숲 · ROOTBOUND Project Hub">
-  <meta name="twitter:description" content="스토리, 무기, 몬스터, 보스와 개발 현황을 담은 게임 바이블">
-  <meta name="twitter:image" content="https://seominku.github.io/capstone2026-project-hub/og.png">
-  <title>잠들지 않는 숲 · Project Hub</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f2f0e9">
+<meta name="description" content="잠들지 않는 숲 — 기억을 엮어 싸우고, 숲의 순환을 따라 심층으로 내려가는 3D 액션 로그라이트. C0D3X의 게임을 만나보세요.">
+<meta property="og:type" content="website"><meta property="og:title" content="잠들지 않는 숲 | ROOTBOUND">
+<meta property="og:description" content="기억을 엮어 싸우고, 잠들지 못한 숲의 비밀을 마주하세요.">
+<meta property="og:url" content="https://seominku.github.io/capstone2026-project-hub/">
+<meta property="og:image" content="https://seominku.github.io/capstone2026-project-hub/assets/game/social.jpg">
+<meta property="og:image:alt" content="지하 성소에서 뿌리 수호자와 마주한 모험가. 인게임 모델 연출 촬영.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+<link rel="preload" as="image" href="assets/game/forest.webp">
+<title>잠들지 않는 숲 | ROOTBOUND</title>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand top-brand" href="#game-bible" data-view="game-bible" aria-label="게임 바이블 홈">
-      <span class="brand-mark" aria-hidden="true"><span></span></span>
-      <span><strong>ROOTBOUND</strong><small>PROJECT HUB</small></span>
-    </a>
-    <button class="mobile-menu" type="button" aria-label="상단 메뉴 열기" aria-controls="primaryNav" aria-expanded="false">☰</button>
-    <nav class="primary-nav" id="primaryNav" aria-label="상단 주요 메뉴">
-      <a class="top-nav-link active" href="#game-bible" data-view="game-bible">GAME BIBLE</a>
-      <a class="top-nav-link" href="#development" data-view="development">개발 현황</a>
-      <a class="top-nav-link" href="#quality" data-view="quality">로드맵 · QA</a>
-      <a class="top-nav-link" href="#documents" data-view="documents">문서</a>
-      <a class="top-nav-link" href="#feedback" data-view="feedback">피드백</a>
-    </nav>
-    <div class="top-actions">
-      <label class="search-box">
-        <span aria-hidden="true">⌕</span>
-        <input id="globalSearch" type="search" placeholder="전체 검색" autocomplete="off">
-        <kbd>Ctrl K</kbd>
-      </label>
-      <a class="figma-link" href="https://www.figma.com/design/VUbSL5UgQZpliih2Y8Ud8a?node-id=1-2" target="_blank" rel="noreferrer">Figma ↗</a>
-      <button class="primary-button" id="openFeedback" type="button">+ 피드백</button>
-    </div>
-  </header>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+<a class="brand" href="#intro" aria-label="잠들지 않는 숲, 게임 소개"><span class="brand-symbol" aria-hidden="true">✳</span><span>ROOTBOUND<small>잠들지 않는 숲</small></span></a>
+<button class="menu-toggle" aria-controls="navigation" aria-expanded="false" type="button">메뉴 <span aria-hidden="true">☰</span></button>
+<nav id="navigation" aria-label="주요 메뉴"><a href="#intro">게임 소개</a><a href="#story">이야기</a><a href="#world">숲과 심층</a><a href="#combat">전투와 성장</a><a href="#memories">기억</a><a href="#equipment">장비</a><a href="#bestiary">몬스터</a></nav><span class="team-mark">C0D3X</span>
+</header>
+<main id="main" tabindex="-1">
+<section class="page" id="intro" aria-labelledby="intro-title">
+<div class="hero">
+<img class="hero-backdrop" src="assets/game/forest.webp" alt="안개가 낮게 깔린 로우폴리 숲과 구불구불한 길" fetchpriority="high" width="1920" height="1080">
+<div class="hero-shade"></div><div class="hero-content">
+<p class="eyebrow light">기억으로 이어지는 액션 로그라이트</p><h1 id="intro-title">잠들지<br>않는 숲<span>ROOTBOUND</span></h1>
+<p class="hero-lead">쓰러져도, 숲의 이야기는 끝나지 않습니다.<br>잊힌 검술을 엮어 나만의 싸움을 완성하세요.</p>
+<a class="button light-button" href="#combat">어떻게 싸우나요? <span aria-hidden="true">↗</span></a></div>
+<span class="image-note">실제 게임 화면</span><div class="hero-index"><span>01 — 숲의 문턱</span><span>기억 · 선택 · 계승</span></div></div>
+<div class="game-strip wrap"><span>3D 액션 로그라이트</span><span>로우폴리 다크 판타지</span><span>Windows · 싱글 플레이</span><span>제작 C0D3X</span></div>
+<div class="wrap intro-statement"><div><p class="eyebrow">숲이 다시 깨어날 때</p><h2>같은 숲.<br>다른 기억, 다른 전투.</h2></div><div><p>마을로 물자를 운반하던 평범한 여행자가 검은 안개 속에 갇힙니다. 손에 남은 검술의 기억과 길목에서 만난 까마귀가, 숲 아래 잠든 진실로 당신을 이끕니다.</p><p>무엇을 장착하고 어떤 기억을 연결할지, 보상을 위해 어떤 위험을 받아들일지. 매번의 선택이 다음 싸움의 모습을 바꿉니다.</p><a class="text-link" href="#story">숲의 이야기를 읽어보세요 →</a></div></div>
+<div class="wrap feature-grid" id="intro-features"></div>
+<div class="wrap encounter split-feature"><button class="photo portrait-photo" data-photo="assets/game/boss.webp" data-caption="뿌리 수호자와의 대면 · 인게임 모델 연출 촬영" aria-label="뿌리 수호자 사진 크게 보기"><img src="assets/game/boss.webp" alt="검을 든 모험가 뒤로 솟아 있는 거대한 뿌리 수호자" loading="lazy" width="1334" height="1888"><span>크게 보기 ↗</span></button><div><p class="eyebrow">가장 깊은 곳에서 기다리는 존재</p><h2>이 숲에는<br>잠들지 못한<br>이유가 있습니다.</h2><p>몬스터를 쓰러뜨리는 것만이 여정의 끝은 아닙니다. 숲을 지켜 온 존재와 그 안에 남은 기억을 마주했을 때, 이 길의 의미가 달라집니다.</p><a class="button" href="#bestiary">숲의 존재들 만나보기 ↗</a><p class="small muted">사진은 실제 게임 모델을 사용한 연출 촬영입니다.</p></div></div>
+<section class="wrap faq-section" aria-labelledby="faq-title"><p class="eyebrow">처음 만나는 분께</p><h2 id="faq-title">플레이하기 전에</h2><div id="faq-content"></div></section>
+</section>
 
-  <nav class="game-subnav" id="gameSubnav" aria-label="게임 바이블 세부 메뉴">
-    <span class="subnav-title">GAME BIBLE</span>
-    <a class="subnav-link active" href="#game-bible" data-view="game-bible">개요</a>
-    <a class="subnav-link" href="#story" data-view="story">스토리</a>
-    <a class="subnav-link" href="#systems" data-view="systems">시스템</a>
-    <a class="subnav-link" href="#ui-ux" data-view="ui-ux">UI · UX</a>
-    <a class="subnav-link" href="#weapons" data-view="weapons">무기</a>
-    <a class="subnav-link" href="#memories" data-view="memories">기억</a>
-    <a class="subnav-link" href="#armor" data-view="armor">방어구</a>
-    <a class="subnav-link" href="#bestiary" data-view="bestiary">몬스터 · 보스</a>
-  </nav>
+<section class="page wrap inner-page" id="story" aria-labelledby="story-title" hidden>
+<header class="page-heading"><p class="eyebrow">숲에 남겨진 이야기</p><h1 id="story-title">돌아갈 길을 찾다가,<br>남겨진 기억을 만나다.</h1><p>이야기는 영웅의 부름이 아니라, 마을로 향하던 작은 마차에서 시작됩니다.</p></header>
+<figure class="wide-photo"><img src="assets/game/camp.webp" alt="숲길의 캠프와 여행자를 위한 쉼터" loading="lazy" width="1920" height="1080"><figcaption>잠시 비를 피하는 자리에서 시작되는 여정</figcaption></figure>
+<div class="story-layout"><aside><p class="eyebrow">이야기의 문턱</p><p>비와 검은 안개.<br>익숙한 길의 낯선 흔적.<br>그리고 당신을 기다리던 까마귀.</p><span class="small muted">아래 ‘숲의 진실’에는 후반부 내용이 포함됩니다.</span></aside><div id="story-content"></div></div>
+<div class="split-feature crow-feature"><button class="photo" data-photo="assets/game/crow.webp" data-caption="나뭇가지 위의 까마귀 · 실제 게임 화면" aria-label="까마귀 사진 크게 보기"><img src="assets/game/crow.webp" alt="캠프 나뭇가지에 앉아 있는 작은 까마귀" loading="lazy"><span>크게 보기 ↗</span></button><div><p class="eyebrow">숲의 길잡이</p><h2>까마귀는<br>얼마나 알고 있을까요?</h2><p>까마귀는 성장을 돕는 존재이자, 숲의 사연을 조금씩 들려주는 길잡이입니다. 나뭇가지에 앉은 검은 새는 지하에서 옅은 하늘색 환영의 모습으로 다시 나타납니다.</p><p>대화를 거듭하고 더 깊은 곳으로 나아갈수록, 흩어져 있던 이야기들이 하나로 이어집니다.</p></div></div>
+</section>
 
-  <main class="main-content">
-      <div class="page-wrap">
-        <section class="hero page-section" id="overview" data-page="game-bible">
-          <div>
-            <p class="eyebrow">DARK FANTASY ROGUELITE · UNITY 6</p>
-            <h1>잠들지 않는 숲</h1>
-            <p class="hero-copy">검은 안개가 다시 세우는 숲. 세계관과 전투 설계부터 실제 구현, 다음 작업과 피드백까지 한곳에서 확인하는 게임 바이블입니다.</p>
-            <div class="hero-meta">
-              <span class="status-pill"><i></i>핵심 시스템 완성</span>
-              <span>최종 동기화 2026.09.14</span>
-              <span>Windows · URP</span>
-            </div>
-          </div>
-          <figure class="hero-media">
-            <img src="og.png" alt="거대한 뿌리 수호자와 숲으로 향하는 짐수레 모험가">
-          </figure>
-        </section>
+<section class="page wrap inner-page" id="world" aria-labelledby="world-title" hidden>
+<header class="page-heading"><p class="eyebrow">숲과 심층</p><h1 id="world-title">빛이 닿는 숲에서,<br>뿌리가 잠든 곳까지.</h1><p>8개 전투 장으로 이어지는 여정. 야영지와 두 번의 기억 제련소는 그 사이에 놓인 쉼표입니다.</p></header>
+<div class="journey" id="journey"></div>
+<div class="split-feature section-space"><button class="photo" data-photo="assets/game/waterfall.webp" data-caption="여울목 서쪽 폭포 · 실제 게임 화면" aria-label="폭포 사진 크게 보기"><img src="assets/game/waterfall.webp" alt="여울목 끝에서 아래로 떨어지는 폭포" loading="lazy"><span>크게 보기 ↗</span></button><div><p class="eyebrow">길 밖의 길</p><h2>물살을 따라가면<br>어디에 닿을까요?</h2><p>여울목의 강은 배경이 아닙니다. 깊어지면 수영하고, 거센 물살에는 몸이 휩쓸립니다. 서쪽 폭포 아래에는 숨겨진 침수 수로가 기다립니다.</p><p>숨은 길을 탐험한 뒤 폐허 마을로 합류할 수 있습니다. 정상적인 다리 경로와는 다른 선택입니다.</p></div></div>
+<section class="section-space"><p class="eyebrow">미로 안의 작은 세계</p><h2>복도 너머에는<br>어떤 방이 있을까요?</h2><p class="section-intro">일반 미로에는 아홉 가지 주제의 방이 섞여 등장합니다. 철창과 작은 방, 열주와 회랑이 공간을 나누고 벽의 횃불이 길을 비춥니다.</p><div class="gallery-grid" id="room-gallery"></div><div class="room-list" id="room-list"></div><p class="small muted">원형 미로는 별도의 환형 구조입니다. 위 방들이 모두 한 번에 나오거나 원형 미로에도 등장하는 것은 아닙니다.</p></section>
+<div class="feature-grid section-space" id="world-features"></div>
+</section>
 
-        <section class="stats-grid has-asset-progress page-section" id="development" data-page="development" aria-label="프로젝트 핵심 지표" hidden>
-          <article class="progress-card panel">
-            <div class="progress-ring" id="progressRing"><span id="progressValue">0%</span></div>
-            <div>
-              <p class="section-kicker">CHECKLIST PROGRESS</p>
-              <h2>핵심은 완성,<br>마지막 장을 만드는 중</h2>
-              <p id="progressCaption"></p>
-            </div>
-          </article>
-          <article class="progress-card asset-progress-card panel">
-            <div class="progress-ring asset-progress-ring" id="assetProgressRing"><span id="assetProgressValue">0%</span></div>
-            <div>
-              <p class="section-kicker">ASSET REPLACEMENT · 2026.08.01 SNAPSHOT</p>
-              <h2>신규 에셋부터 확보하고,<br>화면과 소리를 교체하는 중</h2>
-              <p id="assetProgressCaption"></p>
-              <a class="asset-progress-link" href="#asset-swap">상세 교체 목록 보기 ↓</a>
-            </div>
-          </article>
-          <div class="metric-cards" id="metricCards"></div>
-        </section>
+<section class="page wrap inner-page" id="combat" aria-labelledby="combat-title" hidden>
+<header class="page-heading"><p class="eyebrow">전투와 성장</p><h1 id="combat-title">공격을 잇거나,<br>한 순간에 쏟아내거나.</h1><p>검술의 기억과 성장 트리를 조합해 나만의 전투 리듬을 만드세요.</p></header>
+<button class="photo combat-panorama" data-photo="assets/game/battle.webp" data-caption="보스와 마주한 모험가 · 인게임 모델 연출 촬영"><img src="assets/game/battle.webp" alt="대검을 들고 뿌리 수호자를 상대하는 모험가의 연출 장면" loading="lazy"><span>인게임 모델 연출 촬영 ↗</span></button>
+<div class="feature-grid section-space" id="combat-features"></div>
+<section class="section-space"><p class="eyebrow">세 갈래, 하나의 빌드</p><h2>기억의 성장</h2><div class="tree-grid" id="growth-trees"></div><p class="note">세 트리에 함께 투자할 수 있습니다. 보조 성장은 해당 트리의 메인 노드를 먼저 배워야 하며, 공용 능력치 성장도 별도로 마련되어 있습니다.</p><button class="photo tree-photo" data-photo="assets/game/growth.webp" data-caption="기억의 성장 · 실제 게임 UI, 수치와 배치는 조정될 수 있습니다"><img src="assets/game/growth.webp" alt="이어지는 기억, 응축된 기억, 대장장이의 세 성장 트리를 한 화면에 표시하는 실제 게임 UI" loading="lazy"><span>성장 화면 크게 보기 ↗</span></button></section>
+<section class="section-space"><p class="eyebrow">한 번의 도전, 다음 도전</p><h2>실패해도 남는 것이 있습니다.</h2><div class="rules-grid" id="run-rules"></div></section>
+<section class="section-space controls-section"><p class="eyebrow">기본 조작</p><h2>숲에 들어가기 전, 이것만.</h2><dl class="controls" id="controls"></dl></section>
+</section>
 
-        <section class="section-block panel ui-progress-panel page-section" data-page="development" data-ui-progress aria-label="UI UX 진행 단계" hidden></section>
+<section class="page wrap inner-page" id="memories" aria-labelledby="memories-title" hidden>
+<header class="page-heading"><p class="eyebrow">기억 도감</p><h1 id="memories-title">칼은 하나여도,<br>싸움의 형태는 다릅니다.</h1><p>22가지 검술의 기억. 희귀도나 속성이 아닌 <strong>무게와 공격 방식</strong>으로 선택합니다.</p></header>
+<div class="catalog-toolbar"><div class="filter-pills" id="memory-filters" role="group" aria-label="기억 무게"><button data-weight="all" aria-pressed="true">전체</button><button data-weight="light" aria-pressed="false">가벼움</button><button data-weight="normal" aria-pressed="false">보통</button><button data-weight="heavy" aria-pressed="false">무거움</button></div><label class="search-label"><span>기억 검색</span><input id="memory-search" type="search" placeholder="기억 이름으로 검색" autocomplete="off"></label></div>
+<p class="result-count" id="memory-count" role="status"></p><div class="memory-grid" id="memory-grid"></div>
+<div class="feature-grid section-space" id="memory-features"></div>
+<p class="note">새 도전의 기본 기억은 ‘회전 베기’입니다. ‘일격 축적’을 배우면 2~4번 슬롯이 잠기고, 그곳에 장착했던 기억은 기억 인벤토리로 돌아갑니다.</p>
+</section>
 
-        <section class="section-block game-bible page-section" id="world" data-page="game-bible">
-          <div class="section-heading">
-            <div><p class="section-kicker">GAME BIBLE · WORLD</p><h2>검은 안개가 숲을 다시 세운다</h2></div>
-            <a class="text-link" href="pdf/상세스토리.pdf" target="_blank" rel="noreferrer">전체 스토리 PDF ↗</a>
-          </div>
-          <div class="game-intro-grid">
-            <article class="game-manifesto panel">
-              <span class="manifesto-mark" aria-hidden="true">“</span>
-              <blockquote>안개는 나를 죽이지 않는다.<br><strong>숲을 다시 세울 뿐이다.</strong></blockquote>
-              <p>장소는 되돌아가지만 모험가는 완전히 되돌아가지 않는다. 매번 달라지는 절차적 숲, 남는 기억과 무덤, 30%의 성장이 하나의 세계관 규칙으로 연결된다.</p>
-            </article>
-            <div class="game-facts" id="gameFacts" aria-label="게임 핵심 수치"></div>
-          </div>
-          <div class="pillar-grid" id="pillarGrid"></div>
-          <article class="core-loop panel">
-            <div><p class="section-kicker">CORE LOOP</p><h3>욕심을 낼수록 강해지고, 늦을수록 숲이 사나워진다</h3></div>
-            <div class="loop-track" id="coreLoop"></div>
-          </article>
-        </section>
+<section class="page wrap inner-page" id="equipment" aria-labelledby="equipment-title" hidden>
+<header class="page-heading"><p class="eyebrow">장비 도감</p><h1 id="equipment-title">발견하고, 감정하고,<br>나의 것으로.</h1><p>무기 15종과 방어구 300종, 반지 2종의 외형을 살펴보세요. 모든 몬스터가 같은 장비를 떨어뜨리지는 않습니다.</p></header>
+<div class="equipment-process"><div><b>01</b><span>장비 획득<small>몬스터별 전리품</small></span></div><div><b>02</b><span>감정<small>잠든 추가 옵션 공개</small></span></div><div><b>03</b><span>재추첨 또는 분해<small>원하는 빌드로 정리</small></span></div></div>
+<div class="catalog-toolbar"><div class="filter-pills" id="equipment-filters" role="group" aria-label="장비 종류"><button data-kind="weapons" aria-pressed="true">무기</button><button data-kind="armor" aria-pressed="false">방어구</button><button data-kind="accessories" aria-pressed="false">장신구</button></div><label class="search-label"><span>장비 검색</span><input id="equipment-search" type="search" placeholder="장비 이름으로 검색" autocomplete="off"></label></div>
+<div class="catalog-selects"><label id="grade-filter-label">등급<select id="grade-filter"><option value="all">모든 등급</option><option value="0">일반</option><option value="1">레어</option><option value="2">에픽</option><option value="3">유니크</option><option value="4">레전더리</option></select></label><label id="slot-filter-label" hidden>부위<select id="slot-filter"><option value="all">모든 부위</option></select></label><p class="result-count" id="equipment-count" role="status"></p></div>
+<div class="equipment-grid" id="equipment-grid"></div>
+<div class="pagination" id="pagination" aria-label="장비 목록 페이지"><button id="previous-page" type="button" aria-label="이전 장비 페이지">← 이전</button><span id="page-count" aria-live="polite"></span><button id="next-page" type="button" aria-label="다음 장비 페이지">다음 →</button></div>
+<p class="note">성능은 등급·품질·감정 옵션과 성장에 따라 달라집니다. 고정 수치로 오해하지 않도록 도감에는 외형과 분류를 표시합니다. 무기 강화 시스템은 사용하지 않습니다.</p>
+<div class="feature-grid section-space" id="equipment-features"></div>
+</section>
 
-        <section class="section-block page-section" id="story" data-page="story" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">THE COMPLETE STORY · 9 CHAPTERS</p><h2>잠들지 않는 숲</h2></div>
-            <span class="section-note">상세스토리 원문을 바탕으로 엮은 하나의 이야기</span>
-          </div>
-          <figure class="section-visual story-visual panel">
-            <img src="assets/concept/story-forest.png" alt="검은 안개가 뒤덮은 숲길에서 폐허 마을로 향하는 짐수레 모험가" loading="lazy">
-            <figcaption><strong>한 번의 밤, 끝나지 않는 길</strong><span>마을에 물자를 전하려던 평범한 모험가는 검은 안개 속에서 오래된 수호자의 마지막 부탁을 듣는다.</span></figcaption>
-          </figure>
-          <article class="novel-reader panel" id="storyNovel" aria-label="잠들지 않는 숲 상세 이야기"></article>
-        </section>
-
-        <section class="section-block page-section" id="systems" data-page="systems" hidden>
-          <div class="section-heading system-page-heading">
-            <div><p class="section-kicker">PROJECT SYSTEMS · COMPLETE GUIDE</p><h2>프로젝트를 움직이는 모든 시스템</h2></div>
-            <span class="section-note">기획 문서 · 구현 명세 · 현재 상태를 한곳에 통합</span>
-          </div>
-          <article class="system-manifesto panel">
-            <div>
-              <p class="section-kicker">HOW ROOTBOUND WORKS</p>
-              <h3>기억을 조립하고, 위험과 거래하며,<br>죽음 너머로 다음 세대를 준비한다.</h3>
-              <p>이 페이지는 게임 규칙과 실제 구현 상태를 함께 설명합니다. 시스템 이름만 나열하지 않고 무엇을 입력하면 어떤 규칙을 거쳐 무엇이 남는지, 아직 어떤 작업이 필요한지까지 연결합니다.</p>
-            </div>
-            <div class="system-overview" id="systemOverview" aria-label="시스템 현황 요약"></div>
-          </article>
-          <article class="system-browser panel">
-            <div class="system-toolbar">
-              <label class="catalog-search system-search">
-                <span>시스템 검색</span>
-                <input id="systemSearch" type="search" placeholder="기억, 세이브, 계약, 락온 등" autocomplete="off">
-              </label>
-              <div class="filter-tabs system-filters" id="systemFilters" role="tablist" aria-label="시스템 대분류 필터"></div>
-            </div>
-            <div class="system-result-bar"><strong id="systemResultCount">전체 시스템</strong><span>카드를 열면 세부 규칙과 수치를 볼 수 있습니다.</span></div>
-            <div class="system-catalog" id="systemCatalog"></div>
-          </article>
-          <article class="system-docs panel">
-            <div><p class="section-kicker">SOURCE DOCUMENTS</p><h3>더 깊이 확인하기</h3><p>각 시스템 카드는 현재 프로젝트 문서를 기준으로 정리했습니다.</p></div>
-            <div class="system-doc-links" id="systemDocLinks"></div>
-          </article>
-        </section>
-
-        <section class="section-block ui-ux-page page-section" id="ui-ux" data-page="ui-ux" hidden>
-          <div class="section-heading ui-ux-heading">
-            <div><p class="section-kicker">INTERFACE · EXPERIENCE · CURRENT BUILD</p><h2>숲의 분위기를 유지하면서, 조작은 더 분명하게</h2></div>
-            <a class="text-link" href="pdf/상세기획서.pdf" target="_blank" rel="noreferrer">UI/UX 기획 PDF ↗</a>
-          </div>
-
-          <article class="ui-ux-hero panel">
-            <div class="ui-ux-hero-copy">
-              <span class="ui-status-badge">2026.09.14 진행 상태 확인</span>
-              <h3>캠프부터 죽음까지,<br>하나의 나무 프레임으로.</h3>
-              <p>캐릭터 관리, 기억 구성, 커스터마이징, 장비 해금, 옵션, 난이도, HUD, 지도와 사망 화면을 같은 시각 언어와 입력 규칙으로 정리했습니다. 드래그·선택·호버·입력 복구 기능은 연결되었으며, 전체 런을 반복하는 흐름 검사와 다중 해상도 QA는 남아 있습니다.</p>
-              <dl class="ui-ux-summary">
-                <div><dt>기준 화면</dt><dd>1920 × 1080</dd></div>
-                <div><dt>현재 언어</dt><dd>한국어 통일</dd></div>
-                <div><dt>현재 단계</dt><dd>기능 완료 · 종합 QA 대기</dd></div>
-              </dl>
-            </div>
-            <div class="ui-ux-latest-captures">
-              <figure><img src="assets/ui/camp-after-death.png" alt="사망 후 다시 로드된 캠프 시작 화면" loading="lazy"><figcaption>사망 후 캠프 카메라 복구</figcaption></figure>
-              <figure><img src="assets/ui/customization-after-death.png" alt="사망 후 캠프에서 다시 연 커스터마이징 화면" loading="lazy"><figcaption>커스터마이징 미리보기 재연결</figcaption></figure>
-            </div>
-          </article>
-
-          <article class="panel ui-progress-panel" data-ui-progress aria-label="UI UX 구현과 검증 현황"></article>
-
-          <div class="ui-principle-grid" aria-label="UI UX 공통 원칙">
-            <article class="panel"><span>01</span><h3>같은 행동, 같은 피드백</h3><p>클릭은 선택과 상세 보기, 드래그는 장착·해제·배치, 호버는 작은 확대와 강조로 통일합니다.</p></article>
-            <article class="panel"><span>02</span><h3>이미지 기준 안전 여백</h3><p>좌표만 맞추지 않고 실제 캡처에서 프레임, 글, 아이콘, 슬롯과 설명창의 겹침을 검증합니다.</p></article>
-            <article class="panel"><span>03</span><h3>플레이 입력과 완전 분리</h3><p>관리·옵션 화면이 열리면 카메라 Look을 막고, 닫을 때 커서·시간·입력 맵을 복구합니다.</p></article>
-            <article class="panel"><span>04</span><h3>현재는 한국어만</h3><p>화면에는 한 언어만 표시하고 한국어/영어 원문은 로컬라이징 테이블 키로 함께 관리합니다.</p></article>
-          </div>
-
-          <div class="section-heading ui-screen-heading">
-            <div><p class="section-kicker">SCREEN SYSTEMS</p><h2>개편한 주요 화면</h2></div>
-            <span class="section-note">08.09 캡처 · 09.14 기능 현황. 전체 흐름 QA는 별도입니다.</span>
-          </div>
-          <div class="ui-screen-grid">
-            <article class="ui-screen-card panel"><img src="assets/ui/inventory.png" alt="캐릭터 관리와 인벤토리 화면" loading="lazy"><div><span>구현 완료</span><h3>캐릭터 관리 · 인벤토리</h3><p>인벤토리↔장비 슬롯 드래그, 양쪽 슬롯 클릭 상세 보기, 빈 부위 실루엣과 호버 피드백.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/ui/memory-loadout.png" alt="보유 기억과 장착 기억을 구성하는 화면" loading="lazy"><div><span>구현 완료</span><h3>기억 구성</h3><p>왼쪽 보유 기억, 오른쪽 선택 정보와 장착 슬롯. 배치 순서가 실제 콤보 순서입니다.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/ui/customization-after-death.png" alt="부위와 파츠를 그리드에서 선택하는 커스터마이징 화면" loading="lazy"><div><span>08.09 회귀 수정</span><h3>커스터마이징</h3><p>부위→파츠 그리드→색상 선택, 장비 미착용 기본값, 캐릭터 전용 미리보기 레이어.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/ui/difficulty.png" alt="쉬움 보통 어려움 난이도 선택 화면" loading="lazy"><div><span>구현 완료</span><h3>난이도 선택</h3><p>쉬움 흰색·보통 노란색·어려움 빨간색으로 구분하고 선택 뒤 런 진입 흐름을 연결했습니다.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/ui/gameplay-hud.png" alt="체력 포션 골드 정수 미니맵이 표시된 인게임 HUD" loading="lazy"><div><span>구현 완료</span><h3>게임플레이 HUD</h3><p>HP, 포션, 골드, 정수, 흐름, 상태 칩과 미니맵을 배경·아이콘 단위로 읽기 쉽게 분리했습니다.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/ui/big-map.png" alt="Fog of War가 적용된 전체 지도 화면" loading="lazy"><div><span>구현 완료</span><h3>미니맵 · 전체 지도</h3><p>미니맵 범위 클램프와 맵 밖 검정, M 전체 지도와 Fog of War 탐험 상태를 공유합니다.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/ui/bonfire.png" alt="골드를 사용해 성장하는 화톳불 화면" loading="lazy"><div><span>아트 폴리싱 남음</span><h3>화톳불 성장</h3><p>비용과 상승 수치를 먼저 확인합니다. 월드 오브젝트의 뿌리 제단 리스킨은 다음 아트 작업입니다.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/ui/death-screen.png" alt="런 결과를 보여주는 사망 화면" loading="lazy"><div><span>구현 완료</span><h3>사망 결과 · 장비 유지</h3><p>런 기록 뒤 장비 최대 1개 또는 미선택으로 이어지며 무료 단검과 소모품은 후보에서 제외됩니다.</p></div></article>
-          </div>
-
-          <div class="section-heading ui-screen-heading">
-            <div><p class="section-kicker">COMBAT FEEDBACK · CURRENT BUILD</p><h2>최근 전투 표현 개선</h2></div>
-            <a class="text-link" href="pdf/전투모션_보정_2026-09-14.pdf" target="_blank" rel="noreferrer">전투 모션 검증 PDF ↗</a>
-          </div>
-          <div class="ui-screen-grid">
-            <article class="ui-screen-card panel"><img src="assets/combat/goblin.png" alt="보정한 고블린의 실제 공격 판정 검사" loading="lazy"><div><span>09.14 플레이 검증</span><h3>몬스터 공격 모션</h3><p>기존 13종·27클립의 준비·타격·회복과 체중 이동을 정비했습니다. 근접 72개 타격·회피·취소 사례 통과.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/combat/memory.png" alt="보정한 기억을 실제 장착 무기로 재생하는 플레이어" loading="lazy"><div><span>23개 기억 + 순서 콤보</span><h3>기억 리타게팅</h3><p>원본 96파일을 백업하고 CS 12개 관절·바닥 높이를 보정했습니다. 기존 믹사모 11개와 배속·타격 이벤트는 유지합니다.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/combat/player-hit.png" alt="공격을 맞고 경직되는 플레이어" loading="lazy"><div><span>17개 피격 사례</span><h3>경직과 짧은 넉백</h3><p>0.45초 경직에 0.38m/0.16초 넉백을 연결했습니다. 벽 충돌, 방향, 공격 취소와 조작 복구를 검사했습니다.</p></div></article>
-            <article class="ui-screen-card panel"><img src="assets/combat/wolf-pounce.png" alt="목표 방향으로 도약하며 접근하는 늑대" loading="lazy"><div><span>전진 도약</span><h3>늑대 강공격</h3><p>점프 모션에 지면 전진을 연결하고 방향을 확정합니다. 벽·NavMesh 경계·피격 취소·일시정지 안전성을 검증합니다.</p></div></article>
-          </div>
-
-          <article class="ui-qa-panel panel">
-            <div><p class="section-kicker">NEXT QUALITY GATE</p><h3>남은 것은 화면 추가보다 전체 흐름 검증입니다.</h3></div>
-            <ul>
-              <li>1920×1080과 다른 16:9 해상도에서 글·아이콘·슬롯·프레임 겹침 확인</li>
-              <li>캠프→난이도→런→옵션→사망→캠프를 2회 반복하며 입력·카메라 상태 확인</li>
-              <li>기억 정식 아이콘과 화톳불 뿌리 제단 아트 교체</li>
-            </ul>
-          </article>
-        </section>
-
-        <section class="section-block page-section" id="weapons" data-page="weapons" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">ARSENAL · WEAPONS</p><h2>무기가 콤보의 문법을 바꾼다</h2></div>
-            <div class="filter-tabs" id="weaponFilters" role="tablist" aria-label="무기 계열 필터">
-              <button class="active" data-filter="all" type="button">전체</button>
-              <button data-filter="light" type="button">경량</button>
-              <button data-filter="medium" type="button">중량</button>
-              <button data-filter="heavy" type="button">대검</button>
-            </div>
-          </div>
-          <div class="weapon-family-grid" id="weaponFamilies"></div>
-          <article class="asset-showcase panel">
-            <div class="asset-showcase-heading">
-              <div><p class="section-kicker">CAPTURED FROM UNITY</p><h3>실제 프로젝트 장비</h3></div>
-              <span id="weaponCatalogCount">16종 등록</span>
-            </div>
-            <div class="unity-asset-grid" id="weaponAssetGallery"></div>
-          </article>
-        </section>
-
-        <section class="section-block page-section" id="memories" data-page="memories" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">MEMORY COMBAT · ORDERED COMBO</p><h2>기억의 순서가 곧 나만의 콤보</h2></div>
-            <div class="filter-tabs" id="memoryFilters" role="tablist" aria-label="기억 무게 필터">
-              <button class="active" data-filter="all" type="button">전체</button>
-              <button data-filter="light" type="button">가벼움</button>
-              <button data-filter="normal" type="button">보통</button>
-              <button data-filter="heavy" type="button">무거움</button>
-            </div>
-          </div>
-          <article class="memory-lab panel memory-intro">
-            <div class="memory-copy">
-              <p class="section-kicker">22 ATTACK MEMORIES</p>
-              <h3>가볍게 열고, 이어 붙이고, 무겁게 끝낸다</h3>
-              <p>가볍게 흐름을 열고, 상승과 돌진으로 연결한 뒤, 무거운 마무리에 누적 배율을 쏟아붓는다. 피격 시 흐름은 흩어지지만 회피 캔슬 중에는 유지된다.</p>
-              <div class="flow-formula"><span>가벼움</span><i>→</i><span>상승 · 돌진</span><i>→</i><span>마무리</span><b>×1.0 → ×1.8</b></div>
-            </div>
-            <div class="memory-rule-copy">
-              <strong>장착한 순서 그대로 발동</strong>
-              <p>사망 후 다음 런에서도 보유 기억과 장착 순서를 유지합니다. 락온 중에는 Q로 지정한 대상을 우선해 돌진 공격을 연결합니다.</p>
-            </div>
-          </article>
-          <article class="asset-showcase panel">
-            <div class="asset-showcase-heading">
-              <div><p class="section-kicker">IN-GAME ICONS</p><h3>구현된 공격 기억</h3></div>
-              <span id="memoryCatalogCount">22종 등록</span>
-            </div>
-            <div class="unity-asset-grid memory-assets" id="memoryAssetGallery"></div>
-          </article>
-        </section>
-
-        <section class="section-block page-section" id="armor" data-page="armor" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">EQUIPMENT · ARMOR & ACCESSORIES</p><h2>방어구와 액세서리</h2></div>
-            <span class="section-note">액세서리는 방어구 분류에 통합</span>
-          </div>
-          <article class="asset-showcase panel">
-            <div class="asset-showcase-heading">
-              <div><p class="section-kicker">ARMOR CATALOG</p><h3>프로젝트 전체 방어구</h3></div>
-              <span>ItemDatabase 기준 300종 · 6개 부위</span>
-            </div>
-            <div class="catalog-toolbar">
-              <label class="catalog-search">
-                <span>방어구 검색</span>
-                <input id="armorSearch" type="search" placeholder="이름, 세트, 에셋명 검색" autocomplete="off">
-              </label>
-              <div class="filter-tabs armor-filters" id="armorFilters" role="tablist" aria-label="방어구 부위 필터">
-                <button class="active" data-filter="all" type="button">전체</button>
-                <button data-filter="featured" type="button">주요 세트</button>
-                <button data-filter="helmet" type="button">투구</button>
-                <button data-filter="armor" type="button">상의</button>
-                <button data-filter="gloves" type="button">장갑</button>
-                <button data-filter="pants" type="button">하의</button>
-                <button data-filter="boots" type="button">신발</button>
-                <button data-filter="belt" type="button">허리</button>
-              </div>
-            </div>
-            <div class="catalog-result-bar"><strong id="armorCatalogCount">300종</strong><span>Unity ItemDatabase와 동기화된 목록</span></div>
-            <div class="armor-catalog-grid" id="armorCatalogGrid"></div>
-            <nav class="catalog-pagination" aria-label="방어구 페이지">
-              <button class="secondary-button" id="armorPrev" type="button">← 이전</button>
-              <span id="armorPage">1 / 13</span>
-              <button class="secondary-button" id="armorNext" type="button">다음 →</button>
-            </nav>
-          </article>
-          <article class="asset-showcase panel accessory-showcase">
-            <div class="asset-showcase-heading">
-              <div><p class="section-kicker">ACCESSORIES</p><h3>액세서리</h3></div>
-              <span>RingData · 장비 슬롯</span>
-            </div>
-            <div class="unity-asset-grid accessory-assets" id="accessoryAssetGallery"></div>
-          </article>
-        </section>
-
-        <section class="section-block page-section" id="bestiary" data-page="bestiary" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">BESTIARY · THE TWISTED</p><h2>깊어질수록 짐승에서 사람으로</h2></div>
-            <div class="filter-tabs" id="monsterFilters" role="tablist" aria-label="몬스터 깊이 필터">
-              <button class="active" data-filter="all" type="button">전체</button>
-              <button data-filter="surface" type="button">1~3장</button>
-              <button data-filter="village" type="button">4~6장</button>
-              <button data-filter="depths" type="button">7~9장</button>
-              <button data-filter="elite" type="button">네임드</button>
-            </div>
-          </div>
-          <div class="depth-track" id="depthTrack"></div>
-          <article class="asset-showcase panel">
-            <div class="asset-showcase-heading">
-              <div><p class="section-kicker">CAPTURED FROM UNITY</p><h3>현재 구현된 몬스터</h3></div>
-              <span>Enemy Prefab · 768px Preview</span>
-            </div>
-            <div class="unity-asset-grid monster-assets" id="monsterAssetGallery"></div>
-          </article>
-          <div class="boss-divider">
-            <span>FINAL ENCOUNTER</span>
-            <i aria-hidden="true"></i>
-          </div>
-          <div class="boss-showcase panel" id="boss">
-            <div class="boss-copy">
-              <p class="section-kicker">FINAL BOSS · CHAPTER 9</p>
-              <span class="boss-status">설계·레퍼런스 확정 · 모델 제작 대기</span>
-              <h2>잠들지 않는 뿌리</h2>
-              <p>숲 전체가 하나의 생명체이고, 마지막 장의 보스는 그 심장부다. 오랫동안 마을을 지켜 온 수호자가 힘을 잃으며 검은 안개를 흘리고 있다.</p>
-              <dl class="boss-rules">
-                <div><dt>형태</dt><dd>반고정형 나무 정령</dd></div>
-                <div><dt>이동</dt><dd>회전 · 지하 이동 후 재출현</dd></div>
-                <div><dt>전투 핵심</dt><dd>흐름 · 회피 캔슬 · 슈퍼아머 판단</dd></div>
-              </dl>
-              <a class="secondary-button boss-doc-link" href="pdf/보스_설계_프롬프트.pdf" target="_blank" rel="noreferrer">보스 설계 PDF 열기 ↗</a>
-            </div>
-            <div class="boss-sigil" aria-hidden="true"><span></span><i></i><b></b></div>
-          </div>
-          <figure class="concept-sheet panel">
-            <img src="assets/concept/boss-concept.png" alt="잠들지 않는 뿌리 보스의 정면, 측면, 후면과 코어 구조 콘셉트 시트" loading="lazy">
-            <figcaption><strong>잠들지 않는 뿌리 · 제작 기준안</strong><span>현재는 모델 제작 전 단계이며, 이 시트를 실루엣·리깅·코어 노출의 기준으로 사용합니다.</span></figcaption>
-          </figure>
-          <div class="boss-phase-grid" id="bossPhases"></div>
-        </section>
-
-        <section class="section-block page-section" id="sprint" data-page="development" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">NOW BUILDING</p><h2>현재 작업</h2></div>
-            <div class="filter-tabs" id="taskFilters" role="tablist" aria-label="작업 상태 필터">
-              <button class="active" data-filter="all" type="button">전체</button>
-              <button data-filter="todo" type="button">대기</button>
-              <button data-filter="done" type="button">완료</button>
-              <button data-filter="risk" type="button">위험</button>
-            </div>
-          </div>
-          <div class="task-grid" id="taskGrid"></div>
-        </section>
-
-        <section class="section-block asset-swap-section page-section" id="asset-swap" data-page="development" hidden>
-          <div class="section-heading asset-swap-heading">
-            <div><p class="section-kicker">ASSET REPLACEMENT · 2026.08.01</p><h2>에셋 교체 체크리스트</h2><p class="section-note">이 목록은 08.01 스캔 기록이며 재감사가 필요합니다. 이후 보스 모델과 UI 기능은 구현되었습니다. 최신 구현 단계는 위 개발 현황을 기준으로 확인해 주세요.</p></div>
-            <a class="secondary-button" href="pdf/에셋_교체_체크리스트.pdf" target="_blank" rel="noreferrer">전체 체크리스트 PDF ↗</a>
-          </div>
-          <div class="asset-swap-summary" id="assetSwapSummary"></div>
-          <div class="asset-swap-audit">
-            <article class="panel audit-card added"><span>+42</span><div><strong>추가·확장</strong><p>기억·장비 아이콘, 맵 미리보기, 앰비언스, 스토리 모델을 현 프로젝트 기준으로 등록했습니다.</p></div></article>
-            <article class="panel audit-card removed"><span>−5</span><div><strong>제외·대체</strong><p>폐기된 경험치 UI, 미사용 아이콘, 중복·구형 항목을 목록에서 정리했습니다.</p></div></article>
-          </div>
-          <div class="asset-swap-browser panel">
-            <div class="asset-swap-toolbar">
-              <div class="filter-tabs asset-swap-filters" id="assetSwapFilters" role="tablist" aria-label="에셋 교체 필터">
-                <button class="active" data-filter="need-new" type="button">신규 제작</button>
-                <button data-filter="placeholder" type="button">교체 대기</button>
-                <button data-filter="ui" type="button">UI</button>
-                <button data-filter="sound" type="button">사운드</button>
-                <button data-filter="model" type="button">모델</button>
-                <button data-filter="done" type="button">완료</button>
-                <button data-filter="all" type="button">전체</button>
-              </div>
-              <label class="catalog-search asset-swap-search"><span>SEARCH</span><input id="assetSwapSearch" type="search" placeholder="이름, 분류, 경로 검색"></label>
-            </div>
-            <div class="asset-swap-result" id="assetSwapResult"></div>
-            <div class="asset-swap-list" id="assetSwapList"></div>
-          </div>
-        </section>
-
-        <section class="section-block page-section" id="roadmap" data-page="quality" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">MILESTONES</p><h2>완성으로 가는 길</h2></div>
-            <span class="section-note">매달 말 시연 가능한 빌드 유지</span>
-          </div>
-          <div class="roadmap panel" id="roadmapTrack"></div>
-        </section>
-
-        <section class="dashboard-grid page-section" id="quality" data-page="quality" hidden>
-          <article class="panel qa-panel">
-            <div class="panel-heading">
-              <div><p class="section-kicker">QUALITY GATE</p><h2>버그 · QA</h2></div>
-              <span class="count-badge" id="qaCount"></span>
-            </div>
-            <div class="qa-list" id="qaList"></div>
-          </article>
-
-          <article class="panel focus-panel">
-            <p class="section-kicker">NEXT CRITICAL PATH</p>
-            <h2>다음 순서는 보스입니다</h2>
-            <p>스토리 반영과 락온 스트레이프를 먼저 닫고, 확보한 레퍼런스로 「잠들지 않는 뿌리」 모델 제작에 들어갑니다.</p>
-            <ol class="focus-steps">
-              <li><span>01</span><div><strong>스토리 반영 5종</strong><small>챕터, 무덤, 기록자, 문구, 뿌리 동선</small></div></li>
-              <li><span>02</span><div><strong>락온 스트레이프</strong><small>이동 벡터와 애니메이션 블렌드 정합</small></div></li>
-              <li><span>03</span><div><strong>보스 모델 · 리깅</strong><small>반고정형 실루엣과 코어 노출 구조</small></div></li>
-              <li><span>04</span><div><strong>3페이즈 · 엔딩</strong><small>실제 보스 사망을 승리 조건으로 연결</small></div></li>
-            </ol>
-          </article>
-        </section>
-
-        <section class="dashboard-grid page-section" id="changes" data-page="development" hidden>
-          <article class="panel change-panel">
-            <div class="panel-heading">
-              <div><p class="section-kicker">RECENT ACTIVITY</p><h2>최근 변경사항</h2></div>
-              <a href="pdf/변경이력.pdf" target="_blank" rel="noreferrer">전체 기록 PDF ↗</a>
-            </div>
-            <div class="timeline" id="changeTimeline"></div>
-          </article>
-
-          <article class="panel contract-panel">
-            <p class="section-kicker">PROJECT CONTRACT</p>
-            <blockquote>“모아두면 전부 잃는다.<br>살아서 돌아와, 몸에 새겨라.”</blockquote>
-            <dl>
-              <div><dt>골드</dt><dd>전부 소실</dd></div>
-              <div><dt>레벨</dt><dd>30% 계승</dd></div>
-              <div><dt>장비</dt><dd>최대 1개 · 미선택 가능</dd></div>
-              <div><dt>기억</dt><dd>보유·순서 유지</dd></div>
-              <div><dt>시작 단검</dt><dd>매 런 무료 지급</dd></div>
-            </dl>
-          </article>
-        </section>
-
-        <section class="section-block page-section" id="documents" data-page="documents" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">SOURCE OF TRUTH</p><h2>프로젝트 문서</h2></div>
-            <a class="text-link" href="pdf/문서_인덱스.pdf" target="_blank" rel="noreferrer">문서 인덱스 PDF 열기 ↗</a>
-          </div>
-          <div class="document-grid" id="documentGrid"></div>
-        </section>
-
-        <section class="section-block feedback-section page-section" id="feedback" data-page="feedback" hidden>
-          <div class="section-heading">
-            <div><p class="section-kicker">LOCAL FEEDBACK BOARD</p><h2>피드백</h2></div>
-            <p class="section-note">이 브라우저에 자동 저장됩니다.</p>
-          </div>
-          <div class="feedback-board panel">
-            <div class="feedback-toolbar">
-              <div class="feedback-summary" id="feedbackSummary"></div>
-              <button class="secondary-button" id="openFeedbackBottom" type="button">새 피드백</button>
-            </div>
-            <div class="feedback-list" id="feedbackList"></div>
-          </div>
-        </section>
-
-        <footer class="page-footer">
-          <span>ROOTBOUND PROJECT HUB · CAPSTONE2026</span>
-          <span>문서와 구현이 다르면 실제 코드·에셋·플레이 결과를 우선합니다.</span>
-        </footer>
-      </div>
-  </main>
-
-  <div class="search-results" id="searchResults" hidden></div>
-
-  <dialog class="feedback-dialog" id="feedbackDialog">
-    <form method="dialog" id="feedbackForm">
-      <div class="dialog-heading">
-        <div><p class="section-kicker">ADD FEEDBACK</p><h2>피드백 남기기</h2></div>
-        <button class="icon-button" type="button" data-dialog-close aria-label="닫기">×</button>
-      </div>
-      <label>제목<input name="title" required maxlength="70" placeholder="무엇을 바꾸면 좋을까요?"></label>
-      <div class="form-row">
-        <label>분류<select name="category"><option>게임플레이</option><option>아트</option><option>UI/UX</option><option>사운드</option><option>문서</option><option>버그</option></select></label>
-        <label>우선순위<select name="priority"><option value="P2">P2 중요</option><option value="P0">P0 필수</option><option value="P1">P1 핵심</option><option value="P3">P3 품질</option><option value="P4">P4 폴리싱</option></select></label>
-      </div>
-      <label>상세 내용<textarea name="detail" rows="5" required maxlength="500" placeholder="재현 방법, 기대 결과, 참고할 장면을 적어주세요."></textarea></label>
-      <div class="dialog-actions"><button class="secondary-button" type="button" data-dialog-close>취소</button><button class="primary-button" value="default" type="submit">피드백 저장</button></div>
-    </form>
-  </dialog>
-
-  <script src="data.js"></script>
-  <script src="catalog-data.js"></script>
-  <script src="story-data.js"></script>
-  <script src="systems-data.js"></script>
-  <script src="asset-swap-data.js"></script>
-  <script src="app.js"></script>
+<section class="page wrap inner-page" id="bestiary" aria-labelledby="bestiary-title" hidden>
+<header class="page-heading"><p class="eyebrow">숲의 존재들</p><h1 id="bestiary-title">숲은 당신을<br>그냥 보내주지 않습니다.</h1><p>날쌘 적과 무거운 적, 방패와 마법을 쓰는 적. 거리와 준비 자세를 읽고 싸워야 합니다.</p></header>
+<div class="monster-grid" id="monster-grid"></div>
+<div class="bestiary-note"><h2>그리고, 더 낯선 존재들.</h2><p>뒤틀린 늑대와 나무 정령, 포자에 잠식된 주민 등 숲의 변화를 닮은 존재들이 여정을 가로막습니다. 네임드는 더 위협적인 전투와 무작위 기억 보상으로 탐험의 목표가 됩니다.</p></div>
+<div class="boss-feature"><div><p class="eyebrow light">심층의 수호자</p><h2>잠들지 않는 뿌리</h2><p>거대한 몸체만큼이나 다양한 공격을 펼치는 최종 보스. 거리에 따라 근접 공격과 투사체를 섞고, 싸움이 깊어질수록 연속 공격과 환경의 위협이 겹칩니다.</p><ol class="boss-phases"><li><strong>첫 대면</strong><span>내려찍기, 휘두르기, 씨앗과 뿌리 파동</span></li><li><strong>뒤틀린 저항</strong><span>연속 내려찍기와 어퍼컷 연계, 달라지는 공격 리듬</span></li><li><strong>드러난 기억</strong><span>열린 중심부, 황금빛 씨앗과 원거리 압박</span></li></ol><details class="boss-spoiler"><summary>보스의 정체 보기 · 이야기 스포일러</summary><p>몸통 안에 남아 있는 해골은 이전 세대의 수호자입니다. 그를 마주하는 일은 단순한 처치가 아니라, 끝나지 않던 계승의 의미를 알아가는 일입니다.</p></details></div><button class="photo" data-photo="assets/game/boss.webp" data-caption="잠들지 않는 뿌리 · 인게임 모델 연출 촬영"><img src="assets/game/boss.webp" alt="몸체가 나무와 뿌리로 이루어진 거대한 최종 수호자" loading="lazy"><span>모습 크게 보기 ↗</span></button></div>
+</section>
+</main>
+<footer class="site-footer"><div class="wrap footer-inner"><a class="brand" href="#intro"><span class="brand-symbol" aria-hidden="true">✳</span><span>ROOTBOUND<small>잠들지 않는 숲</small></span></a><p>기억을 엮어, 숲의 끝으로.<small>C0D3X · 컴퓨터정보계열 SG-A<br>구민서 · 우현하 · 홍동기 · 김다현</small></p><p class="footer-note">제작 중인 게임 소개<br>2026. 09. 28. 기준</p></div></footer>
+<dialog id="photo-dialog" aria-labelledby="photo-caption"><button id="close-photo" type="button" aria-label="이미지 닫기">×</button><img id="photo-image" alt=""><p id="photo-caption"></p></dialog>
+<noscript><div class="noscript-message">세부 메뉴와 도감을 보려면 브라우저의 JavaScript를 켜 주세요.</div></noscript>
+<script src="data.js"></script><script src="catalog-data.js"></script><script src="app.js"></script>
 </body>
 </html>

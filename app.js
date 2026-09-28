@@ -1,614 +1,87 @@
-(function () {
-  "use strict";
+(() => {
+'use strict';
+const D = window.GAME_SHOWCASE, C = window.EQUIPMENT_CATALOG;
+const $ = id => document.getElementById(id);
+const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const photo = (src, alt, caption, label=caption) => '<button type="button" class="photo" data-photo="'+esc(src)+'" data-caption="'+esc(caption)+'" aria-label="'+esc(alt)+' 크게 보기"><img src="'+esc(src)+'" alt="'+esc(alt)+'" loading="lazy">'+(label?'<span>'+esc(label)+' ↗</span>':'')+'</button>';
+const features = list => list.map(([n,title,body,href,label]) => '<article><span class="feature-number">'+esc(n)+'</span><h3>'+esc(title)+'</h3><p>'+esc(body)+'</p>'+(href?'<a class="text-link" href="#'+esc(href)+'">'+esc(label)+' →</a>':'')+'</article>').join('');
+['intro','world','combat','memory','equipment'].forEach(key => $(key+'-features').innerHTML = features(D[key+'Features']));
+$('faq-content').innerHTML=D.faq.map(([q,a])=>'<details><summary>'+esc(q)+'</summary><p>'+esc(a)+'</p></details>').join('');
+const chapters = list => list.map(c=>'<article class="story-chapter"><h2>'+esc(c.title)+'</h2>'+c.paragraphs.map(p=>'<p>'+esc(p)+'</p>').join('')+'</article>').join('');
+$('story-content').innerHTML=chapters(D.story)+'<details class="story-spoilers"><summary>숲의 진실 읽기 · 후반부와 결말 포함</summary>'+chapters(D.spoilers)+'</details>';
+$('journey').innerHTML=D.journey.map(([stage,name,body,img])=>'<article'+(!img?' class="rest-stop"':'')+'>'+(img?'<img src="assets/game/'+esc(img)+'.webp" alt="'+esc(name)+' 실제 게임 화면" loading="lazy">':'')+'<div>'+(!img?'<span class="rest-mark" aria-hidden="true">◇</span>':'')+'<span class="stage">'+esc(stage)+'</span><h3>'+esc(name)+'</h3><p>'+esc(body)+'</p></div></article>').join('');
+$('room-gallery').innerHTML=D.roomGallery.map(([img,name])=>photo('assets/game/'+img+'.webp',name,name+' · 일반 미로 내부 관찰 화면',name)).join('');
+$('room-list').innerHTML=D.rooms.map(name=>'<span>'+esc(name)+'</span>').join('');
+$('growth-trees').innerHTML=D.trees.map(([name,sub,body,tags],i)=>'<article><span class="tree-symbol" aria-hidden="true">'+['↝','◇','✧'][i]+'</span><h3>'+esc(name)+'</h3><p class="tree-subtitle">'+esc(sub)+'</p><p>'+esc(body)+'</p><small>'+esc(tags)+'</small></article>').join('');
+$('run-rules').innerHTML=D.rules.map(([name,body])=>'<article><h3>'+esc(name)+'</h3><p>'+esc(body)+'</p></article>').join('');
+$('controls').innerHTML=D.controls.map(([key,action])=>'<div><dt><kbd>'+esc(key)+'</kbd></dt><dd>'+esc(action)+'</dd></div>').join('');
+$('monster-grid').innerHTML=D.monsters.map(([key,name,role,body])=>'<article class="monster-card">'+photo('assets/unity/monster-'+key+'.png',name+' 모델',name+' · Unity 모델 촬영','')+'<p class="monster-role">'+esc(role)+'</p><h3>'+esc(name)+'</h3><p>'+esc(body)+'</p></article>').join('');
 
-  const data = window.PROJECT_DATA;
-  const catalog = window.EQUIPMENT_CATALOG || { weapons: [], armor: [], memories: [] };
-  const storyContent = window.STORY_CONTENT || { novel: data.game.novel, clues: data.game.clues };
-  const systems = window.PROJECT_SYSTEMS || { categories: [], items: [], sources: [] };
-  const assetSwap = window.ASSET_SWAP_DATA || { summary: { total: 0, placeholder: 0, needNew: 0, done: 0, categories: {}, audit: { added: [], removed: [] } }, items: [] };
-  const systemPdfSources = {
-    "docs/README.md": "pdf/문서_인덱스.pdf",
-    "docs/프로젝트_현황.md": "pdf/프로젝트_현황.pdf",
-    "docs/변경이력.md": "pdf/변경이력.pdf",
-    "docs/기획서.md": "pdf/기획서.pdf",
-    "docs/상세기획서.md": "pdf/상세기획서.pdf",
-    "docs/상세스토리.md": "pdf/상세스토리.pdf",
-    "docs/spec/01_절차적맵생성.md": "pdf/구현명세_01_절차적맵생성.pdf",
-    "docs/spec/02_전투판정_흐름시스템.md": "pdf/구현명세_02_전투판정_흐름시스템.pdf",
-    "docs/spec/03_적AI_FSM.md": "pdf/구현명세_03_적AI_FSM.pdf",
-    "docs/spec/04_세이브_죽음규칙.md": "pdf/구현명세_04_세이브_죽음규칙.pdf",
-    "docs/보스_설계_프롬프트.md": "pdf/보스_설계_프롬프트.pdf",
-    "docs/개발_체크리스트.md": "pdf/개발_체크리스트.pdf",
-    "docs/에셋_교체_체크리스트.md": "pdf/에셋_교체_체크리스트.pdf"
-  };
-  const systemSourceHref = (path) => systemPdfSources[path] || path;
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  const escapeHtml = (value = "") => String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[char]));
+let weight='all', kind='weapons', page=1;
+const pageSize=20;
+const pressed=(parent,attribute,value)=>document.querySelectorAll('#'+parent+' button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset[attribute]===value)));
+function renderMemories(){
+ const query=$('memory-search').value.trim().toLocaleLowerCase('ko');
+ const items=C.memories.filter(m=>(weight==='all'||m.weight===weight)&&m.name.toLocaleLowerCase('ko').includes(query));
+ $('memory-count').textContent=items.length+'개의 기억';
+ $('memory-grid').innerHTML=items.length?items.map(m=>'<article class="memory-card">'+photo(m.image,m.name+' 아이콘',m.name+' · '+m.weightName+' 기억','')+'<div><h3>'+esc(m.name)+'</h3><p class="memory-meta"><span class="weight-'+esc(m.weight)+'">'+esc(m.weightName)+'</span> · '+esc(m.tag)+'</p></div></article>').join(''):'<p class="empty-state">조건에 맞는 기억이 없습니다. 검색어나 무게를 바꿔 보세요.</p>';
+}
+$('memory-filters').addEventListener('click',e=>{const b=e.target.closest('button[data-weight]');if(!b)return;weight=b.dataset.weight;pressed('memory-filters','weight',weight);renderMemories();});
+$('memory-search').addEventListener('input',renderMemories);
+const slots=[...new Set(C.armor.map(a=>a.slotName))];
+$('slot-filter').innerHTML+=[...slots].map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join('');
+function renderEquipment(){
+ const query=$('equipment-search').value.trim().toLocaleLowerCase('ko');
+ const grade=$('grade-filter').value, slot=$('slot-filter').value;
+ const items=C[kind].filter(x=>x.name.toLocaleLowerCase('ko').includes(query)&&(kind==='accessories'||grade==='all'||String(x.gradeKey)===grade)&&(kind!=='armor'||slot==='all'||x.slotName===slot));
+ const total=Math.max(1,Math.ceil(items.length/pageSize));page=Math.max(1,Math.min(page,total));
+ $('grade-filter-label').hidden=kind==='accessories';
+ $('slot-filter-label').hidden=kind!=='armor';
+ $('equipment-count').textContent=items.length+'개의 '+({weapons:'무기',armor:'방어구',accessories:'장신구'}[kind]);
+ $('equipment-grid').innerHTML=items.length?items.slice((page-1)*pageSize,page*pageSize).map(x=>'<article class="equipment-card">'+photo(x.image,x.name+' 외형',x.name+' · 장비 모델 촬영','')+'<h3>'+esc(x.name)+'</h3><p>'+(x.grade?'<span class="grade grade-'+esc(x.gradeKey)+'">'+esc(x.grade)+'</span>':'')+esc(x.className||x.slotName)+'</p></article>').join(''):'<p class="empty-state">조건에 맞는 장비가 없습니다. 검색어나 필터를 바꿔 보세요.</p>';
+ $('pagination').hidden=total<=1;
+ $('page-count').textContent=page+' / '+total;
+ $('previous-page').disabled=page===1;$('next-page').disabled=page===total;
+}
+function changeKind(next){
+ kind=next;page=1;$('equipment-search').value='';$('grade-filter').value='all';$('slot-filter').value='all';
+ pressed('equipment-filters','kind',kind);renderEquipment();
+}
+$('equipment-filters').addEventListener('click',e=>{const b=e.target.closest('button[data-kind]');if(b)changeKind(b.dataset.kind);});
+['equipment-search','grade-filter','slot-filter'].forEach(id=>$(id).addEventListener(id==='equipment-search'?'input':'change',()=>{page=1;renderEquipment();}));
+function movePage(delta){page+=delta;renderEquipment();$('equipment-grid').scrollIntoView({block:'start',behavior:'auto'});}
+$('previous-page').addEventListener('click',()=>movePage(-1));$('next-page').addEventListener('click',()=>movePage(1));
+renderMemories();renderEquipment();
 
-  const activeTotal = data.meta.total - data.meta.cut;
-  const progress = Math.round((data.meta.done / activeTotal) * 100);
-  const assetProgress = assetSwap.summary.total
-    ? Math.round((assetSwap.summary.done / assetSwap.summary.total) * 100)
-    : 0;
-  const feedbackKey = "rootbound-project-feedback-v1";
-  let feedback = loadFeedback();
-  let taskFilter = "all";
-  let weaponFilter = "all";
-  let memoryFilter = "all";
-  let armorFilter = "all";
-  let armorQuery = "";
-  let armorPage = 1;
-  let systemFilter = "all";
-  let systemQuery = "";
-  let monsterFilter = "all";
-  let assetSwapFilter = "need-new";
-  let assetSwapQuery = "";
-  const armorPageSize = 24;
-  const gameViews = new Set(["game-bible", "story", "systems", "ui-ux", "weapons", "memories", "armor", "bestiary"]);
-  const routeMap = {
-    "": "game-bible",
-    "#overview": "game-bible",
-    "#world": "game-bible",
-    "#game-bible": "game-bible",
-    "#story": "story",
-    "#systems": "systems",
-    "#ui-ux": "ui-ux",
-    "#arsenal": "weapons",
-    "#weapons": "weapons",
-    "#memories": "memories",
-    "#armor": "armor",
-    "#bestiary": "bestiary",
-    "#boss": "bestiary",
-    "#development": "development",
-    "#asset-swap": "development",
-    "#sprint": "development",
-    "#changes": "development",
-    "#quality": "quality",
-    "#roadmap": "quality",
-    "#documents": "documents",
-    "#feedback": "feedback"
-  };
+const titles={intro:'게임 소개',story:'이야기',world:'숲과 심층',combat:'전투와 성장',memories:'기억',equipment:'장비',bestiary:'몬스터'};
+const aliases={'game-bible':'intro',overview:'intro',systems:'combat','ui-ux':'combat',weapons:'equipment',armor:'equipment',boss:'bestiary',development:'intro',quality:'intro',documents:'intro',feedback:'intro',roadmap:'intro',qa:'intro'};
+const toggle=document.querySelector('.menu-toggle'),nav=$('navigation');
+function closeMenu(){nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');}
+toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-open',open);});
+function route(focus=false){
+ const raw=location.hash.slice(1)||'intro';
+ if(raw==='main'){$('main').focus();return;}
+ const next=titles[raw]?raw:(aliases[raw]||'intro');
+ if(raw!==next)history.replaceState(null,'','#'+next);
+ if(raw==='armor')changeKind('armor');else if(raw==='weapons')changeKind('weapons');
+ document.querySelectorAll('.page').forEach(p=>p.hidden=p.id!==next);
+ nav.querySelectorAll('a').forEach(a=>{if(a.hash==='#'+next)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ document.title=titles[next]+' · 잠들지 않는 숲 | ROOTBOUND';
+ closeMenu();window.scrollTo({top:0,behavior:'instant'});if(focus)$('main').focus({preventScroll:true});
+}
+window.addEventListener('hashchange',()=>route(true));route();
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
 
-  function resolveView(hash = window.location.hash) {
-    return routeMap[hash.toLowerCase()] || "game-bible";
-  }
-
-  function showView(view, options = {}) {
-    const { updateHistory = false, hash = `#${view}`, smooth = true } = options;
-    const nextView = [...gameViews, "development", "quality", "documents", "feedback"].includes(view) ? view : "game-bible";
-
-    $$(".page-section").forEach((section) => {
-      section.hidden = section.dataset.page !== nextView;
-    });
-    $$(".top-nav-link").forEach((link) => {
-      const active = link.dataset.view === "game-bible" ? gameViews.has(nextView) : link.dataset.view === nextView;
-      link.classList.toggle("active", active);
-      if (active) link.setAttribute("aria-current", "page");
-      else link.removeAttribute("aria-current");
-    });
-    $$(".subnav-link").forEach((link) => {
-      const active = link.dataset.view === nextView;
-      link.classList.toggle("active", active);
-      if (active) link.setAttribute("aria-current", "page");
-      else link.removeAttribute("aria-current");
-    });
-
-    const subnav = $("#gameSubnav");
-    subnav.hidden = !gameViews.has(nextView);
-    $("#primaryNav").classList.remove("open");
-    $(".mobile-menu").setAttribute("aria-expanded", "false");
-
-    if (updateHistory) window.history.pushState({ view: nextView }, "", hash);
-    if (smooth) window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function loadFeedback() {
-    try {
-      const stored = JSON.parse(localStorage.getItem(feedbackKey));
-      return Array.isArray(stored) ? stored : [...data.feedbackSeed];
-    } catch (_) {
-      return [...data.feedbackSeed];
-    }
-  }
-
-  function saveFeedback() {
-    localStorage.setItem(feedbackKey, JSON.stringify(feedback));
-  }
-
-  function renderOverview() {
-    $("#progressValue").textContent = `${progress}%`;
-    $("#progressRing").style.setProperty("--progress", `${progress * 3.6}deg`);
-    $("#progressCaption").textContent = `완료 ${data.meta.done} · 미완료 ${data.meta.todo} · 제외 ${data.meta.cut} (Unity 목록 기준)`;
-    $("#assetProgressValue").textContent = `${assetProgress}%`;
-    $("#assetProgressRing").style.setProperty("--progress", `${assetProgress * 3.6}deg`);
-    $("#assetProgressCaption").textContent = `완료 ${assetSwap.summary.done} · 신규 제작 ${assetSwap.summary.needNew} · 교체 대기 ${assetSwap.summary.placeholder}`;
-    $("#metricCards").innerHTML = data.metrics.map((metric) => `
-      <article class="metric-card panel tone-${metric.tone}">
-        <span class="metric-icon">${metric.icon}</span>
-        <div><p>${metric.label}</p><strong>${metric.value}</strong><small>${metric.detail}</small></div>
-      </article>`).join("");
-  }
-
-  function renderTasks() {
-    const tasks = data.tasks.filter((task) => {
-      if (taskFilter === "all") return true;
-      if (taskFilter === "risk") return task.risk;
-      return task.status === taskFilter;
-    });
-    $("#taskGrid").innerHTML = tasks.map((task) => `
-      <article class="task-card panel ${task.status} ${task.risk ? "risk" : ""}">
-        <div class="task-top"><span class="priority ${task.priority.toLowerCase()}">${task.priority}</span><span class="task-tag">${escapeHtml(task.tag)}</span></div>
-        <h3>${escapeHtml(task.title)}</h3>
-        <p>${escapeHtml(task.detail)}</p>
-        <div class="task-bottom"><code>${escapeHtml(task.id)}</code><span>${task.status === "done" ? "완료 ✓" : "대기 →"}</span></div>
-      </article>`).join("");
-  }
-
-  function renderUIProgress() {
-    const ui = data.uiProgress;
-    if (!ui) return;
-    $$('[data-ui-progress]').forEach((root) => {
-      root.innerHTML = `<div class="section-heading"><div><p class="section-kicker">UI / UX · ${escapeHtml(ui.checkedAt)}</p><h2>구현과 최종 검증을 나누어 봅니다</h2></div><strong>${ui.features.length}개 기능 연결</strong></div>
-        <label class="ui-stage-label">구조·테마·기능 구현 <span>${ui.features.length} / ${ui.features.length}</span><progress value="${ui.features.length}" max="${ui.features.length}" aria-label="UI 기능 구현 항목"></progress></label>
-        <div class="ui-stage-grid"><article><span class="ui-stage-done">구현 완료</span><h3>화면과 조작</h3><p>공통 테마, 드래그, 선택, 호버, 화면 전환과 입력 복구를 연결했습니다.</p></article><article><span class="ui-stage-pending">검증 대기</span><h3>전체 흐름·해상도</h3><p>${escapeHtml(ui.gates[0])}</p></article><article><span class="ui-stage-pending">폴리싱 대기</span><h3>최종 아트</h3><p>${escapeHtml(ui.gates[1])}</p></article></div>
-        <details><summary>구현 완료 ${ui.features.length}개 항목 보기</summary><ul class="ui-feature-list">${ui.features.map((feature) => `<li>✓ ${escapeHtml(feature)}</li>`).join('')}</ul></details>
-        <p class="ui-stage-note">기능 구현 완료는 전체 UI QA 통과를 뜻하지 않습니다. 화면 예시는 ${escapeHtml(ui.captureDate)} 캡처이며, 진행 상태는 ${escapeHtml(ui.checkedAt)} 코드·체크리스트 기준입니다.</p>`;
-    });
-  }
-
-  function renderRoadmap() {
-    $("#roadmapTrack").innerHTML = data.roadmap.map((item, index) => `
-      <div class="roadmap-item ${item.state}">
-        <div class="roadmap-node"><span>${item.state === "done" ? "✓" : index + 1}</span></div>
-        <time>${item.date}</time><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.detail)}</small>
-      </div>`).join("");
-  }
-
-  function renderQa() {
-    $("#qaCount").textContent = `${data.qa.length} ACTIVE`;
-    $("#qaList").innerHTML = data.qa.map((item) => `
-      <div class="qa-item">
-        <span class="qa-signal ${item.tone}"></span>
-        <div><strong>${escapeHtml(item.title)}</strong><code>${escapeHtml(item.id)}</code></div>
-        <span class="qa-state">${escapeHtml(item.status)}</span><b>${item.severity}</b>
-      </div>`).join("");
-  }
-
-  function renderChanges() {
-    $("#changeTimeline").innerHTML = data.changes.map((item) => `
-      <div class="timeline-item tone-${item.tone}">
-        <time>${item.time}</time><span class="timeline-dot"></span>
-        <div><small>${item.group}</small><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.detail)}</p></div>
-      </div>`).join("");
-  }
-
-  function renderDocuments() {
-    $("#documentGrid").innerHTML = data.documents.map((doc) => `
-      <a class="document-card panel accent-${doc.accent}" href="${encodeURI(systemSourceHref(doc.path))}" target="_blank" rel="noreferrer">
-        <span class="doc-type">${doc.type}</span><span class="doc-arrow">↗</span>
-        <h3>${escapeHtml(doc.title)}</h3><p>${escapeHtml(doc.description)}</p>
-      </a>`).join("");
-  }
-
-  function renderAssetSwap() {
-    const summary = assetSwap.summary;
-    const query = assetSwapQuery.trim().toLowerCase();
-    const items = assetSwap.items.filter((item) => {
-      const matchesFilter = assetSwapFilter === "all"
-        || item.statusKey === assetSwapFilter
-        || item.categoryKey === assetSwapFilter;
-      const haystack = `${item.title} ${item.tag} ${item.path} ${item.description}`.toLowerCase();
-      return matchesFilter && (!query || haystack.includes(query));
-    });
-    const counts = [
-      ["전체", summary.total, "total"],
-      ["교체 대기", summary.placeholder, "placeholder"],
-      ["신규 제작", summary.needNew, "need-new"],
-      ["완료", summary.done, "done"]
-    ];
-    $("#assetSwapSummary").innerHTML = counts.map(([label, value, tone]) => `
-      <article class="asset-swap-stat tone-${tone}"><span>${label}</span><strong>${value}</strong><small>개</small></article>`).join("");
-    $("#assetSwapResult").innerHTML = `<strong>${items.length}개</strong><span>표시 중 · UI ${summary.categories.UI || 0} · 사운드 ${summary.categories["사운드"] || 0} · 모델 ${summary.categories["모델"] || 0}</span>`;
-    $("#assetSwapList").innerHTML = items.length ? items.map((item) => `
-      <article class="asset-swap-item status-${item.statusKey}">
-        <div class="asset-swap-item-head">
-          <span class="asset-swap-category">${escapeHtml(item.category)}</span>
-          <span class="asset-swap-status">${escapeHtml(item.status)}</span>
-        </div>
-        <div class="asset-swap-item-copy">
-          <small>${escapeHtml(item.tag)}</small>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.description || "교체 대상 에셋")}</p>
-          <code>${escapeHtml(item.path)}</code>
-        </div>
-      </article>`).join("") : `<div class="empty-state asset-swap-empty">조건에 맞는 에셋이 없습니다.</div>`;
-  }
-
-  function renderGameBible() {
-    $("#gameFacts").innerHTML = data.game.facts.map((fact) => `
-      <article class="game-fact panel">
-        <strong>${escapeHtml(fact.value)}</strong><span>${escapeHtml(fact.label)}</span><small>${escapeHtml(fact.detail)}</small>
-      </article>`).join("");
-    $("#pillarGrid").innerHTML = data.game.pillars.map((pillar) => `
-      <article class="pillar-card panel tone-${pillar.tone}">
-        <span>${pillar.index}</span><h3>${escapeHtml(pillar.title)}</h3><p>${escapeHtml(pillar.detail)}</p>
-      </article>`).join("");
-    $("#coreLoop").innerHTML = data.game.loop.map((step, index) => `
-      <div class="loop-step"><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(step)}</strong></div>`).join("");
-  }
-
-  function renderStory() {
-    $("#storyNovel").innerHTML = `
-      <header class="novel-title-page">
-        <span>ROOTBOUND · A TALE OF INHERITANCE</span>
-        <h3>잠들지 않는 숲</h3>
-        <p>검은 안개 속에서 되풀이되는 한 짐꾼과 오래된 수호자의 이야기</p>
-      </header>
-      ${storyContent.novel.map((chapter, index) => `
-        <section class="novel-chapter">
-          <div class="novel-chapter-heading"><span>${escapeHtml(chapter.chapter)}</span><h4>${escapeHtml(chapter.title)}</h4></div>
-          <div class="novel-prose">${chapter.paragraphs.map((paragraph, paragraphIndex) => `<p class="${index === 0 && paragraphIndex === 0 ? "novel-opener" : ""}">${escapeHtml(paragraph)}</p>`).join("")}</div>
-        </section>`).join("")}
-      <aside class="story-lore-notes">
-        <div class="story-lore-heading"><span>STORY KEYS</span><h4>이 이야기에서 놓치면 안 되는 단서</h4></div>
-        <div class="story-lore-grid">${storyContent.clues.map((clue, index) => `
-          <article><span>${String(index + 1).padStart(2, "0")}</span><div><strong>${escapeHtml(clue.label)}</strong><p>${escapeHtml(clue.detail)}</p></div></article>`).join("")}</div>
-      </aside>
-      <footer class="novel-ending"><span>END OF ONE GENERATION</span><strong>그리고 다음 수레가 숲으로 들어온다.</strong></footer>`;
-  }
-
-  function renderSystems() {
-    const normalized = systemQuery.trim().toLowerCase();
-    const visible = systems.items.filter((item) => {
-      const matchesGroup = systemFilter === "all" || item.group === systemFilter;
-      const searchText = `${item.title} ${item.kicker} ${item.summary} ${item.status} ${item.rules.join(" ")} ${item.metrics.map((metric) => `${metric.label} ${metric.value}`).join(" ")}`.toLowerCase();
-      return matchesGroup && (!normalized || searchText.includes(normalized));
-    });
-    const counts = systems.items.reduce((map, item) => ({ ...map, [item.statusKey]: (map[item.statusKey] || 0) + 1 }), {});
-
-    $("#systemOverview").innerHTML = [
-      { label: "등록 시스템", value: systems.items.length, detail: `${systems.categories.length}개 대분류` },
-      { label: "구현 완료", value: counts.done || 0, detail: "현재 플레이 가능" },
-      { label: "보완·QA", value: (counts.partial || 0) + (counts.qa || 0), detail: "동작 후 검증 포함" },
-      { label: "제작 대기", value: counts.planned || 0, detail: "보스·엔딩 핵심" }
-    ].map((item) => `<div><span>${escapeHtml(item.label)}</span><strong>${item.value}</strong><small>${escapeHtml(item.detail)}</small></div>`).join("");
-
-    $("#systemFilters").innerHTML = [
-      { id: "all", name: "전체" },
-      ...systems.categories
-    ].map((category) => `<button class="${systemFilter === category.id ? "active" : ""}" data-filter="${escapeHtml(category.id)}" type="button">${escapeHtml(category.name)}</button>`).join("");
-
-    $("#systemResultCount").textContent = `${visible.length} / ${systems.items.length}개 시스템`;
-    $("#systemCatalog").innerHTML = systems.categories.map((category) => {
-      const items = visible.filter((item) => item.group === category.id);
-      if (!items.length) return "";
-      return `<section class="system-group tone-${escapeHtml(category.tone)}">
-        <header class="system-group-heading"><span>${escapeHtml(category.name)}</span><div><h3>${escapeHtml(category.name)}</h3><p>${escapeHtml(category.description)}</p></div><b>${items.length}</b></header>
-        <div class="system-card-grid">${items.map((item) => `
-          <article class="system-card" id="system-${escapeHtml(item.id)}">
-            <header><div><small>${escapeHtml(item.kicker)}</small><h4>${escapeHtml(item.title)}</h4></div><span class="system-status status-${escapeHtml(item.statusKey)}">${escapeHtml(item.status)}</span></header>
-            <p>${escapeHtml(item.summary)}</p>
-            <div class="system-metrics">${item.metrics.map((metric) => `<span><small>${escapeHtml(metric.label)}</small><strong>${escapeHtml(metric.value)}</strong></span>`).join("")}</div>
-            <details><summary>세부 규칙 보기 <span>+</span></summary><ul>${item.rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ul></details>
-            <a class="system-source" href="${encodeURI(systemSourceHref(item.source))}" target="_blank" rel="noreferrer">PDF 원본에서 확인 ↗</a>
-          </article>`).join("")}</div>
-      </section>`;
-    }).join("") || `<div class="empty-state catalog-empty">검색 조건에 맞는 시스템이 없습니다.</div>`;
-
-    $("#systemDocLinks").innerHTML = systems.sources.map((source, index) => `
-      <a href="${encodeURI(systemSourceHref(source.path))}" target="_blank" rel="noreferrer"><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(source.label)} PDF</strong><i>↗</i></a>`).join("");
-  }
-
-  function renderUnityAssetGallery(selector, items) {
-    $(selector).innerHTML = items.map((item) => `
-      <a class="unity-asset-card ${item.rank === "네임드" ? "asset-elite" : ""}" href="${encodeURI(item.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(item.source)}">
-        <span class="unity-asset-image"><img src="${encodeURI(item.image)}" alt="Unity 프로젝트의 ${escapeHtml(item.name)} 프리팹 렌더" loading="lazy" width="768" height="768"></span>
-        <span class="unity-asset-copy"><small>${escapeHtml(item.type)}</small><strong>${escapeHtml(item.name)}</strong>${item.detail ? `<em>${escapeHtml(item.detail)}</em>` : ""}<i>확대 보기 ↗</i></span>
-      </a>`).join("");
-  }
-
-  function renderWeapons() {
-    $("#weaponFamilies").innerHTML = data.game.weaponFamilies.map((family) => `
-      <article class="weapon-family panel tone-${family.tone}">
-        <span>${escapeHtml(family.name)}</span><strong>${escapeHtml(family.role)}</strong>
-        <div><b>${escapeHtml(family.fit)}</b><small>${escapeHtml(family.opposite)}</small></div>
-      </article>`).join("");
-    const weapons = catalog.weapons.filter((weapon) => weaponFilter === "all" || weapon.classKey === weaponFilter);
-    $("#weaponCatalogCount").textContent = `${weapons.length} / ${catalog.weapons.length}종`;
-    $("#weaponAssetGallery").innerHTML = weapons.map((weapon) => `
-      <a class="unity-asset-card catalog-card grade-${weapon.grade.toLowerCase()}" href="${encodeURI(weapon.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(`${weapon.asset} · ${weapon.prefab}`)}">
-        <span class="unity-asset-image"><img src="${encodeURI(weapon.image)}" alt="${escapeHtml(weapon.name)} 무기 렌더" loading="lazy" width="640" height="640"></span>
-        <span class="unity-asset-copy"><small>${escapeHtml(weapon.className)} · ${escapeHtml(weapon.grade)}</small><strong>${escapeHtml(weapon.name)}</strong><em>공격력 ${escapeHtml(weapon.damage)} · ${escapeHtml(weapon.prefab)}</em><i>${escapeHtml(weapon.asset)}</i></span>
-      </a>`).join("");
-  }
-
-  function renderMemories() {
-    const memories = catalog.memories.filter((memory) => memoryFilter === "all" || memory.weight === memoryFilter);
-    $("#memoryCatalogCount").textContent = `${memories.length} / ${catalog.memories.length}종`;
-    $("#memoryAssetGallery").innerHTML = memories.map((memory) => `
-      <a class="unity-asset-card catalog-card memory-catalog-card grade-${memory.grade.toLowerCase()}" href="${encodeURI(memory.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(`${memory.asset} · ${memory.clip}`)}">
-        <span class="unity-asset-image"><img src="${encodeURI(memory.image)}" alt="${escapeHtml(memory.name)} 기억 아이콘" loading="lazy" width="64" height="64"></span>
-        <span class="unity-asset-copy"><small>${escapeHtml(memory.weightName)} · ${escapeHtml(memory.grade)}</small><strong>${escapeHtml(memory.name)}</strong><em>피해 ${memory.damage} · ${escapeHtml(memory.tag)} · ${escapeHtml(memory.element)}</em><i>${escapeHtml(memory.clip)}</i></span>
-      </a>`).join("");
-  }
-
-  function renderArmor() {
-    const normalized = armorQuery.trim().toLowerCase();
-    const filtered = catalog.armor.filter((armor) => {
-      const matchesFilter = armorFilter === "all" || (armorFilter === "featured" ? armor.featured : armor.slot === armorFilter);
-      const searchText = `${armor.name} ${armor.asset} ${armor.collection} ${armor.part} ${armor.slotName}`.toLowerCase();
-      return matchesFilter && (!normalized || searchText.includes(normalized));
-    });
-    const pageCount = Math.max(1, Math.ceil(filtered.length / armorPageSize));
-    armorPage = Math.min(armorPage, pageCount);
-    const start = (armorPage - 1) * armorPageSize;
-    const visible = filtered.slice(start, start + armorPageSize);
-
-    $("#armorCatalogCount").textContent = `검색 결과 ${filtered.length}종`;
-    $("#armorPage").textContent = `${armorPage} / ${pageCount}`;
-    $("#armorPrev").disabled = armorPage <= 1;
-    $("#armorNext").disabled = armorPage >= pageCount;
-    $("#armorCatalogGrid").innerHTML = visible.length ? visible.map((armor) => `
-      <a class="armor-catalog-card grade-${armor.grade.toLowerCase()}" href="${encodeURI(armor.image)}" target="_blank" rel="noreferrer" title="${escapeHtml(`${armor.asset} · ${armor.part}`)}">
-        <span class="armor-catalog-image"><img src="${encodeURI(armor.image)}" alt="${escapeHtml(armor.name)} 아이콘" loading="lazy" width="64" height="64"></span>
-        <span class="armor-catalog-copy"><small>${escapeHtml(armor.slotName)} · ${escapeHtml(armor.collection)}</small><strong>${escapeHtml(armor.name)}</strong><em>방어 ${escapeHtml(armor.defence)} · 체력 ${escapeHtml(armor.hp)}</em></span>
-      </a>`).join("") : `<div class="empty-state catalog-empty">조건에 맞는 방어구가 없습니다.</div>`;
-    renderUnityAssetGallery("#accessoryAssetGallery", data.unityAssets.accessories);
-  }
-
-  function renderBestiary() {
-    $("#depthTrack").innerHTML = data.game.depths.map((depth, index) => `
-      <article class="depth-card tone-${depth.tone}">
-        <span>${escapeHtml(depth.chapters)}</span><strong>${escapeHtml(depth.title)}</strong><small>${escapeHtml(depth.detail)}</small>
-        ${index < data.game.depths.length - 1 ? '<i aria-hidden="true">→</i>' : ""}
-      </article>`).join("");
-    const monsters = data.game.monsters.filter((monster) => {
-      if (monsterFilter === "all") return true;
-      if (monsterFilter === "elite") return monster.rank === "네임드";
-      return monster.group === monsterFilter;
-    });
-    const visibleAssets = data.unityAssets.monsters.filter((asset) => monsters.some((monster) => monster.ko === asset.name));
-    renderUnityAssetGallery("#monsterAssetGallery", visibleAssets);
-  }
-
-  function renderBoss() {
-    $("#bossPhases").innerHTML = data.game.boss.phases.map((phase) => `
-      <article class="boss-phase panel tone-${phase.tone}">
-        <div><span>${escapeHtml(phase.phase)}</span><b>HP ${escapeHtml(phase.hp)}</b></div>
-        <h3>${escapeHtml(phase.title)}</h3>
-        <strong>${escapeHtml(phase.pattern)}</strong><p>${escapeHtml(phase.intent)}</p>
-      </article>`).join("");
-  }
-
-  function feedbackLabel(status) {
-    return { open: "검토 대기", in_progress: "진행 중", resolved: "반영 완료" }[status] || status;
-  }
-
-  function renderFeedback() {
-    const counts = feedback.reduce((map, item) => ({ ...map, [item.status]: (map[item.status] || 0) + 1 }), {});
-    $("#feedbackSummary").innerHTML = `<span><b>${feedback.length}</b> 전체</span><span><b>${counts.open || 0}</b> 검토 대기</span><span><b>${counts.in_progress || 0}</b> 진행 중</span><span><b>${counts.resolved || 0}</b> 반영 완료</span>`;
-    $("#feedbackList").innerHTML = feedback.length ? feedback.map((item) => `
-      <article class="feedback-item" data-id="${escapeHtml(item.id)}">
-        <div class="feedback-main">
-          <div class="feedback-tags"><span>${escapeHtml(item.priority)}</span><span>${escapeHtml(item.category)}</span><time>${escapeHtml(item.createdAt)}</time></div>
-          <h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.detail)}</p>
-        </div>
-        <div class="feedback-actions">
-          <button class="status-button ${item.status}" data-action="cycle" type="button">${feedbackLabel(item.status)}</button>
-          <button class="delete-button" data-action="delete" type="button" aria-label="피드백 삭제">×</button>
-        </div>
-      </article>`).join("") : `<div class="empty-state">아직 피드백이 없습니다. 첫 의견을 남겨보세요.</div>`;
-  }
-
-  function openFeedbackDialog() {
-    const dialog = $("#feedbackDialog");
-    if (typeof dialog.showModal === "function") dialog.showModal();
-  }
-
-  function setupFeedback() {
-    ["#openFeedback", "#openFeedbackBottom"].forEach((selector) => $(selector).addEventListener("click", openFeedbackDialog));
-    $$("[data-dialog-close]", $("#feedbackDialog")).forEach((button) => {
-      button.addEventListener("click", () => $("#feedbackDialog").close());
-    });
-    $("#feedbackForm").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const form = new FormData(event.currentTarget);
-      const now = new Date();
-      feedback.unshift({
-        id: `feedback-${Date.now()}`,
-        title: form.get("title").trim(),
-        detail: form.get("detail").trim(),
-        category: form.get("category"),
-        priority: form.get("priority"),
-        status: "open",
-        createdAt: `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`
-      });
-      saveFeedback();
-      renderFeedback();
-      event.currentTarget.reset();
-      $("#feedbackDialog").close();
-    });
-    $("#feedbackList").addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-action]");
-      const item = event.target.closest(".feedback-item");
-      if (!button || !item) return;
-      const index = feedback.findIndex((entry) => entry.id === item.dataset.id);
-      if (index < 0) return;
-      if (button.dataset.action === "delete") feedback.splice(index, 1);
-      if (button.dataset.action === "cycle") {
-        const order = ["open", "in_progress", "resolved"];
-        feedback[index].status = order[(order.indexOf(feedback[index].status) + 1) % order.length];
-      }
-      saveFeedback();
-      renderFeedback();
-    });
-  }
-
-  function setupFilters() {
-    $("#taskFilters").addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-filter]");
-      if (!button) return;
-      taskFilter = button.dataset.filter;
-      $$("button", event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
-      renderTasks();
-    });
-    $("#weaponFilters").addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-filter]");
-      if (!button) return;
-      weaponFilter = button.dataset.filter;
-      $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
-      renderWeapons();
-    });
-    $("#memoryFilters").addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-filter]");
-      if (!button) return;
-      memoryFilter = button.dataset.filter;
-      $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
-      renderMemories();
-    });
-    $("#armorFilters").addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-filter]");
-      if (!button) return;
-      armorFilter = button.dataset.filter;
-      armorPage = 1;
-      $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
-      renderArmor();
-    });
-    $("#armorSearch").addEventListener("input", (event) => {
-      armorQuery = event.currentTarget.value;
-      armorPage = 1;
-      renderArmor();
-    });
-    $("#armorPrev").addEventListener("click", () => {
-      armorPage = Math.max(1, armorPage - 1);
-      renderArmor();
-      $("#armorCatalogGrid").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    $("#armorNext").addEventListener("click", () => {
-      armorPage += 1;
-      renderArmor();
-      $("#armorCatalogGrid").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    $("#systemFilters").addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-filter]");
-      if (!button) return;
-      systemFilter = button.dataset.filter;
-      renderSystems();
-    });
-    $("#systemSearch").addEventListener("input", (event) => {
-      systemQuery = event.currentTarget.value;
-      renderSystems();
-    });
-    $("#monsterFilters").addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-filter]");
-      if (!button) return;
-      monsterFilter = button.dataset.filter;
-      $$('button', event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
-      renderBestiary();
-    });
-    $("#assetSwapFilters").addEventListener("click", (event) => {
-      const button = event.target.closest("button[data-filter]");
-      if (!button) return;
-      assetSwapFilter = button.dataset.filter;
-      $$("button", event.currentTarget).forEach((item) => item.classList.toggle("active", item === button));
-      renderAssetSwap();
-    });
-    $("#assetSwapSearch").addEventListener("input", (event) => {
-      assetSwapQuery = event.currentTarget.value;
-      renderAssetSwap();
-    });
-  }
-
-  function searchIndex(query) {
-    const normalized = query.trim().toLowerCase();
-    if (!normalized) return [];
-    return [
-      ...data.tasks.map((item) => ({ group: "작업", title: item.title, detail: `${item.id} · ${item.detail}`, href: "#sprint" })),
-      ...data.qa.map((item) => ({ group: "QA", title: item.title, detail: `${item.id} · ${item.status}`, href: "#quality" })),
-      ...data.changes.map((item) => ({ group: "변경", title: item.title, detail: item.detail, href: "#changes" })),
-      ...data.documents.map((item) => ({ group: "문서", title: item.title, detail: item.description, href: systemSourceHref(item.path) })),
-      ...data.game.story.map((item) => ({ group: "스토리", title: item.title, detail: `${item.chapters} · ${item.detail}`, href: "#story" })),
-      ...systems.items.map((item) => ({ group: "시스템", title: item.title, detail: `${item.status} · ${item.summary}`, href: "#systems" })),
-      ...catalog.weapons.map((item) => ({ group: "무기", title: item.name, detail: `${item.className} · 공격력 ${item.damage}`, href: "#weapons" })),
-      ...catalog.memories.map((item) => ({ group: "기억", title: item.name, detail: `${item.weightName} · 피해 ${item.damage} · ${item.tag}`, href: "#memories" })),
-      ...catalog.armor.map((item) => ({ group: "방어구", title: item.name, detail: `${item.slotName} · ${item.collection}`, href: "#armor" })),
-      ...data.unityAssets.accessories.map((item) => ({ group: "액세서리", title: item.name, detail: item.detail, href: "#armor" })),
-      ...data.unityAssets.monsters.map((item) => ({ group: "몬스터", title: item.name, detail: `${item.type} · ${item.detail}`, href: "#bestiary" })),
-      ...assetSwap.items.map((item) => ({ group: "에셋 교체", title: item.title, detail: `${item.status} · ${item.category} · ${item.path}`, href: "#asset-swap" })),
-      ...data.game.boss.phases.map((item) => ({ group: "보스", title: item.title, detail: `${item.phase} · ${item.pattern}`, href: "#boss" }))
-    ].filter((item) => `${item.title} ${item.detail}`.toLowerCase().includes(normalized)).slice(0, 8);
-  }
-
-  function setupSearch() {
-    const input = $("#globalSearch");
-    const results = $("#searchResults");
-    const update = () => {
-      const found = searchIndex(input.value);
-      if (!input.value.trim()) { results.hidden = true; return; }
-      results.innerHTML = found.length ? found.map((item) => `<a href="${encodeURI(item.href)}"${item.href.toLowerCase().endsWith(".pdf") ? ' target="_blank" rel="noreferrer"' : ""}><span>${item.group}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.detail)}</small></a>`).join("") : `<div class="empty-state">검색 결과가 없습니다.</div>`;
-      results.hidden = false;
-      const box = input.closest(".search-box").getBoundingClientRect();
-      results.style.top = `${box.bottom + 8}px`;
-      results.style.right = `${window.innerWidth - box.right}px`;
-    };
-    input.addEventListener("input", update);
-    input.addEventListener("keydown", (event) => { if (event.key === "Escape") { input.value = ""; results.hidden = true; input.blur(); } });
-    document.addEventListener("keydown", (event) => {
-      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") { event.preventDefault(); input.focus(); input.select(); }
-    });
-    results.addEventListener("click", (event) => {
-      const link = event.target.closest("a[href^='#']");
-      if (!link) return;
-      event.preventDefault();
-      input.value = "";
-      results.hidden = true;
-      showView(resolveView(link.getAttribute("href")), { updateHistory: true, hash: link.getAttribute("href") });
-    });
-    document.addEventListener("click", (event) => { if (!event.target.closest(".search-box") && !event.target.closest(".search-results")) results.hidden = true; });
-  }
-
-  function setupNavigation() {
-    $$("[data-view]").forEach((link) => link.addEventListener("click", (event) => {
-      event.preventDefault();
-      showView(link.dataset.view, { updateHistory: true, hash: link.getAttribute("href") });
-    }));
-
-    $(".mobile-menu").addEventListener("click", (event) => {
-      event.stopPropagation();
-      const nav = $("#primaryNav");
-      const open = nav.classList.toggle("open");
-      event.currentTarget.setAttribute("aria-expanded", String(open));
-    });
-    document.addEventListener("click", (event) => {
-      if (event.target.closest("#primaryNav") || event.target.closest(".mobile-menu")) return;
-      $("#primaryNav").classList.remove("open");
-      $(".mobile-menu").setAttribute("aria-expanded", "false");
-    });
-    window.addEventListener("popstate", () => showView(resolveView(), { smooth: false }));
-    window.addEventListener("hashchange", () => showView(resolveView(), { smooth: false }));
-    showView(resolveView(), { smooth: false });
-  }
-
-  renderOverview();
-  renderUIProgress();
-  renderTasks();
-  renderRoadmap();
-  renderQa();
-  renderChanges();
-  renderDocuments();
-  renderGameBible();
-  renderStory();
-  renderSystems();
-  renderWeapons();
-  renderMemories();
-  renderArmor();
-  renderBestiary();
-  renderBoss();
-  renderAssetSwap();
-  renderFeedback();
-  setupFeedback();
-  setupFilters();
-  setupSearch();
-  setupNavigation();
+const dialog=$('photo-dialog'),fullImage=$('photo-image');
+let photoTrigger=null;
+document.addEventListener('click',e=>{
+ const button=e.target.closest('button[data-photo]');
+ if(!button)return;
+ photoTrigger=button;fullImage.src=button.dataset.photo;
+ fullImage.alt=button.querySelector('img')?.alt||button.dataset.caption;
+ $('photo-caption').textContent=button.dataset.caption;dialog.showModal();
+});
+$('close-photo').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+dialog.addEventListener('close',()=>{photoTrigger?.focus({preventScroll:true});fullImage.removeAttribute('src');});
 })();

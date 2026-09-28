@@ -1,248 +1,379 @@
-window.PROJECT_DATA = {
-  meta: {
-    name: "잠들지 않는 숲",
-    updated: "2026-09-14",
-    scene: "ForestPath",
-    unity: "6.3.10f1",
-    total: 128,
-    done: 101,
-    todo: 23,
-    cut: 4,
-    errors: 0,
-    warnings: 1
-  },
-  metrics: [
-    { label: "완료 작업", value: "101", detail: "Unity 체크리스트 기준 · 전체 런 완료율 아님", tone: "green", icon: "✓" },
-    { label: "미완료 작업", value: "23", detail: "대기 22 · 진행 1 (Unity 목록)", tone: "amber", icon: "↗" },
-    { label: "기억 모션 검증", value: "24", detail: "23개 개별 재생 + 순서 콤보 1개 통과", tone: "cyan", icon: "◇" },
-    { label: "UI 기능", value: "13/13", detail: "구현 연결 완료 · 전체 흐름 QA 별도", tone: "violet", icon: "▤" }
-  ],
-  uiProgress: {
-    checkedAt: "2026-09-14",
-    captureDate: "2026-08-09",
-    features: ["나무 프레임 v2 공통 테마", "인벤토리·장비 드래그 장착/해제", "기억 배치·캐릭터 관리 탭", "슬롯 선택·상세 정보·호버", "부위·파츠 그리드·색상·미리보기", "장비 해금·정수 비용", "일시정지·옵션 화면 전환", "난이도 선택·런 진입", "HP·포션·골드·정수 HUD", "미니맵·M 전체 지도", "사망 결과·장비 유지/미선택", "캠프·외형 카메라 재연결", "한국어·영어 로컬라이징 테이블"],
-    gates: ["캠프→런→옵션→사망→캠프 2회 및 다중 해상도 회귀 QA", "기억 정식 아이콘·화톳불 뿌리 제단 최종 아트"]
-  },
-  tasks: [
-    { id: "story-chapter-label", title: "챕터 표기 통일", detail: "B1~B9를 1장~9장으로 교체", priority: "P0", status: "todo", tag: "스토리", risk: true },
-    { id: "story-camp-exit-root", title: "캠프 출구 · 7장 뿌리", detail: "첫 동선을 지상으로, 뿌리를 심층 진입점으로", priority: "P0", status: "todo", tag: "스토리", risk: true },
-    { id: "lockon-strafe-fix", title: "락온 스트레이프 수정", detail: "대상 기준 WASD·후진·Sword and Shield 블렌드, 회피 중 락온 유지 구현", priority: "P1", status: "done", tag: "전투" },
-    { id: "boss-model", title: "보스 모델 · 리깅", detail: "Meshy 모델·리그·20모션 연결. 2100 HP, 3페이즈 구현; 최종 밸런스 별도", priority: "P0", status: "done", tag: "보스" },
-    { id: "regression-death-second-run", title: "사망 2회차 회귀 테스트", detail: "장비 인식, 기억 순서, 입력 상태, 포션을 연속 검증", priority: "P0", status: "todo", tag: "QA", risk: true },
-    { id: "ui-full-run-regression", title: "전체 UI 흐름·해상도 QA", detail: "캠프부터 사망 복귀까지 2회, 16:9 해상도와 입력 누수 검증", priority: "P1", status: "todo", tag: "UI/UX", risk: true },
-    { id: "ui-camp-camera-rebind", title: "사망 후 캠프·미리보기 복구", detail: "씬 재로드 뒤 캠프 구도와 커스터마이징 캐릭터를 재연결", priority: "P1", status: "done", tag: "UI/UX" },
-    { id: "ui-management-overhaul", title: "캐릭터 관리·기억 구성 개편", detail: "공통 탭, 드래그 장착, 선택 정보, 나무 프레임 테마 적용", priority: "P1", status: "done", tag: "UI/UX" },
-    { id: "ui-flow-overhaul", title: "메뉴·HUD·지도·사망 UI 개편", detail: "난이도·옵션·화톳불·HUD·빅맵·사망 화면과 한국어 표기 통일", priority: "P1", status: "done", tag: "UI/UX" },
-    { id: "equipment-drop-presentation", title: "3D 등급 드랍 표현", detail: "에픽 원형 · 유니크 노랑 · 레전더리 하늘색 기둥", priority: "P2", status: "done", tag: "VFX" },
-    { id: "weapon-grip-normalization", title: "무기 15종 그립 정비", detail: "칼날·히트박스·트레일 기준 통합", priority: "P2", status: "done", tag: "전투" },
-    { id: "death-memory-starter", title: "죽음·기억·시작 단검", detail: "최대 1개/미선택, 기억 순서 유지, 단검 재지급", priority: "P0", status: "done", tag: "세이브" },
-    { id: "player-attack-tempo", title: "플레이어 공격 배속 원복", detail: "공통 2배 가속 제거. 기억별 지정 배속과 무게 기반 속도 유지", priority: "P1", status: "done", tag: "전투" },
-    { id: "player-slash-vfx-hd", title: "추가 참격 VFX 제거", detail: "사용자 요청으로 플레이어 추가 참격은 현재 미사용. 기존 무기 트레일과 구분", priority: "P1", status: "done", tag: "전투" },
-    { id: "combat-feel-legacy-v2", title: "기존 몬스터 전용 모션 보정", detail: "13종·27클립 타격 시간, 체중 이동, 접지 정비. 근접 72사례 통과", priority: "P1", status: "done", tag: "전투" },
-    { id: "player-hit-knockback", title: "플레이어 피격·짧은 넉백", detail: "0.45초 경직 + 0.38m/0.16초 넉백. 벽 충돌·조작 복구 포함 17사례 통과", priority: "P1", status: "done", tag: "전투" },
-    { id: "memory-retarget-v2", title: "기억 리타게팅·접지 보정", detail: "96파일 원본 백업, CS 12개 복사본 보정. 기억 23개+순서 콤보 검증", priority: "P1", status: "done", tag: "전투" },
-    { id: "wolf-forward-pounce", title: "늑대 전진 도약 강공격", detail: "확정 방향·최대 3.2m 전진·벽 차단·피격 취소·일시정지, 전투/이동 포함 17사례 통과", priority: "P1", status: "done", tag: "전투" },
-    { id: "dungeon-modular-authoring", title: "던전 모듈 Blender 편집 준비", detail: "왕좌·기둥·벽·바닥을 가져오고 타일 비율, 계단과 아치 크기를 독립 조절하는 제작 흐름 정리", priority: "P2", status: "done", tag: "3D" }
-  ],
-  roadmap: [
-    { date: "07.31", title: "핵심 시스템", state: "done", detail: "전투 · 죽음 · 계약 · 맵" },
-    { date: "08.09", title: "UI/UX 전면 개편", state: "done", detail: "관리 · HUD · 지도 · 사망 · 카메라" },
-    { date: "09.12", title: "보스 구현", state: "done", detail: "모델 · 상황별 AI · 3페이즈 (밸런스 별도)" },
-    { date: "09.14", title: "전투 모션 안정화", state: "active", detail: "몬스터 · 기억 · 피격 · 도약 · 실맵 QA" },
-    { date: "09 말", title: "전체 QA", state: "next", detail: "2회 런 · 사운드" },
-    { date: "10", title: "최종 빌드", state: "next", detail: "발표 · 시연" }
-  ],
-  qa: [
-    { id: "lockon-strafe-fix", title: "락온 후 스트레이프 이동", status: "구현 완료 · 실맵 QA", severity: "P1", tone: "cyan" },
-    { id: "regression-monster-animation", title: "몬스터 소실·지면 침투 회귀", status: "검증 대기", severity: "P1", tone: "amber" },
-    { id: "regression-audio-headphones", title: "몬스터 3D 발소리 헤드폰 QA", status: "청취 대기", severity: "P2", tone: "amber" },
-    { id: "ui-full-run-regression", title: "전체 UI 흐름·다중 해상도", status: "검증 대기", severity: "P1", tone: "amber" },
-    { id: "regression-drop-readability", title: "등급 드랍 원거리 가독성", status: "실맵 QA", severity: "P2", tone: "cyan" }
-  ],
-  changes: [
-    { time: "09.14", group: "COMBAT", title: "기존 모션과 비교한 리타게팅 보정", detail: "몬스터 준비·회복 시간과 하체 고정을 보정하고 기억 관절 뒤집힘·바닥 침투를 완화. 원본 보존", tone: "green" },
-    { time: "09.14", group: "UI/UX", title: "UI 진행 단계와 웹 정보 정정", detail: "13개 기능 구현, 전체 흐름·다중 해상도 QA 및 최종 아트를 분리. 공통 2배·추가 참격은 현재 미사용으로 정정", tone: "violet" },
-    { time: "08.24", group: "WEB", title: "프로젝트 허브 최신 상태 동기화", detail: "8월 9일 이후 전투·VFX·Blender 제작 흐름과 검증 이미지를 Game Bible·시스템·개발 현황에 반영", tone: "violet" },
-    { time: "08.10", group: "VFX", title: "참격 VFX 고해상도 재베이크", detail: "역할별 셀을 256에서 512로 올리고 Uncompressed·Clamp·Mip Off로 5.1배 확대 선명도 회복", tone: "cyan" },
-    { time: "08.10", group: "COMBAT", title: "공격 속도와 참격 크기 조정", detail: "모든 플레이어 공격 최종 재생 속도 ×2, 참격 루트 1.7→5.1과 0.60초 풀링 계약 적용", tone: "green" },
-    { time: "08.10", group: "COMBAT", title: "타격별 참격 방향 직접 조정", detail: "AttackCombo Inspector에서 EnableHitbox 순서별 Local Euler·Mirror X를 지정하고 TripleAttack 세 타격을 개별 튜닝", tone: "amber" },
-    { time: "08.10", group: "3D", title: "던전 모듈 Blender 편집 파이프라인", detail: "Ground·Wall·Column·Throne을 가져와 벽돌 비율을 유지한 바닥 확장과 계단·아치 독립 조절 흐름을 준비", tone: "violet" },
-    { time: "23:05", group: "UI/UX", title: "사망 후 캠프·커스터마이징 카메라 복구", detail: "ForestPath 재로드 뒤 캠프 구도와 캐릭터 미리보기를 재바인딩, 전용 레이어와 카메라 1개 유지 검증", tone: "cyan" },
-    { time: "21:40", group: "UI/UX", title: "관리·메뉴·HUD 화면 전면 개편", detail: "인벤토리·기억·커스터마이징·해금·옵션·난이도·지도·사망 화면을 나무 프레임 테마와 공통 UX로 통일", tone: "green" },
-    { time: "20:10", group: "LOCALIZATION", title: "UI 언어와 문자열 테이블 통일", detail: "현재 화면은 한국어만 노출하고 한국어/영어 키 기반 런타임 바인딩 구성", tone: "violet" },
-    { time: "23:20", group: "ASSET", title: "에셋 교체 체크리스트 동기화", detail: "프로젝트 재스캔으로 42개 추가·확장, 5개 제외·대체, 총 128개 정리", tone: "amber" },
-    { time: "22:37", group: "DOCUMENT", title: "프로젝트 문서 전체 동기화", detail: "현황·체크리스트·변경이력 신설, spec 01~04 갱신", tone: "violet" },
-    { time: "21:50", group: "COMBAT", title: "무기 15종 그립·칼날 방향 정비", detail: "GoldSword 파지 위치와 비대칭 칼날 방향 보정", tone: "green" },
-    { time: "20:42", group: "VFX", title: "장비 등급 드랍 표현 완성", detail: "지면 기둥·원형·나선 레이어, 무기만 부유", tone: "cyan" },
-    { time: "18:20", group: "INPUT", title: "Q 락온과 기억 돌진 대상 통일", detail: "스트레이프 이동은 별도 수정 항목으로 분리", tone: "amber" },
-    { time: "16:10", group: "SAVE", title: "사망 2회차 기억 순서 유지", detail: "SmallAttack 폴백과 시작 단검 규칙 수정", tone: "green" }
-  ],
-  documents: [
-    { title: "프로젝트 현황", description: "현재 완성도, 위험, 다음 순서", type: "STATUS", path: "docs/프로젝트_현황.md", accent: "green" },
-    { title: "개발 체크리스트", description: "작업 ID와 완료 조건", type: "CHECKLIST", path: "docs/개발_체크리스트.md", accent: "amber" },
-    { title: "에셋 교체 체크리스트", description: "UI·사운드·모델 교체 현황 128개", type: "ASSET", path: "docs/에셋_교체_체크리스트.md", accent: "amber" },
-    { title: "변경이력", description: "최근 구현·버그 수정 기록", type: "CHANGELOG", path: "docs/변경이력.md", accent: "violet" },
-    { title: "1페이지 기획서", description: "컨셉과 핵심 규칙", type: "CONCEPT", path: "docs/기획서.md", accent: "cyan" },
-    { title: "상세기획서", description: "전체 시스템·콘텐츠 구성", type: "SYSTEM", path: "docs/상세기획서.md", accent: "green" },
-    { title: "상세스토리", description: "수호자, 안개, 세대 교체", type: "STORY", path: "docs/상세스토리.md", accent: "amber" },
-    { title: "VFX 제작 컨텍스트", description: "참격·드랍 VFX 제작 계약과 검증 결과", type: "VFX", path: "docs/VFX_CONTEXT.md", accent: "cyan" },
-    { title: "구현 명세 01~04", description: "맵·전투·AI·죽음 규칙", type: "SPEC", path: "pdf/구현명세서.pdf", accent: "violet" },
-    { title: "전투 모션 보정 PDF", description: "2026.09.14 비교 원인·백업·적용·검사 범위", type: "PDF", path: "pdf/전투모션_보정_2026-09-14.pdf", accent: "cyan" }
-  ],
-  unityAssets: {
-    weapons: [
-      { name: "한손검 1형", type: "ONE-HANDED", family: "longsword", detail: "빠른 연계에 맞춘 표준 한손검", image: "assets/unity/weapon-onehand-1.png", source: "PF_GS_OneHand_1_1.prefab" },
-      { name: "한손검 3형", type: "ONE-HANDED", family: "longsword", detail: "넓은 칼날과 안정적인 무게 중심", image: "assets/unity/weapon-onehand-3.png", source: "PF_GS_OneHand_3_1.prefab" },
-      { name: "대검 1형", type: "GREAT SWORD", family: "greatsword", detail: "무거운 기억의 마무리에 특화", image: "assets/unity/weapon-great-1.png", source: "PF_GS_Great_1_1.prefab" },
-      { name: "대검 4형", type: "GREAT SWORD", family: "greatsword", detail: "긴 사거리와 강한 경직을 노리는 대검", image: "assets/unity/weapon-great-4.png", source: "PF_GS_Great_4_1.prefab" },
-      { name: "황금 장식검", type: "UNIQUE", family: "longsword", detail: "높은 기본 피해의 희귀 장식검", image: "assets/unity/weapon-gold.png", source: "PF_Sword_Gold.prefab" },
-      { name: "그림자 검", type: "UNLOCK", family: "longsword", detail: "속도와 돌진 기억을 잇는 경량 검", image: "assets/unity/weapon-shadow.png", source: "PF_Sword_Shadow.prefab" },
-      { name: "서리 검", type: "UNLOCK", family: "greatsword", detail: "냉기 테마의 중량 무기", image: "assets/unity/weapon-frost.png", source: "PF_Sword_Frost.prefab" }
+// Visitor-facing game introduction. Source audit: 2026-09-28.
+window.GAME_SHOWCASE = {
+  "introFeatures": [
+    [
+      "01",
+      "내가 만드는 공격의 순서",
+      "22가지 기억을 골라 연속 공격을 구성하거나, 힘을 축적해 결정적인 일격을 노리세요.",
+      "memories",
+      "기억 살펴보기"
     ],
-    armor: [
-      { name: "기본 모험가 세트", type: "EQUIPPED SET", detail: "현재 플레이어 프리팹에 적용된 기본 외형", image: "assets/unity/armor-player-default.png", source: "Player.prefab" },
-      { name: "황금 흉갑", type: "CHEST ARMOR", detail: "금빛 장식이 강조된 중갑 흉갑", image: "assets/unity/armor-golden.png", source: "Armor_Golden.fbx" },
-      { name: "가죽 흉갑", type: "CHEST ARMOR", detail: "기동성을 우선한 경량 가죽 방어구", image: "assets/unity/armor-leather.png", source: "Armor_Leather.fbx" },
-      { name: "금속 흉갑", type: "CHEST ARMOR", detail: "표준 방어 성능의 금속 흉갑", image: "assets/unity/armor-metal.png", source: "Armor_Metal2.fbx" }
+    [
+      "02",
+      "숲에서 뿌리의 심층으로",
+      "폭우가 쏟아지는 여울목, 물에 잠기는 마을, 매번 구조가 달라지는 미로를 지나세요.",
+      "world",
+      "여정 따라가기"
     ],
-    accessories: [
-      { name: "핏빛 반지", type: "ACCESSORY · RING", detail: "공격적인 빌드를 위한 붉은 금속 반지", image: "assets/unity/accessory-blood-ring.png", source: "BloodRing.asset" },
-      { name: "다이아몬드 반지", type: "ACCESSORY · RING", detail: "청색 보석을 세공한 장비 액세서리", image: "assets/unity/accessory-diamond-ring.png", source: "DiamondRing.asset" }
-    ],
-    memories: [
-      { name: "섬광 베기", type: "가벼움 · 피해 3", detail: "빠른 시작", image: "assets/unity/memory-flash-slash.png", source: "ICON_SmallAttack.png" },
-      { name: "질풍 이연격", type: "가벼움 · 피해 3", detail: "빠르게 두 번 베기", image: "assets/unity/memory-double-slash.png", source: "ICON_SmallAttack2.png" },
-      { name: "찌르는 빛", type: "가벼움 · 피해 4", detail: "전방 찌르기", image: "assets/unity/memory-thrust-light.png", source: "ICON_SmallAttack3.png" },
-      { name: "가로지르는 검", type: "보통 · 피해 5", detail: "교차 베기", image: "assets/unity/memory-cross-cut.png", source: "ICON_SmallAttack4.png" },
-      { name: "낙하 일섬", type: "무거움 · 피해 8", detail: "마무리 · 대지", image: "assets/unity/memory-falling-light.png", source: "ICON_HeavyTurnAttack.png" },
-      { name: "폭주하는 기억", type: "무거움 · 피해 12", detail: "마무리 · 전격 · 5연격", image: "assets/unity/memory-overdrive.png", source: "ICON_TripleAttack.png" }
-    ],
-    monsters: [
-      { name: "구울", type: "GHOUL · 일반 · 근접", group: "surface", rank: "일반", detail: "거친 움직임으로 표층을 배회하는 뒤틀린 생물", image: "assets/unity/monster-ghoul.png", source: "GhoulEnemy.prefab" },
-      { name: "고블린", type: "GOBLIN · 일반 · 근접", group: "surface", rank: "일반", detail: "숲 표층에서 가장 먼저 마주치는 기본 적", image: "assets/unity/monster-goblin.png", source: "GoblinEnemy.prefab" },
-      { name: "골렘", type: "GOLEM · 네임드", group: "depths", rank: "네임드", detail: "HP 500 · 공격 30 · 슈퍼아머 6히트", image: "assets/unity/monster-golem.png", source: "GolemEnemy.prefab" },
-      { name: "오우거", type: "OGRE · 네임드", group: "depths", rank: "네임드", detail: "HP 400 · 공격 35 · 슈퍼아머 5히트", image: "assets/unity/monster-ogre.png", source: "OgreEnemy.prefab" },
-      { name: "오크", type: "ORC · 네임드 · 방패", group: "village", rank: "네임드", detail: "HP 300 · 정면 방어와 가드 브레이크", image: "assets/unity/monster-orc.png", source: "OrcEnemy.prefab" },
-      { name: "스켈레톤 메이지", type: "SKELETON · 네임드", group: "depths", rank: "네임드", detail: "불·얼음·전기 중 하나를 무작위 시전", image: "assets/unity/monster-skeleton-mage.png", source: "Skeleton_MageEnemy.prefab" },
-      { name: "스켈레톤 전사", type: "SKELETON · 일반 · 방패", group: "village", rank: "일반", detail: "정면 완전 방어 · 4회 가드 브레이크", image: "assets/unity/monster-skeleton-warrior.png", source: "Skeleton_WarriorEnemy.prefab" },
-      { name: "트롤", type: "TROLL · 일반 · 대형", group: "depths", rank: "일반", detail: "깊은 곳을 지키는 육중한 근접 크리처", image: "assets/unity/monster-troll.png", source: "TrollEnemy.prefab" },
-      { name: "좀비", type: "ZOMBIE · 일반 · 근접", group: "surface", rank: "일반", detail: "느린 걸음으로 전진하며 공간을 압박", image: "assets/unity/monster-zombie.png", source: "Zombie_MEnemy.prefab" }
+    [
+      "03",
+      "주운 장비가 빌드가 되는 순간",
+      "장비를 감정해 잠든 옵션을 깨우고, 성장 트리와 재추첨으로 원하는 전투 방식을 만드세요.",
+      "equipment",
+      "장비 알아보기"
     ]
-  },
-  game: {
-    facts: [
-      { value: "9", label: "이야기 장", detail: "3막 구조" },
-      { value: "3", label: "무기 계열", detail: "단검 · 장검 · 대검" },
-      { value: "22", label: "공격 기억", detail: "순서 조립형 콤보" },
-      { value: "12", label: "몬스터", detail: "일반 8 · 네임드 4" },
-      { value: "5", label: "등급", detail: "노말 → 레전더리" },
-      { value: "3", label: "보스 페이즈", detail: "해방으로 향하는 전투" }
+  ],
+  "faq": [
+    [
+      "어떤 게임인가요?",
+      "기억으로 공격 순서를 구성하고 장비와 성장 트리를 조합하는 싱글 플레이 액션 로그라이트입니다. 숲부터 지하 보스룸까지 이어지는 한 번의 도전을 반복하며 세계의 이야기를 발견합니다."
     ],
-    pillars: [
-      { index: "01", title: "콤보를 직접 조립한다", detail: "획득한 공격 기억을 슬롯에 배치한다. 같은 기억도 순서와 무기 궁합에 따라 피해와 리듬이 달라진다.", tone: "green" },
-      { index: "02", title: "욕심과 속도를 저울질한다", detail: "엘리트와 보물을 더 찾으면 강해지지만, 오래 머물수록 검은 안개와 저주가 짙어진다.", tone: "amber" },
-      { index: "03", title: "죽음이 이야기를 남긴다", detail: "골드는 잃고 레벨은 30%만 남는다. 기억의 보유·장착 순서와 선택 장비 최대 1개는 다음 반복으로 이어진다.", tone: "cyan" }
+    [
+      "죽으면 무엇이 남나요?",
+      "정수, 영구 해금, 외형 설정과 옵션은 유지됩니다. 이번 도전의 기억과 성장 투자는 초기화되며, 사망 시 장비 한 개를 골라 다음 도전으로 가져갈 수 있습니다. 기본 지급 단검과 소모품은 선택 대상이 아닙니다. 골드는 잃고 레벨은 일부만 남습니다."
     ],
-    loop: ["캠프", "탐색", "계약", "전투", "기억 조립", "더 깊이", "죽음 또는 해방"],
-    story: [
-      { act: "PROLOGUE", chapters: "캠프", title: "불려온 짐꾼", detail: "마을로 물자를 나르던 평범한 모험가가 숲길에서 잠든다. 눈을 뜨자 검은 안개가 돌아갈 길을 지우고, 거대한 뿌리가 땅을 찢고 솟아오른다.", place: "텐트 · 수레 · 무덤 4개", tone: "mist" },
-      { act: "ACT I", chapters: "1~3장", title: "물든 숲", detail: "밝은 개활지와 뒤틀린 짐승 사이에서 먼저 지나간 누군가의 무기와 기억을 발견한다. 주인공은 그 흔적이 자신의 것임을 모른다.", place: "숲 개활지 · 짐승과 나무", tone: "green" },
-      { act: "ACT II", chapters: "4~6장", title: "삼켜진 마을", detail: "오늘 아침 향하던 마을이 수십 년째 폐허였다는 사실이 드러난다. 시신은 없고, 여울목과 미로 아래에서 사람의 흔적이 짙어진다.", place: "폐허 마을 · 여울목 · 미로", tone: "amber" },
-      { act: "ACT III", chapters: "7~9장", title: "뿌리 아래", detail: "뿌리가 뽑혀 나온 땅의 상처로 내려간다. 상대는 짐승에서 사람이었던 것으로 바뀌고, 가장 깊은 곳에서 늙은 수호자와 마주한다.", place: "심층 던전 · 원형 미로 · 마지막 장", tone: "violet" }
+    [
+      "처음에는 어떻게 시작하나요?",
+      "새 저장은 정수 500과 회전 베기 한 개로 시작합니다. 캠프에서 출발하며 자리에서 일어난 뒤 기본 단검을 자동으로 장착합니다. 기억 준비와 장비 해금으로 다음 도전을 준비할 수 있습니다."
     ],
-    novel: [
-      { chapter: "서막", title: "검은 안개가 텐트를 에워쌌다", paragraphs: [
-        "모험가는 해가 지기 전에 마을에 도착할 생각이었다. 수레에는 곡물 자루와 약병, 녹슨 농기구를 고칠 쇳조각이 실려 있었다. 이름난 용사도, 숲의 비밀을 쫓는 학자도 아닌 그는 그저 약속한 물자를 제때 가져다주는 사람이었다.",
-        "그러나 밤이 내려앉자 길은 갑자기 끝났다. 텐트 밖으로 나온 그는 검은 안개가 나무 사이가 아니라 세상의 경계처럼 서 있는 것을 보았다. 안개에 손을 뻗을 때마다 차가운 벽이 밀어냈고, 수레를 돌리려 하자 땅속에서 솟은 거대한 뿌리가 돌아갈 길을 찢어 놓았다.",
-        "텐트 곁에는 무덤이 네 개 있었다. 모두 오래된 것처럼 이끼가 끼어 있었지만 흙은 방금 덮은 듯 축축했다. 그는 묘비의 글자를 읽지 못했다. 비에 지워진 것이 아니라, 글씨가 자신의 손과 너무 닮아 눈이 뜻을 거부하는 것 같았다."
-      ]},
-      { chapter: "1장–3장", title: "물든 숲", paragraphs: [
-        "아침은 오지 않았다. 안개 너머의 하늘은 밝아졌지만 숲은 밤의 색을 놓지 않았다. 고블린과 구울, 이름을 잃은 짐승들이 길가를 서성였고, 나무껍질 아래에서는 검은 핏줄 같은 것이 꿈틀거렸다.",
-        "쓰러진 적의 곁에는 낯선 무기와 공격의 기억이 남았다. 검을 쥐자 몸이 먼저 움직였다. 한 번 베고, 몸을 낮춰 파고들고, 마지막 일격을 내리꽂는 순서를 손과 발이 알고 있었다. 배운 적 없는 동작이었다. 기억은 새로 얻은 지식이 아니라 오래전에 잃어버린 습관처럼 돌아왔다.",
-        "숲은 그가 익숙해질 때마다 길을 바꾸었다. 전날 있던 개울이 사라지고 빈터 한가운데 뿌리의 벽이 생겼다. 그래도 텐트와 수레, 네 개의 무덤만은 움직이지 않았다. 그 변하지 않는 것들이 오히려 가장 불길했다."
-      ]},
-      { chapter: "4장–6장", title: "삼켜진 마을", paragraphs: [
-        "물소리가 들리는 여울목부터 안개는 더 무거워졌다. 오래 머물수록 물은 불어나 발목을 삼켰고, 길가의 짐승 대신 녹슨 검을 든 뼈와 썩지 못한 사람들이 나타났다. 그들은 길을 막는 것이 아니라 그를 더 깊은 곳으로 몰아가는 것처럼 싸웠다.",
-        "마침내 나무 사이로 지붕이 보였다. 그가 오늘 아침까지 물자를 전하려 했던 마을이었다. 하지만 우물은 말라 있었고 집의 들보에는 수십 년 묵은 균열이 가득했다. 밥 짓는 연기도, 기다리던 사람도, 시신조차 없었다. 마을 전체가 어느 날 한꺼번에 땅 아래로 끌려간 듯 비어 있었다.",
-        "무너진 집에서 발견한 기록에는 마을을 지키는 수호자의 이야기가 적혀 있었다. 재난이 닥칠 때마다 뿌리가 벽이 되었고, 짐승이 내려올 때마다 숲이 길을 감췄다. 마지막 장에는 같은 문장이 여러 번 덧씌워져 있었다. ‘우리를 지키려는 힘이 우리를 놓아주지 않는다.’"
-      ]},
-      { chapter: "7장–9장", title: "뿌리 아래", paragraphs: [
-        "마을 뒤편에서 뿌리 하나가 땅을 들어 올리고 있었다. 모험가가 가까이 다가가자 그것은 문처럼 갈라졌다. 아래로 이어지는 길은 동굴이 아니었다. 나무의 속, 거대한 생명의 상처 안으로 들어가는 통로였다.",
-        "깊이 내려갈수록 벽에 박힌 물건들이 눈에 띄었다. 아이의 신발, 부러진 괭이, 마을 문장이 새겨진 방패. 수호자는 사람들을 버리지 않았다. 너무 오래, 너무 강하게 보호하려다 마을 전체를 자신의 안쪽으로 끌어안은 것이다. 그 안에서 사람은 뼈가 되고 흙이 되고, 끝내 숲을 지키는 괴물이 되었다.",
-        "그제야 모험가는 자신이 숲을 지나온 것이 아니라 처음부터 수호자의 몸속을 걸어왔음을 알았다. 안개는 침입자를 가두기 위한 저주가 아니었다. 늙은 수호자의 몸에서 새어 나오는 고통이었고, 되풀이되는 길은 마지막 남은 의지가 후계자를 찾기 위해 만든 시험이었다."
-      ]},
-      { chapter: "마지막 장", title: "잠들지 않는 뿌리", paragraphs: [
-        "가장 깊은 원형의 방에서 오래된 수호자가 눈을 떴다. 땅을 찢고 솟은 뿌리들은 팔처럼 휘둘렸고, 검은 안개가 호흡마다 쏟아졌다. 처음 두 번의 격돌에서 모험가는 통제되지 않는 힘의 파편과 싸웠다.",
-        "마지막 순간, 수호자의 가슴에서 빛나는 코어가 드러났다. 방어가 무너진 것이 아니었다. 남아 있던 의지가 스스로 문을 연 것이었다. 칼끝이 코어에 닿자 숲 전체가 긴 숨을 내쉬었다. 그 일격은 살해가 아니라, 너무 오래 깨어 있던 존재에게 허락된 잠이었다."
-      ]},
-      { chapter: "종장", title: "물자를 내려놓는 사람", paragraphs: [
-        "안개가 걷힌 뒤 모험가는 수레로 돌아왔다. 무덤은 다섯 개가 되어 있었다. 그는 묻지 않았다. 몇 번이나 이 길을 걸었는지, 몇 번이나 자신의 무덤을 만들었는지 이제는 알 것 같았기 때문이다.",
-        "그는 빈 마을까지 수레를 끌고 가 약속한 물자를 한 집씩 나누어 내려놓았다. 받을 사람은 없었지만, 그 일만큼은 끝내고 싶었다. 마지막 자루를 내려놓았을 때 숲 아래에서 새 뿌리가 천천히 움직였다.",
-        "모험가는 수호자가 있던 자리에 앉았다. 힘은 저주처럼 이어진 것이 아니라 누군가가 다음 사람을 위해 버티겠다고 선택한 약속으로 넘어왔다. 먼 훗날 또 다른 수레가 숲길에 들어오면, 이제 그가 안개와 길과 괴물 사이에서 후계자를 기다리게 될 것이다."
-      ]},
-      { chapter: "반복의 규칙", title: "숲은 장소를 기억하고, 사람은 몸으로 기억한다", paragraphs: [
-        "죽음 뒤 숲은 장소를 다시 세우지만 완전히 같은 모양으로 만들지는 못한다. 흩어진 기억은 길 위에 놓이고, 모험가의 성장은 일부만 몸에 남는다. 골드는 사라져도 무덤과 상처, 손이 기억한 콤보의 순서는 다음 밤까지 이어진다.",
-        "그러므로 반복은 실패의 취소가 아니다. 한 세대가 다음 세대에게 자리를 넘기는 연습이다. 더 어려운 숲에서 기다리는 보스는 이전 난이도에서 끝까지 살아남은 주인공이며, 여섯 번째 계승까지 이어지는 수호자들은 타락한 잔재가 아니라 누군가를 지키기 위해 남은 사람들이다."
-      ]}
-    ],
-    clues: [
-      { label: "기록자", detail: "동물이 흘린 기억을 다시 길에 놓고 은신처와 무덤을 만든다." },
-      { label: "캠프의 무덤", detail: "첫 플레이부터 4개가 서 있고, 죽을 때마다 하나씩 늘어난다." },
-      { label: "폐허 마을", detail: "오늘 도착한 목적지가 이미 수십 년째 폐허라는 시간의 어긋남." },
-      { label: "코어 노출", detail: "보스의 방어가 무너지는 것이 아니라 남은 의지가 스스로 열어 주는 허락." }
-    ],
-    weaponFamilies: [
-      { id: "dagger", name: "단검", role: "빠르게 흐름을 쌓는다", fit: "가벼운 기억 ×1.20", opposite: "무거운 기억 ×0.85", tone: "cyan" },
-      { id: "longsword", name: "장검", role: "연계의 중심을 잡는다", fit: "보통 기억 ×1.20", opposite: "균형형", tone: "green" },
-      { id: "greatsword", name: "대검", role: "쌓은 흐름을 끝낸다", fit: "무거운 기억 ×1.20", opposite: "가벼운 기억 ×0.85", tone: "amber" }
-    ],
-    weapons: [
-      { id: "starter-dagger", name: "시작 단검", family: "dagger", type: "무료 지급 · 경량", damage: "10 고정", rarity: "STARTER", detail: "매 런 최소한의 기억 전투를 가능하게 하는 약한 기본 무기. 사망 장비 선택에서는 제외된다." },
-      { id: "drop-dagger", name: "드랍 단검", family: "dagger", type: "해금 드랍 · 경량", damage: "20~30", rarity: "NORMAL+", detail: "가벼운 기억과 빠른 연타로 흐름을 안전하게 축적하는 파밍형 단검." },
-      { id: "shadow-sword", name: "그림자 검", family: "longsword", type: "경량 한손검", damage: "30~45", rarity: "UNLOCK", detail: "단검의 속도감과 장검의 안정성을 잇는 경량 빌드용 무기." },
-      { id: "blood-sword", name: "핏빛 검", family: "longsword", type: "경량 한손검", damage: "35~50", rarity: "UNLOCK", detail: "연속 공격과 돌진 기억을 중심으로 압박하는 공격적인 한손검." },
-      { id: "knight-sword", name: "기사의 검", family: "longsword", type: "중량 한손검", damage: "65~85", rarity: "UNLOCK", detail: "보통 무게의 연계를 안정적으로 운용하고 마무리까지 이어 주는 표준 장검." },
-      { id: "gold-sword", name: "황금 장식검", family: "longsword", type: "중량 한손검", damage: "70~90", rarity: "UNLOCK", detail: "높은 기본 피해와 균형 잡힌 콤보 운용을 노리는 장식 장검." },
-      { id: "frost-greatsword", name: "서리 대검", family: "greatsword", type: "대검", damage: "85~105", rarity: "UNLOCK", detail: "무거운 기억과 마무리 피해에 집중하는 냉기 테마의 대검." },
-      { id: "lava-greatsword", name: "용암 대검", family: "greatsword", type: "대검", damage: "95~115", rarity: "UNLOCK", detail: "가장 높은 피해 범위를 가진 화염 테마 대검. 느린 공격의 위험을 회피 캔슬로 보완한다." }
-    ],
-    memories: [
-      { name: "섬광 베기", weight: "가벼움", damage: 3, trait: "빠른 시작", rarity: "NORMAL" },
-      { name: "질풍 이연격", weight: "가벼움", damage: 3, trait: "빠르게 두 번 베기", rarity: "NORMAL" },
-      { name: "찌르는 빛", weight: "가벼움", damage: 4, trait: "전방 찌르기", rarity: "NORMAL" },
-      { name: "가로지르는 검", weight: "보통", damage: 5, trait: "교차 베기", rarity: "RARE" },
-      { name: "낙하 일섬", weight: "무거움", damage: 8, trait: "마무리 · 대지", rarity: "RARE" },
-      { name: "폭주하는 기억", weight: "무거움", damage: 12, trait: "마무리 · 전격 · 5연격", rarity: "UNIQUE" }
-    ],
-    depths: [
-      { id: "surface", chapters: "1~3장", title: "물든 숲", detail: "짐승과 나무가 먼저 뒤틀린다", tone: "green" },
-      { id: "village", chapters: "4~6장", title: "삼켜진 마을", detail: "뼈와 무기를 든 흔적이 나타난다", tone: "amber" },
-      { id: "depths", chapters: "7~9장", title: "뿌리 아래", detail: "사람이었던 것과 흙·돌이 기다린다", tone: "violet" }
-    ],
-    monsters: [
-      { name: "Goblin", ko: "고블린", group: "surface", role: "근접", rank: "일반", feature: "숲 표층의 기본 잡몹", status: "구현" },
-      { name: "Ghoul", ko: "구울", group: "surface", role: "근접", rank: "일반", feature: "거친 움직임의 뒤틀린 생물", status: "구현" },
-      { name: "Zombie M/F", ko: "좀비", group: "surface", role: "근접", rank: "일반", feature: "남녀형으로 구분된 느린 압박", status: "구현" },
-      { name: "Skeleton Base", ko: "스켈레톤", group: "village", role: "근접", rank: "일반", feature: "뼈·검 사운드를 쓰는 표준 병사", status: "구현" },
-      { name: "Skeleton Warrior", ko: "스켈레톤 전사", group: "village", role: "방패", rank: "일반", feature: "정면 완전 방어 · 4회 가드 브레이크", status: "구현" },
-      { name: "Skeleton Archer", ko: "스켈레톤 아처", group: "village", role: "원거리", rank: "일반", feature: "화살 투사체로 공간을 압박", status: "구현" },
-      { name: "Troll", ko: "트롤", group: "depths", role: "대형 근접", rank: "일반", feature: "깊은 곳의 육중한 크리처", status: "구현" },
-      { name: "Golem", ko: "골렘", group: "depths", role: "근접", rank: "네임드", feature: "HP 500 · 공격 30 · 슈퍼아머 6히트", status: "구현" },
-      { name: "Ogre", ko: "오우거", group: "depths", role: "근접", rank: "네임드", feature: "HP 400 · 공격 35 · 슈퍼아머 5히트", status: "구현" },
-      { name: "Orc", ko: "오크", group: "village", role: "방패", rank: "네임드", feature: "HP 300 · 정면 방어와 가드 브레이크", status: "구현" },
-      { name: "Skeleton Mage", ko: "스켈레톤 메이지", group: "depths", role: "원소 마법", rank: "네임드", feature: "불·얼음·전기 중 하나를 무작위 시전", status: "구현" }
-    ],
-    boss: {
-      name: "잠들지 않는 뿌리",
-      phases: [
-        { phase: "PHASE 01", hp: "2100~1400", title: "거리와 예고를 읽는다", pattern: "횡타·어퍼컷 · 단발 내려찍기 · 씨앗 · 랜덤 통로 파동", intent: "근접·원거리 거리에 따라 다른 패턴이 선택됩니다.", tone: "green" },
-        { phase: "PHASE 02", hp: "1400~700", title: "변형과 연계를 넘긴다", pattern: "2연속 내려찍기 · 어퍼컷 연계 · 넓은 뿌리 · 제한된 복합 공격", intent: "먼저 구른 위치에 무조건 명중하지 않도록 조준 고정과 회피 공간을 둡니다.", tone: "amber" },
-        { phase: "PHASE 03", hp: "700~0", title: "허락된 코어에 마무리한다", pattern: "뿌리 · 황금탄 · 공동 붕괴 · 코어 광선", intent: "본체 팔 공격은 중단됩니다. 코어를 타격하고 해방 모션 뒤 승리 출구로 이어집니다.", tone: "violet" }
+    [
+      "지금 소개된 화면이 최종 모습인가요?",
+      "현재 제작 중인 게임의 실제 캡처와 데이터를 바탕으로 소개합니다. 화면, 수치와 콘텐츠는 이후 조정될 수 있습니다. 이 페이지에서는 설치 파일을 배포하지 않습니다."
+    ]
+  ],
+  "story": [
+    {
+      "title": "01. 마을로 향하던 길",
+      "paragraphs": [
+        "마차에는 마을에 전할 물자가 실려 있었습니다. 길은 평범했고, 여행자는 자신이 숲의 운명과 마주하게 되리라고는 생각하지 못했습니다. 갑자기 굵어진 빗줄기가 길을 흐립니다. 그는 마차를 세우고 숲 가장자리에 잠시 몸을 누일 자리를 마련합니다.",
+        "비가 그치기를 기다린 뒤 다시 길을 나서면 될 일이었습니다. 그러나 숲에는 비보다 더 깊은 것이 내려앉아 있었습니다. 검은 안개가 익숙한 길을 삼키고, 마을로 향하던 여정은 돌아갈 길을 찾는 싸움으로 바뀝니다."
+      ]
+    },
+    {
+      "title": "02. 쓰러진 자리에서 다시",
+      "paragraphs": [
+        "안개 속의 존재들은 살아 있는 것과 죽은 것의 경계에 서 있습니다. 낡은 무기를 쥔 손과 뒤틀린 몸이 길을 막습니다. 여행자는 검을 휘두릅니다. 손에 익은 듯하면서도 자신의 것이 아닌 검술의 기억이, 위태로운 몸을 다음 순간으로 이끕니다.",
+        "쓰러져도 끝나지 않습니다. 숲은 그를 다시 길 위에 세웁니다. 하지만 모든 것이 없던 일이 되지는 않습니다. 남겨진 흔적과 만났던 존재들의 이야기는, 이 반복에 이유가 있음을 말해 줍니다."
+      ]
+    },
+    {
+      "title": "03. 까마귀가 아는 것",
+      "paragraphs": [
+        "나뭇가지 위에서 까마귀가 여행자를 지켜봅니다. 새는 숲의 전부를 한꺼번에 말해 주지 않습니다. 한 번의 만남에는 작은 단서 하나를, 다음 만남에는 그 단서의 다른 면을 남깁니다.",
+        "길을 따라가면 물이 불어난 여울목과 비어 버린 마을이 나타납니다. 남은 물건들은 사람들이 단지 멀리 떠난 것이 아님을 암시합니다. 답은 숲 밖이 아니라, 뿌리가 파고든 아래쪽에 있습니다."
       ]
     }
-  },
-  feedbackSeed: [
-    { id: "seed-1", title: "보스 모델은 뿌리 실루엣을 더 강조", detail: "트렌트보다 땅을 찢고 솟은 역전된 뿌리 형태가 핵심으로 보이면 좋겠습니다.", category: "아트", priority: "P1", status: "open", createdAt: "2026.07.31" },
-    { id: "seed-2", title: "락온 스트레이프를 먼저 수정", detail: "보스전 제작 전에 좌우 이동과 후진 블렌드를 자연스럽게 맞춰야 합니다.", category: "게임플레이", priority: "P1", status: "in_progress", createdAt: "2026.07.31" }
+  ],
+  "spoilers": [
+    {
+      "title": "04. 아래로 이어지는 흔적",
+      "paragraphs": [
+        "폐허 아래에는 미로와 오래된 방들이 남아 있습니다. 철창, 기록, 비워진 자리와 봉인된 공간들은 서로 다른 시간의 흔적을 품고 있습니다. 지상에서 보았던 기이한 생명들과 반복되는 죽음은, 이 깊은 곳의 기억과 연결됩니다.",
+        "까마귀는 지하에서도 나타납니다. 더는 햇빛 아래의 검은 새가 아니라, 어둠 속에 옅은 빛으로 남은 환영입니다. 여행자는 그 목소리를 따라 숲의 가장 깊은 중심으로 내려갑니다."
+      ]
+    },
+    {
+      "title": "05. 잠들지 못한 수호자",
+      "paragraphs": [
+        "거대한 뿌리의 몸 안에는 이전 세대의 수호자가 남아 있습니다. 오랜 시간을 견딘 몸은 해골이 되었지만, 그가 맡았던 역할은 끝나지 않았습니다. 숲을 지키는 힘은 생명을 붙들고, 끝나야 할 순간마저 계속 이어 왔습니다.",
+        "숲의 반복은 시간을 처음으로 되돌리는 일이 아닙니다. 잠들지 못한 수호자와 기억에 매인 세계가, 다시 다음 존재를 세우는 순환입니다. 여행자가 지나온 모든 길은 이 만남으로 이어져 있었습니다."
+      ]
+    },
+    {
+      "title": "06. 계승",
+      "paragraphs": [
+        "마지막 싸움은 수호자를 쓰러뜨리는 것으로만 설명할 수 없습니다. 끝내 쉬지 못한 이를 놓아주고, 그가 짊어진 것을 마주하는 순간입니다. 물자를 전하러 왔던 여행자는 이제 다른 무언가를 이어받을 자리에 섭니다.",
+        "숲과 마을에 다시 빛이 돌아옵니다. 그러나 회복된 풍경 아래에는 지나온 기억이 남아 있습니다. 누군가의 끝과 누군가의 시작이 이어지는 곳. 이곳은 잠들지 않는 숲입니다."
+      ]
+    }
+  ],
+  "journey": [
+    [
+      "출발",
+      "시작 캠프",
+      "비를 피한 자리에서 준비를 마치고 숲으로 향합니다.",
+      "camp"
+    ],
+    [
+      "1–2장",
+      "숲 개활지",
+      "검은 안개 속에서 첫 전투를 치르고 기억과 장비를 모읍니다.",
+      "forest"
+    ],
+    [
+      "3장",
+      "여울목",
+      "하나의 큰 다리, 불어나는 강물, 폭포 아래 숨은 길.",
+      "river"
+    ],
+    [
+      "4장",
+      "폐허 마을",
+      "거세지는 비와 차오르는 물 사이로 남겨진 흔적을 찾습니다.",
+      "village"
+    ],
+    [
+      "쉼표",
+      "기억 제련소",
+      "기억 두 개를 새로운 기억 하나로 재조합합니다.",
+      null
+    ],
+    [
+      "5–6장",
+      "미로 · 원형 미로",
+      "변화하는 구조와 함정을 지나 아래로 향하는 계단을 찾습니다.",
+      "maze"
+    ],
+    [
+      "7장",
+      "심층 던전",
+      "빛이 멀어진 지하, 마지막 수호자에게 다가갑니다.",
+      "dungeon"
+    ],
+    [
+      "쉼표",
+      "기억 제련소",
+      "마지막 전투를 앞두고 공격의 구성을 다시 고릅니다.",
+      null
+    ],
+    [
+      "8장",
+      "보스룸",
+      "잠들지 않는 뿌리와 마주하고 숲의 기억을 잇습니다.",
+      "battle"
+    ]
+  ],
+  "rooms": [
+    "감옥",
+    "기록보관실",
+    "무기고",
+    "의식 제단실",
+    "지하 납골당",
+    "버려진 연회장",
+    "봉인 금고",
+    "침식 정원",
+    "무너진 왕좌실"
+  ],
+  "roomGallery": [
+    [
+      "maze",
+      "의식 제단실"
+    ],
+    [
+      "garden",
+      "침식 정원"
+    ],
+    [
+      "banquet",
+      "버려진 연회장"
+    ]
+  ],
+  "worldFeatures": [
+    [
+      "비와 물살",
+      "머무는 동안 변하는 환경",
+      "여울목에 들어서면 폭우가 거세지고 약 1분에 걸쳐 수위와 물살이 강해집니다. 다음 폐허 마을에도 비와 침수가 이어집니다."
+    ],
+    [
+      "보상과 대가",
+      "목적지보다 중요한 선택",
+      "다음 목적지는 정해져 있지만 보상과 저주·계약은 선택할 수 있습니다. 더 좋은 보상을 위해 감당할 위험을 고르세요."
+    ],
+    [
+      "다시 내려가는 길",
+      "계단으로 이어지는 심층",
+      "미로의 입구와 출구는 석조 계단으로 연결됩니다. 방과 함정, 몬스터를 지나 더 아래로 향하는 길을 찾아야 합니다."
+    ]
+  ],
+  "combatFeatures": [
+    [
+      "기억의 순서",
+      "슬롯이 곧 공격의 흐름",
+      "장착한 순서대로 공격이 이어집니다. 기본 2칸에서 5레벨에 3칸, 8레벨에 4칸이 열립니다. 무기와 기억의 무게도 고려해야 합니다."
+    ],
+    [
+      "틈을 만드는 싸움",
+      "회피, 락온, 자세 붕괴",
+      "상대를 주시하며 방향을 골라 회피하고, 공격으로 자세를 무너뜨려 빈틈을 만드세요. 강한 공격만큼 준비 자세를 읽는 일이 중요합니다."
+    ],
+    [
+      "자동 지급 포인트",
+      "레벨업 다음은 나의 선택",
+      "레벨업하면 성장 포인트가 지급됩니다. 초반에는 2포인트, 7레벨부터 3포인트를 받아 원하는 성장에 투자합니다."
+    ]
+  ],
+  "trees": [
+    [
+      "이어지는 기억",
+      "연결할수록 강해지는 공격",
+      "슬롯 강화와 흐름, 공격 속도와 연계 복구에 투자합니다. 연속 공격으로 압박하고 자세를 무너뜨리는 전투에 어울립니다.",
+      "연계 · 흐름 · 속도"
+    ],
+    [
+      "응축된 기억",
+      "기다림을 결정적인 일격으로",
+      "공격하지 않는 동안 힘을 축적합니다. ‘일격 축적’을 배우면 1번 기억만 사용하며, 나머지 슬롯의 기억은 인벤토리로 돌아갑니다.",
+      "축적 · 강타 · 버티기"
+    ],
+    [
+      "대장장이",
+      "전리품을 나만의 장비로",
+      "감정의 품질과 추가 옵션을 발전시킵니다. 재추첨에서 여러 옵션을 보존하거나 원하는 효과 종류를 고르는 성장도 있습니다.",
+      "감정 · 옵션 · 재추첨"
+    ]
+  ],
+  "rules": [
+    [
+      "도전 중에 만드는 것",
+      "기억, 장비, 골드와 성장 투자로 이번 도전의 빌드를 만듭니다. 네임드와 상자, 캠프와 제련소에서 새로운 선택을 얻습니다."
+    ],
+    [
+      "죽음 뒤의 선택",
+      "장비 한 개를 선택해 가져오거나 선택 없이 출발할 수 있습니다. 기억과 성장 투자는 초기화되고 골드는 잃습니다. 레벨은 30%가 남습니다."
+    ],
+    [
+      "영구히 남는 흔적",
+      "정수, 장비 해금, 외형 설정과 옵션, 발견한 까마귀의 이야기는 유지됩니다. 최종 클리어 후 새 도전은 레벨 1과 시작 장비·기억으로 돌아갑니다."
+    ]
+  ],
+  "controls": [
+    [
+      "W A S D",
+      "이동"
+    ],
+    [
+      "마우스 왼쪽",
+      "공격"
+    ],
+    [
+      "Space",
+      "구르기"
+    ],
+    [
+      "Q",
+      "락온"
+    ],
+    [
+      "E",
+      "상호작용"
+    ],
+    [
+      "F",
+      "포션"
+    ],
+    [
+      "Tab",
+      "인벤토리"
+    ],
+    [
+      "K",
+      "기억 구성"
+    ],
+    [
+      "N",
+      "기억의 성장"
+    ],
+    [
+      "M",
+      "지도"
+    ],
+    [
+      "Z",
+      "1.5초 유지해 필드 장비 분해"
+    ],
+    [
+      "Esc",
+      "일시정지·옵션"
+    ]
+  ],
+  "memoryFeatures": [
+    [
+      "발견",
+      "상자와 네임드",
+      "보물상자에서는 확률로, 네임드 몬스터에게서는 확정으로 무작위 기억을 얻습니다. 중복 기억에도 성장의 가치가 있습니다."
+    ],
+    [
+      "준비",
+      "캠프의 기억 준비",
+      "첫 캠프에서 정수를 사용해 무작위 기억을 준비할 수 있습니다. 제안을 새로고침할수록 새로고침 비용이 올라갑니다."
+    ],
+    [
+      "재조합",
+      "기억 제련소",
+      "기억 2개와 300골드로 재료와 다른 무작위 기억 하나를 만듭니다. 같은 기억이 2개 중첩되어 있어도 재료로 사용할 수 있습니다."
+    ]
+  ],
+  "equipmentFeatures": [
+    [
+      "무기",
+      "손에 맞는 무게",
+      "가벼운 무기, 한손 무기와 묵직한 무기는 연결할 기억과 전투 리듬이 다릅니다. 등급만큼 나의 빌드에 맞는지가 중요합니다."
+    ],
+    [
+      "방어구",
+      "장착한 장비가 외형으로",
+      "투구·갑옷·장갑·하의·신발·벨트를 조합하세요. 실제 장착한 방어구가 캐릭터 외형에 반영되며, 해제하면 기본 복장이 돌아옵니다."
+    ],
+    [
+      "대장장이",
+      "옵션을 다루는 성장",
+      "감정은 추가 옵션을 열고, 골드를 쓰는 재추첨은 옵션을 다시 굴립니다. 성장으로 여러 옵션을 보존하거나 원하는 효과 종류를 선택할 수 있습니다."
+    ]
+  ],
+  "monsters": [
+    [
+      "goblin",
+      "고블린",
+      "작은 체구의 위협",
+      "작다고 가볍게 볼 수는 없습니다. 빠른 접근과 공격의 틈을 살피세요."
+    ],
+    [
+      "orc",
+      "오크",
+      "무기를 쥔 전사",
+      "무기를 드는 준비 자세와 휘두르는 궤적을 읽어야 합니다."
+    ],
+    [
+      "skeleton-warrior",
+      "해골 전사",
+      "방패 뒤의 검",
+      "방어하는 때와 공격하는 때를 구분해 빈틈을 노리세요."
+    ],
+    [
+      "skeleton-mage",
+      "해골 마법사",
+      "멀리서 다가오는 위협",
+      "다른 적과의 전투에 몰두하다 원거리 공격을 놓치지 마세요."
+    ],
+    [
+      "troll",
+      "트롤",
+      "육중한 내려찍기",
+      "커다란 팔이 올라갈 때, 다음 공격이 닿을 위치를 살피세요."
+    ],
+    [
+      "ogre",
+      "오우거",
+      "거대한 무기의 압박",
+      "가까이 붙는 것만으로 안전하지 않습니다. 공격 범위 밖으로 움직이세요."
+    ],
+    [
+      "golem",
+      "골렘",
+      "돌로 된 몸",
+      "양팔의 움직임과 실제 타격 방향을 끝까지 확인해야 합니다."
+    ],
+    [
+      "ghoul",
+      "구울",
+      "숲에 남은 굶주림",
+      "다가오는 적을 따로 떼어 내고 전투 공간을 확보하세요."
+    ],
+    [
+      "zombie",
+      "좀비",
+      "떠나지 못한 존재",
+      "느껴지는 위협은 숫자와 지형에 따라 달라집니다. 포위되지 않도록 움직이세요."
+    ]
   ]
 };
