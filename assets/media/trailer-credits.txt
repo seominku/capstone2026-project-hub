@@ -1,0 +1,62 @@
+잠들지 않는 숲 / C0D3X 트레일러 v04·v05 음원 출처
+제작일: 2026-10-12
+
+영상의 소리는 실시간 게임 오디오 녹음이 아니라, 프로젝트에 이미 있는
+무료 음원을 새 컷과 타격 시점에 맞춰 편집·혼합한 후반 믹스입니다.
+새 외부 다운로드나 Epidemic Sound 음원 사용은 없습니다.
+가공: C0D3X (구간 선택, 피치/필터/레이어는 프로젝트 파생본 기준,
+영상에서는 구간 배치·볼륨·페이드·믹싱·전체 음량 정규화).
+
+[배경 음악 — CC0]
+Dark Forest Theme / Battle Theme B for RPG
+The Cynic Project / cynicmusic
+https://opengameart.org/content/dark-forest-theme
+https://opengameart.org/content/battle-theme-b-for-rpg
+
+[칼·책·캐릭터 효과음 — CC0]
+80 CC0 RPG SFX / rubberduck
+https://opengameart.org/content/80-cc0-rpg-sfx
+
+[비·바람·발소리/마차의 기존 가공본 — CC0]
+Rain / Rvgerxini: https://freesound.org/people/Rvgerxini/sounds/527658/
+Forest Wind / deleted_user_229898: https://freesound.org/s/150174/
+Hoof Foley / BorzSounds: https://freesound.org/people/BorzSounds/sounds/843303/
+Wood Creak / Rudmer_Rotteveel: https://freesound.org/people/Rudmer_Rotteveel/sounds/502511/
+프로젝트 TitleCamp의 Rain, ForestWind, CarrierStep, WagonRoll_Foley 가공본 사용.
+
+[보스의 자연 재료 타격 — CC BY 3.0]
+Wall Impact / Hitting Wall.wav, Falling Rock / Falling Rock.wav
+spookymodem
+https://opengameart.org/content/wall-impact
+https://opengameart.org/content/falling-rock
+
+rock_breaking / Yo Frankie! — Blender Foundation
+OpenGameArt 제출: Lamoot
+https://opengameart.org/content/rockbreaking
+https://apricot.blender.org/
+
+Creative Commons Attribution 3.0 Unported:
+https://creativecommons.org/licenses/by/3.0/
+https://creativecommons.org/licenses/by/3.0/legalcode
+
+원본을 발췌·시작점 정리·모노 변환·피치/리샘플링·필터/EQ·레이어·
+엔벨로프/페이드·피크 및 음량 제어하여 게임용 보스 사운드로 가공했습니다.
+CC BY 원본과 해당 파생 효과음은 CC BY 3.0으로 이용할 수 있습니다.
+원 제작자의 보증·후원을 암시하지 않으며 해당 권리를 추가 제한하지 않습니다.
+
+[보스의 나무 재료 타격 — CC0]
+35 wooden cracks/hits/destructions — Independent.nu
+OpenGameArt 제출: qubodup
+사용 원본: impactwood07, impactwood15, crack08, crack09
+https://opengameart.org/content/35-wooden-crackshitsdestructions
+
+[씨앗 발사와 기존 보스 가공본 — CC0 프로젝트 원본]
+BossWeight_v02/BossSeed_Weight.wav의 기존 무료 합성/편집 레이어 사용.
+프로젝트 OpenGameArtAudio 및 Sound/Expansion의 기존 출처 고지가 적용됩니다.
+
+CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
+
+공개 게시 또는 영상 재배포 시 이 출처 파일을 함께 제공하거나 위 내용을
+영상 설명에 넣어 주세요. 영상 마지막에도 CC BY 작성자와 라이선스를 표시했습니다.
+프로젝트의 상세 가공 대응: Assets/Sound/BossNatural_v03/Sources.json
+기존 고지: Assets/StreamingAssets/ThirdPartyNotices/BossNaturalAudio.txt

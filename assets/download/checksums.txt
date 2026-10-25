@@ -1,0 +1,10 @@
+잠들지 않는 숲 · 0.2.20261026 · Windows x64
+공식 배포: https://github.com/seominku/capstone2026-project-hub/releases/tag/v0.2.20261026
+
+SHA-256
+4DEFE914B6A8E494EF88505E0F3C0C013351231AC558EC51AFCA3474D5C3728A  SleeplessForest_0.2.20261026_Windows_Setup.exe
+91C84365FD48486DC3601F8FB9B4C66D3580CF97AF9EDB7A06197D5B53BCE46C  Capstone2026_Playtest_20261026.zip
+
+설치 파일: 235353370 바이트
+설치 없는 ZIP: 366421805 바이트
+서명되지 않은 설치 파일입니다. 공식 주소와 파일 해시를 확인하세요.

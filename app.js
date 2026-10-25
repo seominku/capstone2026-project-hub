@@ -16,6 +16,8 @@ $('growth-trees').innerHTML=D.trees.map(([name,sub,body,tags],i)=>'<article><spa
 $('run-rules').innerHTML=D.rules.map(([name,body])=>'<article><h3>'+esc(name)+'</h3><p>'+esc(body)+'</p></article>').join('');
 $('controls').innerHTML=D.controls.map(([key,action])=>'<div><dt><kbd>'+esc(key)+'</kbd></dt><dd>'+esc(action)+'</dd></div>').join('');
 $('monster-grid').innerHTML=D.monsters.map(([key,name,role,body])=>'<article class="monster-card">'+photo('assets/unity/monster-'+key+'.png',name+' 모델',name+' · Unity 모델 촬영','')+'<p class="monster-role">'+esc(role)+'</p><h3>'+esc(name)+'</h3><p>'+esc(body)+'</p></article>').join('');
+$('screen-gallery').innerHTML=D.gallery.map(([src,name])=>photo(src,name,name+' · 실제 게임 화면',name)).join('');
+document.addEventListener('click',e=>{const b=e.target.closest('[data-scroll-to]');if(b)$(b.dataset.scrollTo)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
 
 let weight='all', kind='weapons', page=1;
 const pageSize=20;
@@ -33,12 +35,12 @@ $('slot-filter').innerHTML+=[...slots].map(s=>'<option value="'+esc(s)+'">'+esc(
 function renderEquipment(){
  const query=$('equipment-search').value.trim().toLocaleLowerCase('ko');
  const grade=$('grade-filter').value, slot=$('slot-filter').value;
- const items=C[kind].filter(x=>x.name.toLocaleLowerCase('ko').includes(query)&&(kind==='accessories'||grade==='all'||String(x.gradeKey)===grade)&&(kind!=='armor'||slot==='all'||x.slotName===slot));
+ const items=C[kind].filter(x=>x.name.toLocaleLowerCase('ko').includes(query)&&(grade==='all'||String(x.gradeKey)===grade)&&(kind!=='armor'||slot==='all'||x.slotName===slot));
  const total=Math.max(1,Math.ceil(items.length/pageSize));page=Math.max(1,Math.min(page,total));
- $('grade-filter-label').hidden=kind==='accessories';
+ $('grade-filter-label').hidden=false;
  $('slot-filter-label').hidden=kind!=='armor';
  $('equipment-count').textContent=items.length+'개의 '+({weapons:'무기',armor:'방어구',accessories:'장신구'}[kind]);
- $('equipment-grid').innerHTML=items.length?items.slice((page-1)*pageSize,page*pageSize).map(x=>'<article class="equipment-card">'+photo(x.image,x.name+' 외형',x.name+' · 장비 모델 촬영','')+'<h3>'+esc(x.name)+'</h3><p>'+(x.grade?'<span class="grade grade-'+esc(x.gradeKey)+'">'+esc(x.grade)+'</span>':'')+esc(x.className||x.slotName)+'</p></article>').join(''):'<p class="empty-state">조건에 맞는 장비가 없습니다. 검색어나 필터를 바꿔 보세요.</p>';
+ $('equipment-grid').innerHTML=items.length?items.slice((page-1)*pageSize,page*pageSize).map(x=>'<article class="equipment-card" data-grade="'+esc(x.gradeKey)+'">'+photo(x.image,x.name+' 외형',x.name+' · 게임 장비 아이콘','')+'<h3>'+esc(x.name)+'</h3><p>'+(x.grade?'<span class="grade grade-'+esc(x.gradeKey)+'">'+esc(x.grade)+'</span>':'')+esc(x.className||x.slotName)+'</p></article>').join(''):'<p class="empty-state">조건에 맞는 장비가 없습니다. 검색어나 필터를 바꿔 보세요.</p>';
  $('pagination').hidden=total<=1;
  $('page-count').textContent=page+' / '+total;
  $('previous-page').disabled=page===1;$('next-page').disabled=page===total;
@@ -53,7 +55,7 @@ function movePage(delta){page+=delta;renderEquipment();$('equipment-grid').scrol
 $('previous-page').addEventListener('click',()=>movePage(-1));$('next-page').addEventListener('click',()=>movePage(1));
 renderMemories();renderEquipment();
 
-const titles={intro:'게임 소개',story:'이야기',world:'숲과 심층',combat:'전투와 성장',memories:'기억',equipment:'장비',bestiary:'몬스터'};
+const titles={intro:'게임 소개',story:'이야기',world:'숲과 심층',combat:'전투와 성장',memories:'기억',equipment:'장비',bestiary:'몬스터',download:'다운로드'};
 const aliases={'game-bible':'intro',overview:'intro',systems:'combat','ui-ux':'combat',weapons:'equipment',armor:'equipment',boss:'bestiary',development:'intro',quality:'intro',documents:'intro',feedback:'intro',roadmap:'intro',qa:'intro'};
 const toggle=document.querySelector('.menu-toggle'),nav=$('navigation');
 function closeMenu(){nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');}
