@@ -1,0 +1,20 @@
+Ring selection for Capstone2026 (2026-10-12)
+
+"Ring" by Zsky: https://poly.pizza/m/Q5aumgYVBE
+"Ring" by Zsky: https://poly.pizza/m/ZgmJCVv48K
+"Ring" by Zsky: https://poly.pizza/m/qDpLp8PPWf
+All three licensed under Creative Commons Attribution 3.0:
+https://creativecommons.org/licenses/by/3.0/
+
+"Scavengers Loot Library - Signet Ring" by 3DAssets.dev:
+https://3dassets.dev/assets/scavengers-loot-library-signet-ring-88e470f3
+CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
+The source website labels its production as AI-assisted.
+
+"Ring" by Jarlan Perez: https://poly.pizza/m/fn7r37d549f
+Creative Commons Attribution 3.0:
+https://creativecommons.org/licenses/by/3.0/
+
+Changes by C0D3X: GLB-to-FBX conversion, display scale/orientation,
+Unity URP material conversion and rendered inventory icons.
+Original downloaded GLBs are preserved separately. No endorsement implied.

@@ -1,0 +1,11 @@
+User-imported sword packs adopted in Capstone2026 on 2026-10-12:
+
+- Free Low Poly Fantasy Swords: 10 original swords
+- Low Poly Fantasy Swords: 9 original swords; the single-material variants are preferred
+- PurePoly Free Swords: 7 original swords
+- GanzSe FREE Fantasy Low Poly Weapons Pack update: Great Sword 5, three color variants
+
+Original package files remain in their original publisher folders.
+Project changes: URP game materials, display scale and grip alignment, gameplay hitboxes,
+rendered transparent inventory icons and game item/loot data.
+This notice records provenance; it does not replace the original package licenses.

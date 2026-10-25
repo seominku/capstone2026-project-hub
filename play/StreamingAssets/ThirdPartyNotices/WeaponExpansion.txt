@@ -1,0 +1,24 @@
+FREE WEAPON ASSETS — Capstone2026, 2026-10-12
+
+KayKit: Fantasy Weapons Bits (FREE tier only)
+Author: Kay Lousberg
+Source: https://kaylousberg.itch.io/fantasy-weapons-bits
+License: CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+Original License.txt retained under Assets/KayKit/FantasyWeaponsBits_FREE.
+Used models: dagger_A, dagger_B, sword_B, sword_C, sword_E.
+The paid EXTRA/SOURCE tiers are not included.
+
+LowPoly Medieval Weapons
+Author: Quaternius
+Source: https://quaternius.com/packs/medievalweapons.html
+Official download: https://quaternius.itch.io/lowpoly-medieval-weapons
+License: CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+Used models: Dagger_2, Sword_2, Sword_Big, Sword_Golden, Claymore.
+
+Both official source pages were checked on 2026-10-12 (Korea).
+Capstone2026 adaptations: URP material conversion, scale/grip normalization,
+weapon collision setup, game-data entries, and rendered inventory icons.
+Original art authors retain credit for their work. No endorsement is implied.
+Pure Poly Fantasy RPG Weapons has not been imported or used by this task.

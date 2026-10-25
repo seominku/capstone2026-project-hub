@@ -1,0 +1,37 @@
+Boss natural-material audio — third-party credits
+Prepared for Capstone2026 / C0D3X on 2026-10-11.
+
+"Wall Impact" / "Hitting Wall.wav" and "Falling Rock" / "Falling Rock.wav"
+by spookymodem, licensed under Creative Commons Attribution 3.0 Unported.
+https://opengameart.org/content/wall-impact
+https://opengameart.org/content/falling-rock
+License: https://creativecommons.org/licenses/by/3.0/
+Legal code: https://creativecommons.org/licenses/by/3.0/legalcode
+
+"rock_breaking" from Yo Frankie! by Blender Foundation,
+submitted to OpenGameArt by Lamoot, licensed under CC BY 3.0 Unported.
+https://opengameart.org/content/rockbreaking
+https://apricot.blender.org/
+License: https://creativecommons.org/licenses/by/3.0/
+Legal code: https://creativecommons.org/licenses/by/3.0/legalcode
+
+"35 wooden cracks/hits/destructions" by Independent.nu,
+submitted to OpenGameArt by qubodup, dedicated under CC0 1.0.
+Used recordings: impactwood07, impactwood15, crack08, crack09.
+https://opengameart.org/content/35-wooden-crackshitsdestructions
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
+Adaptation by C0D3X for boss sound effects: excerpting, onset trimming,
+mono conversion, pitch/resampling, filtering, equalization, layering,
+envelope/fades, dynamic peak control, and loudness matching.
+Original recordings are not claimed as our own; no endorsement is implied.
+The above CC BY materials and their adaptations remain available under
+CC BY 3.0; no additional restriction on those licensed rights is intended.
+
+The swing, phase and seed-impact effects also retain limited layers from
+the project's previous Expansion sound bank. Its existing third-party
+notices remain applicable. No Epidemic Sound recordings were used here.
+
+Source and derivative mapping:
+Assets/Sound/BossNatural_v03/Sources.json (development project)
+Originals: Assets/OpenGameArtAudio/BossNatural_20261011 (development project)
