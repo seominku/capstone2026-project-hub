@@ -3,7 +3,7 @@
 const D = window.GAME_SHOWCASE, C = window.EQUIPMENT_CATALOG;
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const photo = (src, alt, caption, label=caption) => '<button type="button" class="photo" data-photo="'+esc(src)+'" data-caption="'+esc(caption)+'" aria-label="'+esc(alt)+' 크게 보기"><img src="'+esc(src)+'" alt="'+esc(alt)+'" loading="lazy">'+(label?'<span>'+esc(label)+' ↗</span>':'')+'</button>';
+const photo = (src, alt, caption, label=caption, icon=false) => {const id=Number(/item-(\d+)\.png$/.exec(src)?.[1]),meta=icon?window.EQUIPMENT_OPTIONS.catalog.find(x=>x.id===id):null,pixels=meta?Math.min(Math.max(meta.iconWidth,meta.iconHeight),128):256,nativeWidth=meta?meta.iconWidth:256;if(meta)src='assets/equipment-v03/item-'+id+'.png';return '<button type="button" class="photo" data-photo="'+esc(src)+'" data-preview="'+(icon?'icon':'photo')+'" data-native-pixels="'+nativeWidth+'" style="--source-pixels:'+pixels+'px" data-caption="'+esc(caption)+'" aria-label="'+esc(alt)+(icon?' 보기':' 크게 보기')+'"><img src="'+esc(src)+'" alt="'+esc(alt)+'" loading="lazy">'+(label?'<span>'+esc(label)+' ↗</span>':'')+'</button>';};
 const features = list => list.map(([n,title,body,href,label]) => '<article><span class="feature-number">'+esc(n)+'</span><h3>'+esc(title)+'</h3><p>'+esc(body)+'</p>'+(href?'<a class="text-link" href="#'+esc(href)+'">'+esc(label)+' →</a>':'')+'</article>').join('');
 ['intro','world','combat','memory','equipment'].forEach(key => $(key+'-features').innerHTML = features(D[key+'Features']));
 $('faq-content').innerHTML=D.faq.map(([q,a])=>'<details><summary>'+esc(q)+'</summary><p>'+esc(a)+'</p></details>').join('');
@@ -40,7 +40,7 @@ function renderEquipment(){
  $('grade-filter-label').hidden=false;
  $('slot-filter-label').hidden=kind!=='armor';
  $('equipment-count').textContent=items.length+'개의 '+({weapons:'무기',armor:'방어구',accessories:'장신구'}[kind]);
- $('equipment-grid').innerHTML=items.length?items.slice((page-1)*pageSize,page*pageSize).map(x=>'<article class="equipment-card" data-grade="'+esc(x.gradeKey)+'">'+photo(x.image,x.name+' 외형',x.name+' · 게임 장비 아이콘','')+'<h3>'+esc(x.name)+'</h3><p>'+(x.grade?'<span class="grade grade-'+esc(x.gradeKey)+'">'+esc(x.grade)+'</span>':'')+esc(x.className||x.slotName)+'</p></article>').join(''):'<p class="empty-state">조건에 맞는 장비가 없습니다. 검색어나 필터를 바꿔 보세요.</p>';
+ $('equipment-grid').innerHTML=items.length?items.slice((page-1)*pageSize,page*pageSize).map(x=>'<article class="equipment-card" data-grade="'+esc(x.gradeKey)+'">'+photo(x.image,x.name+' 외형',x.name+' · 게임 장비 아이콘 · 원본 크기 미리보기','',true)+'<h3>'+esc(x.name)+'</h3><p>'+(x.grade?'<span class="grade grade-'+esc(x.gradeKey)+'">'+esc(x.grade)+'</span>':'')+esc(x.className||x.slotName)+'</p></article>').join(''):'<p class="empty-state">조건에 맞는 장비가 없습니다. 검색어나 필터를 바꿔 보세요.</p>';
  $('pagination').hidden=total<=1;
  $('page-count').textContent=page+' / '+total;
  $('previous-page').disabled=page===1;$('next-page').disabled=page===total;
@@ -54,6 +54,20 @@ $('equipment-filters').addEventListener('click',e=>{const b=e.target.closest('bu
 function movePage(delta){page+=delta;renderEquipment();$('equipment-grid').scrollIntoView({block:'start',behavior:'auto'});}
 $('previous-page').addEventListener('click',()=>movePage(-1));$('next-page').addEventListener('click',()=>movePage(1));
 renderMemories();renderEquipment();
+
+// The option catalog is a read-only export of the shipping solo rules, not a new roll simulator.
+const O=window.EQUIPMENT_OPTIONS;let optionKind='appraisal';
+function renderOptions(){
+ const slot=$('option-slot').value,grade=Number($('option-grade').value),isNight=optionKind==='night';
+ $('option-slot-label').hidden=isNight;$('option-grade-label').hidden=isNight;
+ const list=isNight?O.night:O.options.filter(o=>o.slot===slot&&o.grade===grade);
+ $('option-count').textContent=list.length+'가지 '+(isNight?'고정 각인':'감정 옵션 후보');
+ $('option-grid').innerHTML=list.map(o=>'<li class="option-card'+(isNight?(o.bane?' bane':' boon'):'')+'"><span class="option-category">'+(isNight?(o.bane?'디버프':'버프'):o.conditional?'조건부 옵션':'감정 옵션')+'</span><p>'+esc(o.minLabel)+(o.minLabel===o.maxLabel?'':'<span class="option-to">~</span>'+esc(o.maxLabel))+'</p></li>').join('');
+ $('appraisal-note').hidden=isNight;$('night-note').hidden=!isNight;
+}
+$('option-filters').addEventListener('click',e=>{const b=e.target.closest('[data-option-kind]');if(!b)return;optionKind=b.dataset.optionKind;pressed('option-filters','optionKind',optionKind);renderOptions();});
+['option-slot','option-grade'].forEach(id=>$(id).addEventListener('change',renderOptions));
+$('unique-options').innerHTML=O.unique.map(o=>'<li>'+esc(o.label)+'</li>').join('');renderOptions();
 
 const titles={intro:'게임 소개',story:'이야기',world:'숲과 심층',combat:'전투와 성장',memories:'기억',equipment:'장비',bestiary:'몬스터',download:'다운로드'};
 const aliases={'game-bible':'intro',overview:'intro',systems:'combat','ui-ux':'combat',weapons:'equipment',armor:'equipment',boss:'bestiary',development:'intro',quality:'intro',documents:'intro',feedback:'intro',roadmap:'intro',qa:'intro'};
@@ -79,7 +93,8 @@ let photoTrigger=null;
 document.addEventListener('click',e=>{
  const button=e.target.closest('button[data-photo]');
  if(!button)return;
- photoTrigger=button;fullImage.src=button.dataset.photo;
+ photoTrigger=button;dialog.dataset.preview=button.dataset.preview||'photo';fullImage.src=button.dataset.photo;
+ fullImage.onload=()=>{fullImage.style.setProperty('--native-width',Math.min(fullImage.naturalWidth,Number(button.dataset.nativePixels)||fullImage.naturalWidth)+'px');};
  fullImage.alt=button.querySelector('img')?.alt||button.dataset.caption;
  $('photo-caption').textContent=button.dataset.caption;dialog.showModal();
 });

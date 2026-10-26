@@ -1,0 +1,16 @@
+Water audio credits (2026-10-11)
+
+Yo Frankie! amb_river and amb_waterfall — Blender Foundation.
+https://apricot.blender.org/
+https://opengameart.org/content/ambient-mountain-river-wind-and-forest-and-waterfall
+Creative Commons Attribution 3.0 Unported: https://creativecommons.org/licenses/by/3.0/
+Changes: WAV conversion, mono mix, trimming, loop crossfade and volume normalization.
+No endorsement implied.
+
+Skippy Fish Water Sound Collection — jcpmcdonald.
+https://opengameart.org/content/skippy-fish-water-sound-collection
+CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
+Used water.wav, swim.wav, waterReentry.wav; trimmed, mono, level-matched game copies.
+
+Other added combat/workshop effects reuse existing Kenney and rubberduck audio.
+Existing notices remain applicable; see the project's other ThirdPartyNotices.

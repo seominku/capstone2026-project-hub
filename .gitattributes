@@ -1,3 +1,4 @@
 play/Build/*.bin -text
 play/StreamingAssets/**/*.bundle -text
 play/StreamingAssets/aa/catalog.bin -text
+play/releases/** -text
