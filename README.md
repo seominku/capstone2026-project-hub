@@ -1,13 +1,13 @@
-# 잠들지 않는 숲 · ROOTBOUND
+# 잠들지 않는 숲 · The Sleepless Forest
 C0D3X의 3D 액션 로그라이트를 소개하는 정적 웹사이트입니다.
 
 - 공개 주소: https://seominku.github.io/capstone2026-project-hub/
 - 구성: 게임 소개 / 이야기 / 숲과 심층 / 전투와 성장 / 기억 / 장비 / 몬스터 / 다운로드
 - 내용 기준: 2026-10-28 실제 프로젝트의 같은 기억 다중 장착·깊은 밤 부정 각인 최대2줄·공통 연계 가속·이어지는 수호·보호막 코팅UI를 포함합니다. 기존 장비·9단계 경로/감정28종·등급별 범위도 유지합니다.
-- 일반판 Windows0.6.20261028 설치 파일과 휴대용 ZIP은 GitHub Releases에서 배포합니다. 완료되지 않은 파티 모드는 지원 기능으로 소개하지 않습니다.
-- 시연판 Windows0.6.20261028-demo 설치 파일은 별도 prerelease에서 제공합니다. 물리 Backquote(~) 개발자 조절·진행도 초기화 메뉴, 도감 미해금 반지2종/깊은 밤1~6 해금·기본1을 유지합니다. 일반판·Web에도 최신 게임 변경을 반영하되 개발자 메뉴는 포함하지 않으며, 시연판은 Latest로 지정하지 않습니다.
+- 일반판 Windows0.8.20261028 설치 파일과 휴대용 ZIP은 GitHub Releases에서 배포합니다. 완료되지 않은 파티 모드는 지원 기능으로 소개하지 않습니다.
+- 시연판 Windows0.8.20261028-demo 설치 파일은 별도 prerelease에서 제공합니다. 물리 Backquote(~) 개발자 조절·진행도 초기화 메뉴, 도감 미해금 반지2종/깊은 밤1~6 해금·기본1을 유지합니다. 일반판·Web에도 최신 게임 변경을 반영하되 개발자 메뉴는 포함하지 않으며, 시연판은 Latest로 지정하지 않습니다.
 - 시연판은 별도 설치 경로/바로가기를 쓰지만 기존 Windows와 세이브 위치를 공유합니다. 설치만으로 초기화하지 않으며, 게임 내 확인식 초기화는 도전 장비/기억/성장·레벨1/골드0/정수500으로 복원하고 영구해금/외형/옵션/밸런스를 유지합니다. 직전 저장을 날짜별로 별도 복사하며, 신규 저장 기본정수500을 기존 정수에 강제로 덮어쓰지 않습니다.
-- `/play/`: 실제 Unity WebGL 싱글 플레이. Web 전용 번역 예열 뒤 기존12씬/9단계 캠페인을 실행합니다. PC 키보드/마우스·WebGL2 필요, 초기 다운로드 약343MiB, 브라우저별 IndexedDB 저장(Windows와 분리), 일부 물 표현은 기존 대체 수면 경로입니다. 모바일 터치/파티 지원으로 표시하지 않습니다.
+- `/play/`: 실제 Unity WebGL 싱글 플레이. Web 전용 번역 예열 뒤 기존12씬/9단계 캠페인을 실행합니다. PC 키보드/마우스·WebGL2 필요, 초기 다운로드 약345MiB, 브라우저별 IndexedDB 저장(Windows와 분리), 일부 물 표현은 기존 대체 수면 경로입니다. 모바일 터치/파티 지원으로 표시하지 않습니다.
 
 ## 로컬 실행
 이 폴더에서 `python -m http.server 4173 --bind 127.0.0.1` 실행 후 http://127.0.0.1:4173/ 을 여세요.
@@ -20,7 +20,7 @@ C0D3X의 3D 액션 로그라이트를 소개하는 정적 웹사이트입니다.
 - `app.js`: 해시 탐색, 필터/검색/페이지 이동, 이미지 확대
 - `data.js`: 방문자용 스토리·여정·전투 설명
 - `catalog-data.js`: 실제 등록 에셋 기준 무기54 / 방어구300 / 반지7 / 기억22종
-- `equipment-options.js`: 현행 Unity 솔로 규칙에서 추출한 감정28종/부위·등급별369행·깊은 밤 각인35개·레전더리 고유 효과4개. 기억 피해는 유니크 이상에만 표시. 기존 저장 원값은 재추첨하지 않으며, 기존 성장의 옵션 하한 보정에는 새 등급 범위가 적용됨
+- `equipment-options.js`: 현행 Unity 솔로 규칙에서 추출한 감정28종/부위·등급별369행·깊은 밤 각인35개·레전더리 고유 효과5개(모든 부위 공통 균등 풀·그림자의 잔향 개별 중첩). 기억 피해는 유니크 이상에만 표시. 기존 저장 원값은 재추첨하지 않으며, 기존 성장의 옵션 하한 보정에는 새 등급 범위가 적용됨
 - `assets/equipment-v03/`: 원본 스프라이트 영역의 해상도·비율을 보존한 장비 아이콘361개. 작은 원본을 확대하거나 정사각형으로 늘리지 않고, 미리보기에서도 실제 픽셀 크기를 넘기지 않음
 - `assets/current/`: 이전 웹용256px 아이콘 보존본. 현재 장비 화면은 위의 원본 비율 이미지를 사용함
 - `assets/media/`: 67.3초 v05 소개 영상/함께 제공하는 음원 출처. 촬영 연출·후반 믹스이며 연속 실전 완주 영상이 아님
@@ -42,6 +42,10 @@ C0D3X의 3D 액션 로그라이트를 소개하는 정적 웹사이트입니다.
 
 Web 검수는 기존 시작·실제 키보드 이동/ESC·새로고침 저장·9단계 진행과 일반 URL의 마차/메뉴/옵션/종료를 확인합니다. 진행 자동 검수는 기존 출구/거래 콜백을 호출하는 fixture이며 자연 보행 완주/전투 승률/전시드·모든 브라우저/16.7ms 검수가 아닙니다. Web 빌드 전용 opt-in QA는 명시적 `webqa` query에서만 별도 저장 폴더를 쓰며 일반 접속에는 생성되지 않습니다.
 
-검수 원시는 Unity 프로젝트의 Docs/QA/ReleaseRefresh_20261028_v06에 별도로 기록합니다. 이전0.3/0.4/0.5 검수는 해당 버전의 이력이며 현재 검수 완료로 재사용하지 않습니다. 방문자 화면에는 개발 현황·QA·로드맵·피드백을 표시하지 않습니다.
+검수 원시는 Unity 프로젝트의 Docs/QA/ReleaseRefresh_20261028_v08에 별도로 기록합니다. 이전 버전의 검수는 해당 버전의 이력이며 현재 검수 완료로 재사용하지 않습니다. 방문자 화면에는 개발 현황·QA·로드맵·피드백을 표시하지 않습니다.
 
-활성0.6 Web 파일은 `play/releases/0.6.20261028/`에 두고 직전0.5 경로는 유지합니다. `play/build-manifest.json`이 활성 버전·각 파일 SHA를 지정합니다. 더 오래된 비활성 웹 바이너리는 Pages 용량 유지를 위해 SHA 확인 후 Unity 프로젝트의 각 배포 QA/Before에 복구 가능하게 보관하며 Git 이력도 유지합니다. 기존 Windows 설치/ZIP Releases는 삭제하거나 덮어쓰지 않습니다.
+활성0.8 Web 파일은 `play/releases/0.8.20261028/`에 두고 직전0.6 경로는 유지합니다. `play/build-manifest.json`이 활성 버전·각 파일 SHA를 지정합니다. 더 오래된 비활성 웹 바이너리는 Pages 용량 유지를 위해 SHA 확인 후 Unity 프로젝트의 각 배포 QA/Before에 복구 가능하게 보관하며 Git 이력도 유지합니다. 기존 Windows 설치/ZIP Releases는 삭제하거나 덮어쓰지 않습니다.
+
+## English application identity0.8
+
+Product/window title: `The Sleepless Forest`. Executable: `TheSleeplessForest.exe`. New generated raven/forest/ember icon is used in Windows executables/installers/shortcuts and web favicons. Company and installer AppIDs stay unchanged. Legacy saves/settings are imported without overwriting newer saves or deleting the old source.0.6 and older keep their original storage; current normal/demo0.8 share the new identity.

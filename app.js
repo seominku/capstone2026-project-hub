@@ -67,7 +67,7 @@ function renderOptions(){
 }
 $('option-filters').addEventListener('click',e=>{const b=e.target.closest('[data-option-kind]');if(!b)return;optionKind=b.dataset.optionKind;pressed('option-filters','optionKind',optionKind);renderOptions();});
 ['option-slot','option-grade'].forEach(id=>$(id).addEventListener('change',renderOptions));
-$('unique-options').innerHTML=O.unique.map(o=>'<li>'+esc(o.label)+'</li>').join('');renderOptions();
+$('unique-options').innerHTML=O.unique.map(o=>'<li><strong>'+esc(o.label)+'</strong>'+(o.description?'<p>'+esc(o.description)+'</p>':'')+'</li>').join('');renderOptions();
 
 const titles={intro:'게임 소개',story:'이야기',world:'숲과 심층',combat:'전투와 성장',memories:'기억',equipment:'장비',bestiary:'몬스터',download:'다운로드'};
 const aliases={'game-bible':'intro',overview:'intro',systems:'combat','ui-ux':'combat',weapons:'equipment',armor:'equipment',boss:'bestiary',development:'intro',quality:'intro',documents:'intro',feedback:'intro',roadmap:'intro',qa:'intro'};
@@ -82,7 +82,7 @@ function route(focus=false){
  if(raw==='armor')changeKind('armor');else if(raw==='weapons')changeKind('weapons');
  document.querySelectorAll('.page').forEach(p=>p.hidden=p.id!==next);
  nav.querySelectorAll('a').forEach(a=>{if(a.hash==='#'+next)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
- document.title=titles[next]+' · 잠들지 않는 숲 | ROOTBOUND';
+ document.title=titles[next]+' · 잠들지 않는 숲 | The Sleepless Forest';
  closeMenu();window.scrollTo({top:0,behavior:'instant'});if(focus)$('main').focus({preventScroll:true});
 }
 window.addEventListener('hashchange',()=>route(true));route();

@@ -1,76 +1,76 @@
 {
-  "version": "0.6.20261028",
+  "version": "0.8.20261028",
   "companyName": "DefaultCompany",
-  "productName": "Capstone2026",
-  "loader": "releases/0.6.20261028/Build/WebGL.loader.js",
-  "streamingAssetsUrl": "releases/0.6.20261028/StreamingAssets",
+  "productName": "The Sleepless Forest",
+  "loader": "releases/0.8.20261028/Build/WebGL.loader.js",
+  "streamingAssetsUrl": "releases/0.8.20261028/StreamingAssets",
   "files": {
     "data": {
-      "bytes": 341265753,
-      "sha256": "8097b64279956cd703ea6763f3486d98a2ecf140636e61d5e767943dd9cc1f26",
+      "bytes": 343099693,
+      "sha256": "6e27cf88eaecaef46f128f3a3f2298c571ce30b4804d3755b8c15c9d05ce1941",
       "type": "application/octet-stream",
       "chunks": [
         {
-          "url": "releases/0.6.20261028/Build/WebGL.data.unityweb.0-7477e42d0cca2e91.bin",
+          "url": "releases/0.8.20261028/Build/WebGL.data.unityweb.0-161e62f30e27a692.bin",
           "bytes": 50331648,
-          "sha256": "7477e42d0cca2e91d31b1f0ab422e8ea4e9cea220ccd0b6707a9e13df1827e2c"
+          "sha256": "161e62f30e27a692a28bdf2f47fd651816e8dd179b59eb35ee4f20724772fde8"
         },
         {
-          "url": "releases/0.6.20261028/Build/WebGL.data.unityweb.1-1cbde9a824666120.bin",
+          "url": "releases/0.8.20261028/Build/WebGL.data.unityweb.1-2215fd18f2f31624.bin",
           "bytes": 50331648,
-          "sha256": "1cbde9a824666120f0d086ef4bbdfc5c090992ea51b31c3730b829a444ea4bf1"
+          "sha256": "2215fd18f2f3162469cf54c1c1b604b63cffc466f0913f4397b51c026c5f2f3d"
         },
         {
-          "url": "releases/0.6.20261028/Build/WebGL.data.unityweb.2-e72cbf9697951b04.bin",
+          "url": "releases/0.8.20261028/Build/WebGL.data.unityweb.2-16e2eabc33674266.bin",
           "bytes": 50331648,
-          "sha256": "e72cbf9697951b04b4a036a89368c4e1fa8c54ae5171d91a32ffd848bf6ba703"
+          "sha256": "16e2eabc3367426652d30fb89d64da74520544ab680c9f04da02aa07e8ee17d1"
         },
         {
-          "url": "releases/0.6.20261028/Build/WebGL.data.unityweb.3-16a352f2540607f0.bin",
+          "url": "releases/0.8.20261028/Build/WebGL.data.unityweb.3-9650ba84fb460192.bin",
           "bytes": 50331648,
-          "sha256": "16a352f2540607f06f0641ff0ebf4d613d4e0721ccaaba514df8a671cc1e1395"
+          "sha256": "9650ba84fb4601929c9f09bb7144360fb195ad9cc95b07c3f7a3ace9fc9b755e"
         },
         {
-          "url": "releases/0.6.20261028/Build/WebGL.data.unityweb.4-ee6e5bf040085a5b.bin",
+          "url": "releases/0.8.20261028/Build/WebGL.data.unityweb.4-e98777b4e65c4d27.bin",
           "bytes": 50331648,
-          "sha256": "ee6e5bf040085a5be449d020d96d021f23295b3e7e8bcaff64b1e26ba69ee22e"
+          "sha256": "e98777b4e65c4d275b9005d3e5137fd2612ef03c8f908485199c2a36148b3e43"
         },
         {
-          "url": "releases/0.6.20261028/Build/WebGL.data.unityweb.5-2652db24e56ea412.bin",
+          "url": "releases/0.8.20261028/Build/WebGL.data.unityweb.5-1fea10ebe4152867.bin",
           "bytes": 50331648,
-          "sha256": "2652db24e56ea412e37ca28489a95c150c934d2deb7de44711d14ab9b3ab4cf5"
+          "sha256": "1fea10ebe4152867af7851c6761d70b54ae783857ad137ad0b107d37ce3f6968"
         },
         {
-          "url": "releases/0.6.20261028/Build/WebGL.data.unityweb.6-c2bb0087525bbc52.bin",
-          "bytes": 39275865,
-          "sha256": "c2bb0087525bbc52bdcb7ec5bad73be14fda82eb8cee9755bd9266dd43a7e7fd"
+          "url": "releases/0.8.20261028/Build/WebGL.data.unityweb.6-3abad87e8d0e294a.bin",
+          "bytes": 41109805,
+          "sha256": "3abad87e8d0e294aa82f63afd0277b05b68bfad8b3013099018b4bbd792f0b85"
         }
       ]
     },
     "code": {
-      "bytes": 18487875,
-      "sha256": "51baf2e68afce78fa5e67b0139c98bb4d1695356ec82a77d6edc5933b74674ec",
+      "bytes": 18500363,
+      "sha256": "8ded776e9ac43eec37d7bae3fceb2f4e86dfaeda7539c0c17f4a2e55a51a7240",
       "type": "application/octet-stream",
       "chunks": [
         {
-          "url": "releases/0.6.20261028/Build/WebGL.wasm.unityweb.0-51baf2e68afce78f.bin",
-          "bytes": 18487875,
-          "sha256": "51baf2e68afce78fa5e67b0139c98bb4d1695356ec82a77d6edc5933b74674ec"
+          "url": "releases/0.8.20261028/Build/WebGL.wasm.unityweb.0-8ded776e9ac43eec.bin",
+          "bytes": 18500363,
+          "sha256": "8ded776e9ac43eec37d7bae3fceb2f4e86dfaeda7539c0c17f4a2e55a51a7240"
         }
       ]
     },
     "framework": {
-      "bytes": 95944,
-      "sha256": "2eff135246f99ecbe5283a4da2eb629a531bd928b2b29c487977a9401e6c9638",
+      "bytes": 95956,
+      "sha256": "6f19288130816ce900a05b5e3fe32d8c301dbd06fc8006c6ca8f4ec7c0cc94a0",
       "type": "application/javascript",
       "chunks": [
         {
-          "url": "releases/0.6.20261028/Build/WebGL.framework.js.unityweb.0-2eff135246f99ecb.bin",
-          "bytes": 95944,
-          "sha256": "2eff135246f99ecbe5283a4da2eb629a531bd928b2b29c487977a9401e6c9638"
+          "url": "releases/0.8.20261028/Build/WebGL.framework.js.unityweb.0-6f19288130816ce9.bin",
+          "bytes": 95956,
+          "sha256": "6f19288130816ce900a05b5e3fe32d8c301dbd06fc8006c6ca8f4ec7c0cc94a0"
         }
       ]
     }
   },
-  "downloadBytes": 359849572
+  "downloadBytes": 361696012
 }
